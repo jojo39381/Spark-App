@@ -274,6 +274,14 @@ import SpriteKit
         }()
     }
     
+    
+    open func setImage() {
+        if let texture = texture {
+          fillTexture = texture
+        }
+    }
+    
+    
     /**
      The animation to execute when the node is selected.
      */

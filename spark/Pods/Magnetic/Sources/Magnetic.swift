@@ -102,15 +102,33 @@ import SpriteKit
     }
     
     override open func addChild(_ node: SKNode) {
-        var x = -node.frame.width // left
+        var x = CGFloat(60) // left
         if children.count % 2 == 0 {
-            x = frame.width + node.frame.width // right
+            x = frame.width // right
         }
-        let y = CGFloat.random(node.frame.height, frame.height - node.frame.height)
+        
+        var y = CGFloat(0);
+        
+        
+        if children.count % 2 == 0 {
+            y = CGFloat(frame.height);
+        }
+        
+        
+        
+        
+        
         node.position = CGPoint(x: x, y: y)
         super.addChild(node)
     }
+  
     
+    
+    
+    
+    
+    
+
 }
 
 extension Magnetic {

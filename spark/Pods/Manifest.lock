@@ -1,16 +1,26 @@
 PODS:
+  - Alamofire (5.2.0)
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
   - Magnetic (3.2.0)
 
 DEPENDENCIES:
+  - Alamofire
+  - ChameleonFramework
   - Magnetic
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - ChameleonFramework
     - Magnetic
 
 SPEC CHECKSUMS:
+  Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Magnetic: e5ee962313e22f977d9fe3b074555ae7fda02c12
 
-PODFILE CHECKSUM: 7cbc9ae4a5712bf8c7d5e44958cda7981e7fd701
+PODFILE CHECKSUM: 5fa2dc02d60d66772f1d73ea10716f8941d1f102
 
 COCOAPODS: 1.5.2
