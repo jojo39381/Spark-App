@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Filters: NSObject {
+class Filters: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         
@@ -19,6 +19,7 @@ class Filters: NSObject {
         return cv
         
     }()
+    let cellId = "cellId"
     let blackView = UIView()
     
     
@@ -59,9 +60,19 @@ class Filters: NSObject {
         }
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        return cell
+    }
     override init() {
         super.init()
-        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
     }
 }

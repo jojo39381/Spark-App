@@ -9,14 +9,14 @@
 import UIKit
 import ChameleonFramework
 import Alamofire
-class FoodViewController: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate {
+class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:180, height:190)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return 50
     }
     
     
@@ -94,6 +94,8 @@ class FoodViewController: UIViewController, UISearchResultsUpdating, UICollectio
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnSwipe = true
+        self.definesPresentationContext = true
+
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +109,7 @@ class FoodViewController: UIViewController, UISearchResultsUpdating, UICollectio
         setupNav()
         
         
-        
+       
         
         
         
@@ -179,17 +181,31 @@ class FoodViewController: UIViewController, UISearchResultsUpdating, UICollectio
         navigationBar.isTranslucent = false;
         foodLabel.frame = CGRect(x:0, y:0, width:view.frame.width - 32, height:view.frame.height)
         navigationItem.titleView = foodLabel
-    }
-    func setupSearch() {
-        let search = UISearchController(searchResultsController: nil)
-        search.searchResultsUpdater = self
-        search.searchBar.searchTextField.placeholder = "search for categories"
-        self.navigationItem.searchController = search
+        navigationItem.hidesSearchBarWhenScrolling = false
+        setupSearch()
     }
     
+    let searchController = UISearchController(searchResultsController: nil)
+    @objc func setupSearch() {
+        searchController.searchBar.sizeToFit()
+        
+        searchController.searchBar.keyboardType = UIKeyboardType.asciiCapable
+        searchController.searchBar.searchTextField.placeholder = "search for categories"
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+        
+        self.navigationItem.searchController = searchController
+    
+        
+        
+    }
     
     
-    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        
+    }
+  
     
     
     func filterOptions() {

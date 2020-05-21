@@ -51,7 +51,6 @@ class PlanningViewController: UIViewController {
         
         
         
-        
         let magneticView = MagneticView(frame:self.view.bounds)
         magnetic = magneticView.magnetic
         magnetic?.magneticDelegate = self
@@ -116,8 +115,10 @@ extension PlanningViewController: MagneticDelegate {
     func magnetic(_ magnetic: Magnetic, didSelect node: Node) {
         let vc = FoodViewController()
         vc.modalPresentationStyle = .custom
+        
         let nav = UINavigationController(rootViewController:vc)
-        nav.modalPresentationStyle = .fullScreen
+        
+    
         self.navigationController?.present(nav, animated: true, completion: nil)
     }
     
