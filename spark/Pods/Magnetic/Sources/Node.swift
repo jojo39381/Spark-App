@@ -64,9 +64,9 @@ import SpriteKit
         didSet {
             guard isSelected != oldValue else { return }
             if isSelected {
-                selectedAnimation()
+             // selectedAnimation()
             } else {
-                deselectedAnimation()
+                // deselectedAnimation()
             }
         }
     }
@@ -301,7 +301,7 @@ import SpriteKit
             .colorTransition(from: originalColor, to: selectedColor, duration: animationDuration)
           ]))
         } else {
-          run(scaleAction)
+         // run(scaleAction)
         }
 
         if let texture = texture {

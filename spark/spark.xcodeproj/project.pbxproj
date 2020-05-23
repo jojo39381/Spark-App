@@ -21,6 +21,8 @@
 		5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02EB2478C37800463868 /* ActivityViewController.swift */; };
 		5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CEDB92478614C006C672C /* CategoriesManager.swift */; };
 		5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1435C42472593900275DC0 /* FoodViewController.swift */; };
+		5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A032024791ED400CB5986 /* ActivityDatabase.swift */; };
+		5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A03222479C0FE00CB5986 /* SelectedModel.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
 		5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D61DD452477434200C10099 /* FilterScreenCell.swift */; };
 		5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C4F212473D7890031933F /* CircularTransition.swift */; };
@@ -72,6 +74,8 @@
 		5D0C02EB2478C37800463868 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		5D0CEDB92478614C006C672C /* CategoriesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesManager.swift; sourceTree = "<group>"; };
 		5D1435C42472593900275DC0 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
+		5D4A032024791ED400CB5986 /* ActivityDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDatabase.swift; sourceTree = "<group>"; };
+		5D4A03222479C0FE00CB5986 /* SelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedModel.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		5D61DD452477434200C10099 /* FilterScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScreenCell.swift; sourceTree = "<group>"; };
 		5D6C4F212473D7890031933F /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
@@ -139,11 +143,13 @@
 				5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */,
 				5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */,
 				5D1435C42472593900275DC0 /* FoodViewController.swift */,
+				5D4A03222479C0FE00CB5986 /* SelectedModel.swift */,
 				5D0C02EB2478C37800463868 /* ActivityViewController.swift */,
 				5D5D0FEC24763D1C0038C339 /* Filters.swift */,
 				5D61DD452477434200C10099 /* FilterScreenCell.swift */,
 				5D0CEDB92478614C006C672C /* CategoriesManager.swift */,
 				5D0C02E724787C6600463868 /* CategoryData.swift */,
+				5D4A032024791ED400CB5986 /* ActivityDatabase.swift */,
 				5D0C02E92478877A00463868 /* CategoryModel.swift */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
 				5D6C4F212473D7890031933F /* CircularTransition.swift */,
@@ -422,7 +428,9 @@
 				5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */,
 				5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */,
 				5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */,
+				5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */,
 				5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */,
+				5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */,
 				5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */,
 				5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */,
 				5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */,

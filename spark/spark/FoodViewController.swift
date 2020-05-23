@@ -9,10 +9,18 @@
 import UIKit
 import ChameleonFramework
 import Alamofire
+
+
+
+
+
+protocol FoodViewControllerDelegate {
+    func didAddSelected(foodSelected:String)
+}
 class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:180, height:190)
+        return CGSize(width:170, height:190)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -23,7 +31,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "mycell", for: indexPath) as! CategoryCell
-        
+    
         myCell.layer.cornerRadius = 35
         
         myCell.backgroundColor = UIColor(randomFlatColorOf: UIShadeStyle.dark)
@@ -31,6 +39,10 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         myCell.category.text = self.categories[indexPath.item]
         
+        print(foodList)
+        if foodList.contains(myCell.category.text!) {
+            myCell.imageView.alpha = 1
+        }
         
         
         
@@ -46,11 +58,15 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
         myCell.imageView.alpha = 1
+        addSelected(foodSelected: myCell.category.text!)
+    
+        
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-       
+       let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
+       myCell.imageView.alpha = 0
     }
         
     
@@ -112,6 +128,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     var manager = CategoriesManager()
+    var foodList = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
@@ -253,6 +270,10 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     
+    var delegate: FoodViewControllerDelegate?
+    func addSelected(foodSelected: String) {
+        self.delegate?.didAddSelected(foodSelected: foodSelected)
+    }
     
     
     

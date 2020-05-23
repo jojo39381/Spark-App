@@ -9,7 +9,7 @@
 import UIKit
 import ChameleonFramework
 import Alamofire
-class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
+class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:180, height:190)
@@ -29,7 +29,7 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         myCell.backgroundColor = UIColor(randomFlatColorOf: UIShadeStyle.dark)
         
         
-        myCell.category.text = self.categories[indexPath.item]
+        myCell.category.text = Array(categories.keys)[indexPath.item]
         
         
         
@@ -110,11 +110,11 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         self.definesPresentationContext = true
 
     }
-    
-    var manager = CategoriesManager()
+    var categories = [String:String]()
+    var database = ActivityDatabase()
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadCategories()
+        
         foodCollectionView.allowsMultipleSelection = true
         
         
@@ -123,14 +123,15 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         self.navigationController?.navigationBar.prefersLargeTitles = false
         
         guard let navigationBar = self.navigationController?.navigationBar else { return }
-        manager.delegate = self
+        
 
         setupNav()
+        categories = database.categories
         
         
        
         
-        loadCategories()
+        
         
         
         
@@ -252,29 +253,13 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     
     
     
+  
+   
     
-    
-    func loadCategories() {
-        
-        manager.fetchCategories()
-        
-    }
-    
-    var categories : [String] = []
-    
-    func didLoadCategories(categoryData: CategoryModel) {
-        print("lmao")
-        
-        categories = categoryData.category
-        print(categories)
-        DispatchQueue.main.async {
-           self.foodCollectionView.reloadData()
-        }
-        
+
         
         
     }
-}
 
 
 

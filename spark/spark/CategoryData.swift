@@ -16,4 +16,5 @@ struct CategoryData: Decodable {
 struct Categories: Decodable {
     let title: String
     let parent_aliases:[String]
+    
 }

@@ -9,7 +9,14 @@
 import UIKit
 import SpriteKit
 import Magnetic
-class PlanningViewController: UIViewController {
+class PlanningViewController: UIViewController, FoodViewControllerDelegate {
+    func didAddSelected(foodSelected: String) {
+        selected.foodSelected.append(foodSelected)
+        let node = Node(text: foodSelected, image:nil, color: UIColor.rgb(red:245, green:123, blue:81), radius: 30)
+        node1?.addChild(node)
+        
+    }
+    
     let transition = CircularTransition()
     var center = CGPoint.zero
     let searchButton: UIButton = {
@@ -46,6 +53,13 @@ class PlanningViewController: UIViewController {
     
     var magnetic: Magnetic?
     var magnetic2: Magnetic?
+    
+    var node1: Node?
+    var node2: Node?
+    
+    
+    
+    var selected = SelectedModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,18 +71,18 @@ class PlanningViewController: UIViewController {
         
         self.view.addSubview(magneticView)
 
-        let node1 = Node(text: "Food", image: UIImage(named: "food"), color: UIColor.rgb(red:173, green:105, blue:137), radius: 140)
-        node1.fontSize = 50.0;
+        node1 = Node(text: "Food", image: UIImage(named: "food"), color: UIColor.rgb(red:173, green:105, blue:137), radius: 140)
+        node1?.fontSize = 50.0;
         
         // custom code refactor and make permanent later
-        node1.setImage()
-        let node2 = Node(text: "Activities", image:UIImage(named:"activity"), color: UIColor.rgb(red:245, green:123, blue:81), radius: 140)
-        node2.fontSize = 50.0;
+        node1?.setImage()
+        node2 = Node(text: "Activities", image:UIImage(named:"activity"), color: UIColor.rgb(red:245, green:123, blue:81), radius: 140)
+        node2?.fontSize = 50.0;
         
         // custom code refactor and make permanent later
-        node2.setImage()
-        magnetic?.addChild(node1)
-        magnetic?.addChild(node2)
+        node2?.setImage()
+        magnetic?.addChild(node1!)
+        magnetic?.addChild(node2!)
         
         
         
@@ -102,6 +116,9 @@ class PlanningViewController: UIViewController {
     
     @objc func searchAction(sender: UIButton!) {
         print("lol")
+        print(selected.foodSelected)
+        
+        
     }
     
     
@@ -116,11 +133,13 @@ extension PlanningViewController: MagneticDelegate {
         if node.text == "Food" {
             let vc = FoodViewController()
             vc.modalPresentationStyle = .custom
-        
+            vc.delegate = self
+            vc.foodList = selected.foodSelected
             let nav = UINavigationController(rootViewController:vc)
         
     
             self.navigationController?.present(nav, animated: true, completion: nil)
+            
         }
         else {
             let vc = ActivityViewController()
