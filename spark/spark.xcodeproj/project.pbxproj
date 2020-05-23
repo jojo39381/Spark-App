@@ -16,8 +16,13 @@
 		5D07FBC92470C0B5005F2E33 /* sparkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBC82470C0B5005F2E33 /* sparkTests.swift */; };
 		5D07FBD42470C0B5005F2E33 /* sparkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBD32470C0B5005F2E33 /* sparkUITests.swift */; };
 		5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBE22470F601005F2E33 /* Extensions.swift */; };
+		5D0C02E824787C6600463868 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02E724787C6600463868 /* CategoryData.swift */; };
+		5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02E92478877A00463868 /* CategoryModel.swift */; };
+		5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02EB2478C37800463868 /* ActivityViewController.swift */; };
+		5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CEDB92478614C006C672C /* CategoriesManager.swift */; };
 		5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1435C42472593900275DC0 /* FoodViewController.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
+		5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D61DD452477434200C10099 /* FilterScreenCell.swift */; };
 		5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C4F212473D7890031933F /* CircularTransition.swift */; };
 		5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFCD9E2475CB1900151A34 /* MenuBar.swift */; };
 		BE1020715E811E048FB6A739 /* Pods_sparkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E04AB7C5EB6A218E7B41FED /* Pods_sparkTests.framework */; };
@@ -62,8 +67,13 @@
 		5D07FBD32470C0B5005F2E33 /* sparkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sparkUITests.swift; sourceTree = "<group>"; };
 		5D07FBD52470C0B5005F2E33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D07FBE22470F601005F2E33 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		5D0C02E724787C6600463868 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
+		5D0C02E92478877A00463868 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		5D0C02EB2478C37800463868 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		5D0CEDB92478614C006C672C /* CategoriesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesManager.swift; sourceTree = "<group>"; };
 		5D1435C42472593900275DC0 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		5D61DD452477434200C10099 /* FilterScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScreenCell.swift; sourceTree = "<group>"; };
 		5D6C4F212473D7890031933F /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		5DAFCD9E2475CB1900151A34 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		741FA46035935C3ADA3B95E9 /* Pods-sparkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sparkUITests/Pods-sparkUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -129,7 +139,12 @@
 				5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */,
 				5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */,
 				5D1435C42472593900275DC0 /* FoodViewController.swift */,
+				5D0C02EB2478C37800463868 /* ActivityViewController.swift */,
 				5D5D0FEC24763D1C0038C339 /* Filters.swift */,
+				5D61DD452477434200C10099 /* FilterScreenCell.swift */,
+				5D0CEDB92478614C006C672C /* CategoriesManager.swift */,
+				5D0C02E724787C6600463868 /* CategoryData.swift */,
+				5D0C02E92478877A00463868 /* CategoryModel.swift */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
 				5D6C4F212473D7890031933F /* CircularTransition.swift */,
 				5D07FBBA2470C0B5005F2E33 /* Assets.xcassets */,
@@ -402,12 +417,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D07FBB62470C0B4005F2E33 /* PlanningViewController.swift in Sources */,
+				5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */,
 				5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */,
 				5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */,
+				5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */,
 				5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */,
 				5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */,
 				5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */,
+				5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */,
 				5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */,
+				5D0C02E824787C6600463868 /* CategoryData.swift in Sources */,
+				5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */,
 				5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

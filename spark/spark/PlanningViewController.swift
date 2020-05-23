@@ -113,13 +113,24 @@ class PlanningViewController: UIViewController {
 extension PlanningViewController: MagneticDelegate {
     
     func magnetic(_ magnetic: Magnetic, didSelect node: Node) {
-        let vc = FoodViewController()
-        vc.modalPresentationStyle = .custom
+        if node.text == "Food" {
+            let vc = FoodViewController()
+            vc.modalPresentationStyle = .custom
         
-        let nav = UINavigationController(rootViewController:vc)
+            let nav = UINavigationController(rootViewController:vc)
         
     
-        self.navigationController?.present(nav, animated: true, completion: nil)
+            self.navigationController?.present(nav, animated: true, completion: nil)
+        }
+        else {
+            let vc = ActivityViewController()
+            vc.modalPresentationStyle = .custom
+                
+            let nav = UINavigationController(rootViewController:vc)
+                
+            
+            self.navigationController?.present(nav, animated: true, completion: nil)
+        }
     }
     
     func magnetic(_ magnetic: Magnetic, didDeselect node: Node) {

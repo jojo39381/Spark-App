@@ -9,7 +9,7 @@
 import UIKit
 import ChameleonFramework
 import Alamofire
-class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
+class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:180, height:190)
@@ -94,7 +94,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     let foodLabel: UILabel = {
         let label = UILabel()
-        label.text = "Food"
+        label.text = "Activities"
         label.textAlignment = .left
         label.font = UIFont.boldSystemFont(ofSize: 25)
         
@@ -189,13 +189,15 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     
     
+    
+
+       
+       
     let icon: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named:"sushi")
+        image.image = UIImage(named:"activityicon")
         return image
     }()
-    
-    
     
     func setupNav() {
         guard let navigationBar = self.navigationController?.navigationBar else { return }
@@ -203,6 +205,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         navigationBar.barTintColor = .white
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationItem.title = "Activity"
         navigationBar.isTranslucent = false;
         
         let title = UIView(frame: CGRect(x:0, y:0, width:view.frame.width, height:view.frame.height))
@@ -215,12 +218,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         title.addSubview(icon)
         icon.anchor(top: title.topAnchor, left: foodLabel.rightAnchor, bottom: title.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        
         navigationItem.titleView = title
-        
-        
-        
         navigationItem.hidesSearchBarWhenScrolling = false
         setupSearch()
     }
@@ -281,103 +279,13 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
 
 
 
-class CategoryCell: UICollectionViewCell {
-    let category: UILabel = {
-        let label = UILabel()
-        label.text = "haha"
-        label.textAlignment = .center
-        label.font = label.font.withSize(20)
-        label.numberOfLines = 0
-        label.textColor = .white
-        return label
-    }()
-    
-    let imageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named:"checkmark")?.withRenderingMode(.alwaysTemplate)
-        image.tintColor = .white
-        image.alpha = 0
-        return image
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.addSubview(category)
-        contentView.addSubview(imageView)
-        imageView.frame = CGRect(x:frame.width - 35,y:20, width:20, height:20)
-        category.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height:0)
-        self.contentView.layer.cornerRadius = 35
-        self.contentView.layer.borderWidth = 1.0
-        self.contentView.layer.borderColor = UIColor.clear.cgColor
-        self.contentView.layer.masksToBounds = true
-
-        self.layer.backgroundColor = UIColor.white.cgColor
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 2.0)//CGSizeMake(0, 2.0);
-        self.layer.shadowRadius = 2.0
-        self.layer.shadowOpacity = 0.5
-        self.layer.masksToBounds = false
-        self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
-        
-        
-            
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("error")
-    }
-}
 
 
 
 
 
-extension UINavigationController {
 
-    func setStatusBar(backgroundColor: UIColor) {
-        let statusBarFrame: CGRect
-        if #available(iOS 13.0, *) {
-            statusBarFrame = view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
-        } else {
-            statusBarFrame = UIApplication.shared.statusBarFrame
-        }
-        let statusBarView = UIView(frame: statusBarFrame)
-        statusBarView.backgroundColor = backgroundColor
-        view.addSubview(statusBarView)
-    }
 
-}
-extension UILabel
-{
-    func addImage(imageName: String, afterLabel bolAfterLabel: Bool = false)
-    {
-        let attachment: NSTextAttachment = NSTextAttachment()
-        attachment.image = UIImage(named: imageName)
-        let attachmentString: NSAttributedString = NSAttributedString(attachment: attachment)
 
-        if (bolAfterLabel)
-        {
-            let strLabelText: NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
-            strLabelText.append(attachmentString)
-
-            self.attributedText = strLabelText
-        }
-        else
-        {
-            let strLabelText: NSAttributedString = NSAttributedString(string: self.text!)
-            let mutableAttachmentString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attachmentString)
-            mutableAttachmentString.append(strLabelText)
-
-            self.attributedText = mutableAttachmentString
-        }
-    }
-
-    func removeImage()
-    {
-        let text = self.text
-        self.attributedText = nil
-        self.text = text
-    }
-}
 
 
