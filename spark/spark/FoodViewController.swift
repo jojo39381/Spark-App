@@ -41,6 +41,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         print(foodList)
         
+        
         if foodList.keys.contains(myCell.category.text!) {
             print(myCell.category.text!)
             myCell.imageView.alpha = 1

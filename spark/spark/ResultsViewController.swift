@@ -39,7 +39,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     
     var restaurantModel:RestaurantModel!
-    
+    var activityModel: ActivityModel!
     
     override func viewDidLoad() {
         view.addSubview(resultsCollectionView)

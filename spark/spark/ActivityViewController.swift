@@ -9,7 +9,12 @@
 import UIKit
 import ChameleonFramework
 import Alamofire
+
+protocol ActivityViewControllerDelegate {
+    func didAddActivity(activity: String, alias: String)
+}
 class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate {
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:180, height:190)
@@ -30,7 +35,14 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         
         
         myCell.category.text = Array(categories.keys)[indexPath.item]
-        
+        print(activityList)
+        if activityList.keys.contains(myCell.category.text!) {
+            print(myCell.category.text!)
+            myCell.imageView.alpha = 1
+        }
+        else {
+            myCell.imageView.alpha = 0
+        }
         
         
         
@@ -46,6 +58,10 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
         myCell.imageView.alpha = 1
+        
+        activityList.updateValue( Array(categories.values)[indexPath.item], forKey: Array(categories.keys)[indexPath.item])
+        addSelect(activity: Array(categories.keys)[indexPath.item], alias: Array(categories.values)[indexPath.item])
+        
         
     }
     
@@ -114,7 +130,8 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     var database = ActivityDatabase()
     
     
-    
+    var activityList = [String:String]()
+    var delegate: ActivityViewControllerDelegate?
     
     // var delegate: ActivityViewControllerDelegate?
     override func viewDidLoad() {
@@ -165,6 +182,15 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         
         
     }
+    
+    
+    
+    func addSelect(activity: String, alias: String) {
+        self.delegate?.didAddActivity(activity: activity, alias: alias)
+    }
+    
+    
+    
     
     let menuBar: MenuBar = {
         let mb = MenuBar()

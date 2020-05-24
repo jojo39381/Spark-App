@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 import Magnetic
-class PlanningViewController: UIViewController, FoodViewControllerDelegate, RestaurantsManagerDelegate {
+class PlanningViewController: UIViewController, FoodViewControllerDelegate, ActivityViewControllerDelegate, RestaurantsManagerDelegate, ActivityManagerDelegate {
     func didAddSelected(foodSelected: String, foodAlias: String) {
         selected.foodSelected.updateValue(foodAlias, forKey: foodSelected)
         
@@ -18,6 +18,11 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Rest
        
     
         
+    }
+    func didAddActivity(activity: String, alias: String) {
+        selected.activitySelected.updateValue(alias, forKey: activity)
+        
+
     }
     
     let transition = CircularTransition()
@@ -130,13 +135,22 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Rest
         
     }
     var restaurants: RestaurantModel!
+    var activities: ActivityModel!
     func didLoadRestaurants(data: RestaurantModel) {
         restaurants = data
         print("///////////")
+        var manager = ActivityManager(categories: selected.activitySelected)
+        manager.delegate = self
+        manager.fetchActivities()
+        
+    }
+    func didLoadActivities(data: ActivityModel) {
+        activities = data
+        
         DispatchQueue.main.async {
 
             let vc = ResultsViewController()
-            vc.restaurantModel = self.restaurants
+            vc.activityModel = self.activities
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -164,7 +178,8 @@ extension PlanningViewController: MagneticDelegate {
         else {
             let vc = ActivityViewController()
             vc.modalPresentationStyle = .custom
-                
+            vc.delegate = self
+            vc.activityList = selected.activitySelected
             let nav = UINavigationController(rootViewController:vc)
                 
             

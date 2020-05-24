@@ -10,6 +10,6 @@ import Foundation
 
 struct SelectedModel {
     var foodSelected = [String:String]()
-    var activitySelected = [String]()
+    var activitySelected = [String:String]()
     
 }

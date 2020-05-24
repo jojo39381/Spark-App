@@ -25,6 +25,9 @@
 		5D101395247A1300004EE552 /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D101394247A1300004EE552 /* RestaurantModel.swift */; };
 		5D1013A1247A307F004EE552 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1013A0247A307F004EE552 /* ResultsViewController.swift */; };
 		5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1435C42472593900275DC0 /* FoodViewController.swift */; };
+		5D178BCA247B30CF00C9F78D /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BC7247B30CD00C9F78D /* ActivityModel.swift */; };
+		5D178BCB247B30CF00C9F78D /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BC8247B30CE00C9F78D /* ActivityManager.swift */; };
+		5D178BCC247B30CF00C9F78D /* ActivityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BC9247B30CF00C9F78D /* ActivityData.swift */; };
 		5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A032024791ED400CB5986 /* ActivityDatabase.swift */; };
 		5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A03222479C0FE00CB5986 /* SelectedModel.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
@@ -82,6 +85,9 @@
 		5D101394247A1300004EE552 /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		5D1013A0247A307F004EE552 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		5D1435C42472593900275DC0 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
+		5D178BC7247B30CD00C9F78D /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
+		5D178BC8247B30CE00C9F78D /* ActivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
+		5D178BC9247B30CF00C9F78D /* ActivityData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityData.swift; sourceTree = "<group>"; };
 		5D4A032024791ED400CB5986 /* ActivityDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDatabase.swift; sourceTree = "<group>"; };
 		5D4A03222479C0FE00CB5986 /* SelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedModel.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
@@ -162,6 +168,9 @@
 				5D101392247A07DF004EE552 /* RestaurantsData.swift */,
 				5D101394247A1300004EE552 /* RestaurantModel.swift */,
 				5D0C02E92478877A00463868 /* CategoryModel.swift */,
+				5D178BC9247B30CF00C9F78D /* ActivityData.swift */,
+				5D178BC8247B30CE00C9F78D /* ActivityManager.swift */,
+				5D178BC7247B30CD00C9F78D /* ActivityModel.swift */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
 				5D6C4F212473D7890031933F /* CircularTransition.swift */,
 				5D1013A0247A307F004EE552 /* ResultsViewController.swift */,
@@ -434,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D178BCA247B30CF00C9F78D /* ActivityModel.swift in Sources */,
 				5D07FBB62470C0B4005F2E33 /* PlanningViewController.swift in Sources */,
 				5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */,
 				5D1013A1247A307F004EE552 /* ResultsViewController.swift in Sources */,
@@ -450,8 +460,10 @@
 				5D101391247A04C8004EE552 /* RestaurantsManager.swift in Sources */,
 				5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */,
 				5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */,
+				5D178BCB247B30CF00C9F78D /* ActivityManager.swift in Sources */,
 				5D0C02E824787C6600463868 /* CategoryData.swift in Sources */,
 				5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */,
+				5D178BCC247B30CF00C9F78D /* ActivityData.swift in Sources */,
 				5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,6 +631,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TD6K89778;
 				INFOPLIST_FILE = spark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -637,6 +650,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6TD6K89778;
 				INFOPLIST_FILE = spark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
