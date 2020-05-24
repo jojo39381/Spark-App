@@ -15,7 +15,7 @@ import Alamofire
 
 
 protocol FoodViewControllerDelegate {
-    func didAddSelected(foodSelected:String)
+    func didAddSelected(foodSelected:String, foodAlias: String)
 }
 class FoodViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
     
@@ -37,11 +37,16 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         myCell.backgroundColor = UIColor(randomFlatColorOf: UIShadeStyle.dark)
         
         
-        myCell.category.text = self.categories[indexPath.item]
+        myCell.category.text = Array(self.categories.keys)[indexPath.item]
         
         print(foodList)
-        if foodList.contains(myCell.category.text!) {
+        
+        if foodList.keys.contains(myCell.category.text!) {
+            print(myCell.category.text!)
             myCell.imageView.alpha = 1
+        }
+        else {
+            myCell.imageView.alpha = 0
         }
         
         
@@ -58,15 +63,20 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
         myCell.imageView.alpha = 1
-        addSelected(foodSelected: myCell.category.text!)
+        
+        
+        foodList.updateValue(Array(self.categories.values)[indexPath.item], forKey:Array(self.categories.keys)[indexPath.item])
+        addSelected(foodSelected: myCell.category.text!, foodAlias: Array(categories.values)[indexPath.item])
     
         
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-       let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
-       myCell.imageView.alpha = 0
+        let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
+        foodList.removeValue(forKey: myCell.category.text!)
+        myCell.imageView.alpha = 0
+        
     }
         
     
@@ -128,7 +138,8 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     var manager = CategoriesManager()
-    var foodList = [String]()
+    var foodList = [String:String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
@@ -235,7 +246,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         
         navigationItem.titleView = title
-        
+    
         
         
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -256,13 +267,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         
     }
-    
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-    }
-  
+ 
     
     
     func filterOptions() {
@@ -271,8 +276,8 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     
     var delegate: FoodViewControllerDelegate?
-    func addSelected(foodSelected: String) {
-        self.delegate?.didAddSelected(foodSelected: foodSelected)
+    func addSelected(foodSelected: String, foodAlias: String) {
+        self.delegate?.didAddSelected(foodSelected: foodSelected, foodAlias: foodAlias)
     }
     
     
@@ -283,21 +288,37 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
         
     }
     
-    var categories : [String] = []
-    
+    var categories = [String:String]()
+    var categoryHolder: CategoryModel!
     func didLoadCategories(categoryData: CategoryModel) {
         print("lmao")
-        
         categories = categoryData.category
+        categoryHolder = categoryData
         print(categories)
         DispatchQueue.main.async {
            self.foodCollectionView.reloadData()
         }
-        
-        
-        
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        categories = categoryHolder.category
+        foodCollectionView.reloadData()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        foodCollectionView.keyboardDismissMode = .interactive
+        if (searchText.count == 0) {
+            categories = categoryHolder.category
+        } else {
+            categories = [String:String]()
+            for i in 0..<categoryHolder.category.count {
+                if (Array(categoryHolder.category.keys)[i].lowercased().contains(searchText.lowercased())) {
+                    categories.updateValue(Array(categoryHolder.category.values)[i], forKey: Array(categoryHolder.category.keys)[i])
+                }
+            }
+        }
+        foodCollectionView.reloadData()
     }
 }
+
 
 
 

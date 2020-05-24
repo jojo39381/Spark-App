@@ -18,6 +18,7 @@ import SpriteKit
         label.verticalAlignmentMode = .center
         label.width = self.frame.width
         label.separator = " "
+        
         addChild(label)
         return label
     }()

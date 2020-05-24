@@ -112,6 +112,11 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     var categories = [String:String]()
     var database = ActivityDatabase()
+    
+    
+    
+    
+    // var delegate: ActivityViewControllerDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -238,12 +243,7 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         
         
     }
-    
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        
-    }
+
   
     
     
@@ -252,7 +252,24 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     
-    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+     categories = database.categories
+     foodCollectionView.reloadData()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        foodCollectionView.keyboardDismissMode = .interactive
+        if (searchText.count == 0) {
+         categories = database.categories
+        } else {
+         categories = [String: String]()
+         for i in 0..<database.categories.count {
+             if (Array(database.categories.values)[i].lowercased().contains(searchText.lowercased())) {
+                 categories.updateValue(Array(database.categories.values)[i], forKey: Array(database.categories.keys)[i])
+                }
+            }
+        }
+        foodCollectionView.reloadData()
+    }
   
    
     

@@ -9,11 +9,14 @@
 import UIKit
 import SpriteKit
 import Magnetic
-class PlanningViewController: UIViewController, FoodViewControllerDelegate {
-    func didAddSelected(foodSelected: String) {
-        selected.foodSelected.append(foodSelected)
+class PlanningViewController: UIViewController, FoodViewControllerDelegate, RestaurantsManagerDelegate {
+    func didAddSelected(foodSelected: String, foodAlias: String) {
+        selected.foodSelected.updateValue(foodAlias, forKey: foodSelected)
+        
         let node = Node(text: foodSelected, image:nil, color: UIColor.rgb(red:245, green:123, blue:81), radius: 30)
         node1?.addChild(node)
+       
+    
         
     }
     
@@ -116,9 +119,26 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate {
     
     @objc func searchAction(sender: UIButton!) {
         print("lol")
-        print(selected.foodSelected)
+        var manager = RestaurantsManager(categories: selected.foodSelected)
+        manager.delegate = self
+        manager.fetchRestaurants()
         
         
+        
+        
+        
+        
+    }
+    var restaurants: RestaurantModel!
+    func didLoadRestaurants(data: RestaurantModel) {
+        restaurants = data
+        print("///////////")
+        DispatchQueue.main.async {
+
+            let vc = ResultsViewController()
+            vc.restaurantModel = self.restaurants
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     

@@ -55,11 +55,12 @@ struct CategoriesManager {
         do {
             let decodedData = try decoder.decode(CategoryData.self, from: categoryData)
             var array = [String]()
-            var categoryData = CategoryModel(category:array, activity:array)
+            var dict = [String:String]()
+            var categoryData = CategoryModel(category:dict, activity:array)
             for category in decodedData.categories {
                 if category.parent_aliases.contains("restaurants") {
                     let data = category.title
-                    categoryData.category.append(data)
+                    categoryData.category.updateValue(category.alias, forKey: data)
                     
                     
                 }

@@ -1,5 +1,5 @@
 //
-//  SelectedModel.swift
+//  RestaurantModel.swift
 //  spark
 //
 //  Created by Joseph Yeh on 5/23/20.
@@ -8,8 +8,6 @@
 
 import Foundation
 
-struct SelectedModel {
-    var foodSelected = [String:String]()
-    var activitySelected = [String]()
-    
+struct RestaurantModel {
+    var restaurants: [String]
 }
