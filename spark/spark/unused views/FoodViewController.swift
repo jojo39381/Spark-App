@@ -213,6 +213,7 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
     let filters = Filters()
     func filterSelected() {
         filters.showFilters()
+        
     }
     
 

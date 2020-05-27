@@ -151,6 +151,7 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Acti
 
             let vc = ResultsViewController()
             vc.activityModel = self.activities
+            vc.restaurantModel = self.restaurants
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

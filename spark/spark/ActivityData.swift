@@ -10,9 +10,9 @@
 import Foundation
 
 struct ActivityData: Decodable {
-    var businesses: [lol]
+    var businesses: [Businesses]
 }
 
-struct lol: Decodable {
+struct Result: Decodable {
     var name: String
 }

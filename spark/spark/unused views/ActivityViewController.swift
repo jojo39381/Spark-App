@@ -13,7 +13,16 @@ import Alamofire
 protocol ActivityViewControllerDelegate {
     func didAddActivity(activity: String, alias: String)
 }
-class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate {
+class ActivityViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MenuViewDelegate, UISearchBarDelegate,UISearchControllerDelegate, CategoriesManagerDelegate {
+    func didLoadCategories(categoryData: CategoryModel) {
+        categories = categoryData.activity
+        original = categoryData.activity
+        DispatchQueue.main.async {
+           self.foodCollectionView.reloadData()
+        }
+        
+    }
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -127,8 +136,8 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
 
     }
     var categories = [String:String]()
-    var database = ActivityDatabase()
-    
+    var manager = CategoriesManager()
+    var original = [String:String]()
     
     var activityList = [String:String]()
     var delegate: ActivityViewControllerDelegate?
@@ -148,7 +157,10 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
         
 
         setupNav()
-        categories = database.categories
+        manager.delegate = self
+        manager.fetchCategories()
+        
+        
         
         
        
@@ -279,18 +291,18 @@ class ActivityViewController: UIViewController, UICollectionViewDataSource, UICo
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-     categories = database.categories
+     categories = original
      foodCollectionView.reloadData()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         foodCollectionView.keyboardDismissMode = .interactive
         if (searchText.count == 0) {
-         categories = database.categories
+         categories = original
         } else {
          categories = [String: String]()
-         for i in 0..<database.categories.count {
-             if (Array(database.categories.values)[i].lowercased().contains(searchText.lowercased())) {
-                 categories.updateValue(Array(database.categories.values)[i], forKey: Array(database.categories.keys)[i])
+         for i in 0..<original.count {
+             if (Array(original.values)[i].lowercased().contains(searchText.lowercased())) {
+                 categories.updateValue(Array(original.values)[i], forKey: Array(original.keys)[i])
                 }
             }
         }

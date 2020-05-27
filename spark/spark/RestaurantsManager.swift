@@ -32,8 +32,15 @@ struct RestaurantsManager {
             
             var components = URLComponents(string: urlString)
             
+            var latitude = "37.866309"
+            var longitude =  "-122.254605"
+            
             components?.queryItems = [
-                URLQueryItem(name: "location", value: "sacramento")
+                URLQueryItem(name: "latitude", value: latitude),
+                URLQueryItem(name: "longitude", value: longitude),
+                URLQueryItem(name: "price", value: "1, 2")
+            
+               
             ]
             
             for (key, value) in categories {

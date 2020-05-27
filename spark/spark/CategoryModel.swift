@@ -11,5 +11,5 @@ import Foundation
 struct CategoryModel {
     var category: [String:String]
     
-    var activity: [String]
+    var activity: [String : String]
 }

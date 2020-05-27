@@ -10,7 +10,9 @@ import Foundation
 
 protocol CategoriesManagerDelegate {
     func didLoadCategories(categoryData:CategoryModel)
+    
 }
+
 struct CategoriesManager {
     let categoryURL = "https://api.yelp.com/v3/categories"
     
@@ -56,17 +58,18 @@ struct CategoriesManager {
             let decodedData = try decoder.decode(CategoryData.self, from: categoryData)
             var array = [String]()
             var dict = [String:String]()
-            var categoryData = CategoryModel(category:dict, activity:array)
+            var categoryData = CategoryModel(category:dict, activity:dict)
             for category in decodedData.categories {
-                if category.parent_aliases.contains("restaurants") {
+                let alias = category.parent_aliases
+                if alias.contains("restaurants") {
                     let data = category.title
                     categoryData.category.updateValue(category.alias, forKey: data)
                     
                     
                 }
-                else {
-                    
-                    categoryData.activity.append(category.title)
+                else if ["active", "arts", "resorts", "skiresorts", "tours", "nightlife"].contains(where: alias.contains){
+                    let data = category.title
+                    categoryData.activity.updateValue(category.alias, forKey: data)
                 }
             }
             return categoryData
