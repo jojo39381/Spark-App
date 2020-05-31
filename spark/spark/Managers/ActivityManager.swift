@@ -129,11 +129,12 @@ struct ActivityManager {
                 for category in business.categories {
                     alias.append(category.alias)
                 }
+                result.append(alias)
                 result.append([business.rating])
                 result.append([business.review_count])
                 let coordinates = [business.coordinates.latitude, business.coordinates.longitude]
                 result.append(coordinates)
-                result.append(alias)
+                
             
                 restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
