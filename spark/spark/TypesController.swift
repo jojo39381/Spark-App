@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = typeList?.count
         return count!
@@ -18,20 +18,25 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! CategoryCell
         myCell.category.text = typeList?[indexPath.item]
         myCell.contentView.backgroundColor = UIColor.init(randomColorIn: [UIColor.flatBlue(), UIColor.flatBlueColorDark(), UIColor.flatSkyBlue(), UIColor.flatRed(), UIColor.flatRedColorDark()])
+        
         return myCell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width/3 - 20, height : 120)
+        return CGSize(width: view.frame.width/2 - 20, height : 180)
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return 30
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
-        filterSelected()
+        filterSelected(key: (typeList?[indexPath.item])!)
         
     }
     
@@ -40,25 +45,112 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .white
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        cv.contentInset = UIEdgeInsets(top: 60, left: 20, bottom: 10, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right:10)
+      
         return cv
     }()
     
     
-    
+    let instructions : UILabel = {
+        let label = UILabel()
+        label.text = "Choose your date"
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
     
     
     let dateModel = DateModel()
     var typeList: [String]?
+    var userSelectedModel: UserSelectedModel!
     override func viewDidLoad() {
         view.addSubview(typesCollectionView)
-        typesCollectionView.frame = view.frame
+        view.addSubview(instructions)
+        view.backgroundColor = .white
+        
+        view.addConstraintsWithFormat(format: "H:|-20-[v0]-20-|", views: instructions)
+        
+        view.addConstraintsWithFormat(format: "H:|[v0]|", views: typesCollectionView)
+        view.addConstraintsWithFormat(format: "V:|-20-[v0]-20-[v1]-|", views: instructions, typesCollectionView )
+     
         typesCollectionView.dataSource = self
         typesCollectionView.delegate = self
         typesCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "myCell")
         typeList = dateModel.dateCategories
+        setupNav()
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func setupNav() {
+        let navigationBar = self.navigationController?.navigationBar
+        navigationItem.hidesBackButton = true
+        navigationBar?.prefersLargeTitles = true
+        navigationBar?.tintColor = .white
+        navigationBar?.backgroundColor = .white
+        self.title = "Spark"
+    }
+    func didSearchForDates(key: String) {
+        
+        
+        var dict = [String:String]()
+        for activity in userSelectedModel.preferences[key]! {
+            dict.updateValue("", forKey: activity)
+        }
+        var manager = ActivityManager(categories: dict)
+            manager.delegate = self
+            manager.fetchActivities()
+        
+    }
+    
+    
+    
+    var restaurants: RestaurantModel!
+    var activities: ActivityModel!
+    func didLoadRestaurants(data: RestaurantModel) {
+        restaurants = data
+       DispatchQueue.main.async {
+
+            let vc = ResultsViewController()
+            vc.activityModel = self.activities
+            vc.restaurantModel = self.restaurants
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
+    
+    func didLoadActivities(data: ActivityModel) {
+        activities = data
+        var dict = [String:String]()
+        for food in userSelectedModel.preferences["Food"]! {
+            dict.updateValue("", forKey: food)
+        }
+        
+        var manager = RestaurantsManager(categories: dict)
+        manager.delegate = self
+        manager.fetchActivities()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -70,7 +162,9 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     }
     
     let descriptions = Descriptions()
-    func filterSelected() {
+    func filterSelected(key: String) {
+        descriptions.delegate = self
+        descriptions.key = key
         descriptions.showFilters()
         
         

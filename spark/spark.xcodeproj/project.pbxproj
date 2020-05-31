@@ -34,9 +34,11 @@
 		5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BD7247C733500C9F78D /* DescriptionCell.swift */; };
 		5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A032024791ED400CB5986 /* ActivityDatabase.swift */; };
 		5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A03222479C0FE00CB5986 /* SelectedModel.swift */; };
+		5D57537E248088C200C190F5 /* UserSelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57537D248088C200C190F5 /* UserSelectedModel.swift */; };
+		5D57538224808EAB00C190F5 /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57538124808EAB00C190F5 /* QuestionsViewController.swift */; };
+		5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57538324808FB700C190F5 /* QuestionCell.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
 		5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D61DD452477434200C10099 /* FilterScreenCell.swift */; };
-		5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C4F212473D7890031933F /* CircularTransition.swift */; };
 		5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFCD9E2475CB1900151A34 /* MenuBar.swift */; };
 		BE1020715E811E048FB6A739 /* Pods_sparkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E04AB7C5EB6A218E7B41FED /* Pods_sparkTests.framework */; };
 		D95A002AA881BBAF4C0D4A2A /* Pods_spark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C6E0F7DE149B53EE538FC0 /* Pods_spark.framework */; };
@@ -98,9 +100,11 @@
 		5D178BD7247C733500C9F78D /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		5D4A032024791ED400CB5986 /* ActivityDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDatabase.swift; sourceTree = "<group>"; };
 		5D4A03222479C0FE00CB5986 /* SelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedModel.swift; sourceTree = "<group>"; };
+		5D57537D248088C200C190F5 /* UserSelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectedModel.swift; sourceTree = "<group>"; };
+		5D57538124808EAB00C190F5 /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
+		5D57538324808FB700C190F5 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		5D61DD452477434200C10099 /* FilterScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScreenCell.swift; sourceTree = "<group>"; };
-		5D6C4F212473D7890031933F /* CircularTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		5DAFCD9E2475CB1900151A34 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		741FA46035935C3ADA3B95E9 /* Pods-sparkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-sparkUITests/Pods-sparkUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B544EE3418E7DEED5792C239 /* Pods-spark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spark.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spark/Pods-spark.debug.xcconfig"; sourceTree = "<group>"; };
@@ -164,23 +168,17 @@
 				5D07FBB12470C0B4005F2E33 /* AppDelegate.swift */,
 				5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */,
 				5D4A03222479C0FE00CB5986 /* SelectedModel.swift */,
-				5D5D0FEC24763D1C0038C339 /* Filters.swift */,
-				5D178BD5247C732D00C9F78D /* Descriptions.swift */,
-				5D178BD7247C733500C9F78D /* DescriptionCell.swift */,
-				5D61DD452477434200C10099 /* FilterScreenCell.swift */,
+				5D575376247F6C7900C190F5 /* Viewss and Cells  */,
 				5D0CEDB92478614C006C672C /* CategoriesManager.swift */,
 				5D0C02E724787C6600463868 /* CategoryData.swift */,
 				5D4A032024791ED400CB5986 /* ActivityDatabase.swift */,
 				5D178BDA247C8C1700C9F78D /* unused views */,
-				5D101390247A04C8004EE552 /* RestaurantsManager.swift */,
-				5D101392247A07DF004EE552 /* RestaurantsData.swift */,
-				5D101394247A1300004EE552 /* RestaurantModel.swift */,
 				5D0C02E92478877A00463868 /* CategoryModel.swift */,
-				5D178BC9247B30CF00C9F78D /* ActivityData.swift */,
-				5D178BC8247B30CE00C9F78D /* ActivityManager.swift */,
-				5D178BC7247B30CD00C9F78D /* ActivityModel.swift */,
+				5D575375247F6C0B00C190F5 /* Managers */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
-				5D6C4F212473D7890031933F /* CircularTransition.swift */,
+				5D57537D248088C200C190F5 /* UserSelectedModel.swift */,
+				5D57538124808EAB00C190F5 /* QuestionsViewController.swift */,
+				5D57538324808FB700C190F5 /* QuestionCell.swift */,
 				5D1013A0247A307F004EE552 /* ResultsViewController.swift */,
 				5D178BD1247C55EE00C9F78D /* TypesController.swift */,
 				5D178BCD247C513800C9F78D /* DateModel.swift */,
@@ -225,6 +223,30 @@
 				5D0C02EB2478C37800463868 /* ActivityViewController.swift */,
 			);
 			path = "unused views";
+			sourceTree = "<group>";
+		};
+		5D575375247F6C0B00C190F5 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				5D101390247A04C8004EE552 /* RestaurantsManager.swift */,
+				5D101392247A07DF004EE552 /* RestaurantsData.swift */,
+				5D101394247A1300004EE552 /* RestaurantModel.swift */,
+				5D178BC9247B30CF00C9F78D /* ActivityData.swift */,
+				5D178BC8247B30CE00C9F78D /* ActivityManager.swift */,
+				5D178BC7247B30CD00C9F78D /* ActivityModel.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		5D575376247F6C7900C190F5 /* Viewss and Cells  */ = {
+			isa = PBXGroup;
+			children = (
+				5D5D0FEC24763D1C0038C339 /* Filters.swift */,
+				5D178BD5247C732D00C9F78D /* Descriptions.swift */,
+				5D178BD7247C733500C9F78D /* DescriptionCell.swift */,
+				5D61DD452477434200C10099 /* FilterScreenCell.swift */,
+			);
+			path = "Viewss and Cells ";
 			sourceTree = "<group>";
 		};
 		EC7A8DFD378CF2CC27AC1FFE /* Pods */ = {
@@ -470,23 +492,25 @@
 				5D178BD6247C732D00C9F78D /* Descriptions.swift in Sources */,
 				5D1013A1247A307F004EE552 /* ResultsViewController.swift in Sources */,
 				5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */,
-				5D6C4F222473D7890031933F /* CircularTransition.swift in Sources */,
 				5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */,
 				5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */,
 				5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */,
 				5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */,
 				5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */,
+				5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */,
 				5D101393247A07DF004EE552 /* RestaurantsData.swift in Sources */,
 				5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */,
 				5D101395247A1300004EE552 /* RestaurantModel.swift in Sources */,
 				5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */,
 				5D101391247A04C8004EE552 /* RestaurantsManager.swift in Sources */,
+				5D57537E248088C200C190F5 /* UserSelectedModel.swift in Sources */,
 				5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */,
 				5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */,
 				5D178BCB247B30CF00C9F78D /* ActivityManager.swift in Sources */,
 				5D0C02E824787C6600463868 /* CategoryData.swift in Sources */,
 				5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */,
 				5D178BCC247B30CF00C9F78D /* ActivityData.swift in Sources */,
+				5D57538224808EAB00C190F5 /* QuestionsViewController.swift in Sources */,
 				5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */,
 				5D178BCE247C513800C9F78D /* DateModel.swift in Sources */,
 			);

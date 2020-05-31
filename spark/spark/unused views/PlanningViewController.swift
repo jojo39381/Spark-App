@@ -25,7 +25,7 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Acti
 
     }
     
-    let transition = CircularTransition()
+    
     var center = CGPoint.zero
     let searchButton: UIButton = {
         let button = UIButton();
@@ -126,7 +126,7 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Acti
         print("lol")
         var manager = RestaurantsManager(categories: selected.foodSelected)
         manager.delegate = self
-        manager.fetchRestaurants()
+        manager.fetchActivities()
         
         
         
@@ -134,6 +134,7 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Acti
         
         
     }
+    
     var restaurants: RestaurantModel!
     var activities: ActivityModel!
     func didLoadRestaurants(data: RestaurantModel) {

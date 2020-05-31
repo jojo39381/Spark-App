@@ -9,5 +9,16 @@
 import Foundation
 
 struct ActivityModel {
-    var restaurants: [String]
+    
+    
+    // [businessName : [[categories that it belongs to], [ratings], [numReviews], [latitude, longitude]
+    var restaurants: [String:[[Any]]]
 }
+
+
+
+
+
+
+
+

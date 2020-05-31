@@ -354,11 +354,12 @@ class CategoryCell: UICollectionViewCell {
         self.contentView.layer.borderWidth = 1.0
         self.contentView.layer.borderColor = UIColor.clear.cgColor
         self.contentView.layer.masksToBounds = true
-
-        self.layer.backgroundColor = UIColor.white.cgColor
+        self.layer.cornerRadius = 35
+        
+        self.layer.backgroundColor = UIColor.clear.cgColor
         self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 2.0)//CGSizeMake(0, 2.0);
-        self.layer.shadowRadius = 2.0
+        self.layer.shadowOffset = CGSize(width: 0, height: 8)//CGSizeMake(0, 2.0);
+        self.layer.shadowRadius = 6
         self.layer.shadowOpacity = 0.5
         self.layer.masksToBounds = false
         self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
@@ -370,6 +371,20 @@ class CategoryCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("error")
     }
+    
+    var gradientLayer: CAGradientLayer!
+    
+    func createGradientLayer() {
+        gradientLayer = CAGradientLayer()
+     
+        gradientLayer.frame = self.bounds
+     
+        gradientLayer.colors = [UIColor.rgb(red: 241, green: 39, blue: 17).cgColor, UIColor.rgb(red: 245, green: 175, blue: 25).cgColor]
+    
+        self.layer.addSublayer(gradientLayer)
+    }
+    
+    
 }
 
 

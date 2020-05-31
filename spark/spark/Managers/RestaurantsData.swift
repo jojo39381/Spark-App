@@ -15,4 +15,19 @@ struct RestaurantsData: Decodable {
 
 struct Businesses: Decodable {
     var name: String
+    var categories: [Lmao]
+    var rating : Float
+    var review_count: Float
+    var coordinates: Coordinates
+    
+        
+}
+
+struct Lmao: Decodable {
+    var alias: String
+}
+
+struct Coordinates: Decodable {
+    var latitude: Float
+    var longitude: Float
 }

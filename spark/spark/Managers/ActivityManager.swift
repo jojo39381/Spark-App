@@ -14,14 +14,15 @@ protocol ActivityManagerDelegate {
 struct ActivityManager {
     let activityUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?parameters"
     let API_KEY = "AIzaSyCyOREZ-tMNFbjcpMcye-58009jQlDh1aA"
-    
+    let activityUrl2 = "https://api.yelp.com/v3/businesses/search"
+    let API_KEY2 = "iM7_IkVflupwpcOMUguJXQJK5649MyfnIu7PZnyd6y9T_pFdDUXD4_KO6WofOXm_lIELDMo_tVgi0cY9QFj9gDb7L8j1p95nC1qi1vBH3GUKE586c9bMtqlRVynIXnYx"
     
     
     
     var delegate: ActivityManagerDelegate?
     var categories: [String:String]
     func fetchActivities() {
-        let urlString = activityUrl
+        let urlString = activityUrl2
         performRequest(urlString: urlString)
         
     }
@@ -40,11 +41,12 @@ struct ActivityManager {
                 
                
                 URLQueryItem(name: "radius", value: "30000"),
-                URLQueryItem(name: "location", value: latitude + ", " + longitude),
-                URLQueryItem(name: "rankby", value: "prominence"),
+                URLQueryItem(name: "latitude", value: latitude),
+                URLQueryItem(name: "longitude", value: longitude),
+                URLQueryItem(name: "sort_by", value: "best_match"),
+                URLQueryItem(name: "limit", value: "10")
             
-            
-                URLQueryItem(name: "key", value: API_KEY)
+                
                 
                
             
@@ -54,31 +56,27 @@ struct ActivityManager {
             
             
             
-            
-            
-            for (key, value) in categories {
-                print("bbbbbbbbbbbbbb")
-                print(value)
-                
-                
 
-
-            }
             
             
             var request = URLRequest(url: (components?.url)!)
             let session = URLSession(configuration: .default)
             print(components?.url)
             var count = 0
-            var result = [String]()
+            var result = [String:[[Any]]]()
             for (key, value) in categories {
-                components?.queryItems?.append(URLQueryItem(name: "keyword", value: value))
+                
+                components?.queryItems?.append(URLQueryItem(name: "term", value: key))
                 var request = URLRequest(url: (components?.url)!)
+                request.addValue("Bearer \(API_KEY2)", forHTTPHeaderField: "Authorization")
                 let task = session.dataTask(with: request) { (data, response, error) in
                     
                     if let safeData = data {
+                        
                         if let parsed = self.parseData(restaurantData: safeData) {
-                            result += parsed
+                            let dataString = String(data: safeData, encoding: .utf8)
+                            print(dataString)
+                            result.merge(dict:parsed)
                         }
                     }
                     
@@ -90,10 +88,11 @@ struct ActivityManager {
                     }
                     
                 }
-                print(";;;;;;;;;;;;;")
+            
                 print(components?.url)
                 let count = components?.queryItems?.count
                 components?.queryItems?.remove(at: count! - 1)
+                
                 task.resume()
             }
             
@@ -101,77 +100,45 @@ struct ActivityManager {
         
         
     }
-    func handleCompletion(data: [String]?, response: URLResponse?, error: Error?) {
+
+    func handleCompletion(data: [String: [[Any]]]?, response: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
             return
         }
         let model = ActivityModel(restaurants: data!)
         self.delegate?.didLoadActivities(data: model)
-        
-        
-    }
-    
-    
-    
-    
-    func handle(data: Data?, response: URLResponse?, error: Error?) {
-        if error != nil {
-            print(error!)
-            return
-        }
-        if let safeData = data {
-            let dataString = String(data: safeData, encoding: .utf8)
-            print("kasbdfkjadbfbkjsb")
-            
-            if let restaurantData = self.parseJSON(restaurantData: safeData) {
-                
-            
-                print(restaurantData.restaurants)
-                
-                self.delegate?.didLoadActivities(data: restaurantData)
 
-            }
-            
-        }
-        
+
     }
     
-    func parseJSON(restaurantData: Data) -> ActivityModel? {
+    func parseData(restaurantData: Data) -> [String: [[Any]]]? {
         let decoder = JSONDecoder()
         
         do {
             let decodedData = try decoder.decode(ActivityData.self, from: restaurantData)
-            var array = [String]()
+            var array = [String:[[String]]]()
             var restaurantData = ActivityModel(restaurants:array)
             
             for business in decodedData.businesses {
                 
-                
-                restaurantData.restaurants.append(business.name)
-            }
-            return restaurantData
-        }
-        catch {
-            print(error)
-            return nil
-        }
-        
-    }
-    func parseData(restaurantData: Data) -> [String]? {
-        let decoder = JSONDecoder()
-        
-        do {
-            let decodedData = try decoder.decode(ActivityData.self, from: restaurantData)
-            var array = [String]()
-            var restaurantData = ActivityModel(restaurants:array)
+                print(business.name)
+                print(business.categories)
+                var result = [[Any]]()
+                var alias = [String]()
+                for category in business.categories {
+                    alias.append(category.alias)
+                }
+                result.append([business.rating])
+                result.append([business.review_count])
+                let coordinates = [business.coordinates.latitude, business.coordinates.longitude]
+                result.append(coordinates)
+                result.append(alias)
             
-            for business in decodedData.businesses {
-                
-                
-                array.append(business.name)
+                restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
-            return array
+            return restaurantData.restaurants
+                
         }
         catch {
             print(error)
@@ -181,9 +148,22 @@ struct ActivityManager {
     }
     
     
+}
+
     
     
     
     
     
+    
+    
+
+
+
+extension Dictionary {
+    mutating func merge(dict: [Key: Value]){
+        for (k, v) in dict {
+            updateValue(v, forKey: k)
+        }
+    }
 }

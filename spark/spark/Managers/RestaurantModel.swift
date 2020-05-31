@@ -9,5 +9,5 @@
 import Foundation
 
 struct RestaurantModel {
-    var restaurants: [String]
+    var restaurants: [String:[[Any]]]
 }

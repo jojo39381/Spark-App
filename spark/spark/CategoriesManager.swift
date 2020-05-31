@@ -20,6 +20,7 @@ struct CategoriesManager {
     
     var delegate: CategoriesManagerDelegate?
     
+    let missing = ["Stargazing": "stargazing"]
     func fetchCategories() {
         let urlString = "\(categoryURL)"
         performRequest(urlString: urlString)
@@ -59,18 +60,25 @@ struct CategoriesManager {
             var array = [String]()
             var dict = [String:String]()
             var categoryData = CategoryModel(category:dict, activity:dict)
+            let gaps = ["shoppingcenters"]
             for category in decodedData.categories {
                 let alias = category.parent_aliases
+                
                 if alias.contains("restaurants") {
                     let data = category.title
                     categoryData.category.updateValue(category.alias, forKey: data)
                     
                     
                 }
-                else if ["active", "arts", "resorts", "skiresorts", "tours", "nightlife"].contains(where: alias.contains){
+                else if ["active", "arts", "resorts", "skiresorts", "tours", "nightlife"].contains(where: alias.contains) || gaps.contains(category.alias) {
                     let data = category.title
                     categoryData.activity.updateValue(category.alias, forKey: data)
                 }
+                for item in missing {
+                    categoryData.activity.updateValue(item.value, forKey: item.key)
+                }
+                
+                
             }
             return categoryData
         }

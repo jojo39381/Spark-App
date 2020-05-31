@@ -8,6 +8,18 @@
 
 import UIKit
 
+protocol DescriptionsDelegate {
+    func didSearchForDates(key: String)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
 class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,7 +33,7 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     }()
     let cellId = "cellId"
     let blackView = UIView()
-    
+    var key: String?
     
     
     
@@ -59,6 +71,7 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
             }
         }
         
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -69,11 +82,16 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DescriptionCell
-        
+        cell.nextButton.addTarget(self, action: #selector(searchDates(_:)), for: .touchUpInside)
         
         return cell
     }
     
+    var delegate: DescriptionsDelegate?
+    @objc func searchDates(_ sender : UIButton) {
+        self.handleDismiss()
+        self.delegate?.didSearchForDates(key: key!)
+    }
     @objc func selectTime(_ sender: UIButton) {
         if !sender.isSelected {
             print("aaaaaaa")
