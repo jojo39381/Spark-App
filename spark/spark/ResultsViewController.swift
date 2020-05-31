@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import MapKit
 
-class ResultsViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class ResultsViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 45
@@ -18,7 +19,6 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         
         print(restaurantModel.restaurants.count)
         print(activityModel.restaurants.count)
-        
         
         return min(restaurantModel.restaurants.count, activityModel.restaurants.count)
     }
@@ -52,51 +52,85 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     
     
-//    var food: bool + true/false
-//    var numActivities = ??????
-//
-//
-//
-//    dates : [["steakhouse" 95, "beaches" 95, "movie1" 100]]
-//    food : ["steakhouse", "top dog", "super duper", "riceful", "sweatheart", "kimchi garden", "t toust"]
-//
-//
-//    activitity: ["beaches", "movie1", "movie2", "museum1", "park", "observatory", "theater", "hiking"]
-//
-//
-//
-//    dateScoreArray = sorted date activities
-//
-//    for act in number of activities {
-//
-//        func sort(dict: dict) {
-//
-//            return dateScoreArray
-//
-//        }
-//
-//        for act in activity {
-//
-//            if act != pointer | string comparison == false {
-//            calculate(act, pointer, act.rating, act.popularity)
-//            return [act:datescore]
-//        }
-//
-//        }
-//
-//
-//    }
-//
-//    func calculate() {
-//
-//    }
-//
-//
+    var foodCentric = true
+    var numActivities = 2
+    var centricList: [String: [Any]]!
+    var dependList: [String: [Any]]!
     
+    func rateDates() {
+        var dates = [[String]]()
+        if foodCentric {
+            centricList = restaurantModel.restaurants
+            dependList = activityModel.restaurants
+        } else {
+            centricList = activityModel.restaurants
+            dependList = restaurantModel.restaurants
+        }
+        calculateScore(startLocation: userLocation, endDict: centricList) { list in
+            let dateScore = list.sorted {$0.1 < $1.1}
+            for score in dateScore {
+                self.makeDate(score: score) { date in
+                    dates.append(date)
+                }
+            }
+        }
+    }
     
+    func makeDate(score: Dictionary<String, Int>.Element, completion: @escaping ([String]) -> ()) {
+        var date = [String]()
+        date.append(score.key)
+        var start = centricList[score.key]
+        for i in 1...self.numActivities {
+            let cord = start![3] as! [Float]
+            self.calculateScore(startLocation: CLLocation(latitude: CLLocationDegrees(cord[0]), longitude: CLLocationDegrees(cord[1])), endDict: dependList) { list in
+                let name = list.sorted {$0.1 < $1.1}.first!.key
+                date.append(name)
+                start = self.dependList[name]!
+                self.dependList = self.activityModel.restaurants
+                if i == self.numActivities {
+                    print(date)
+                    completion(date)
+                }
+            }
+        }
+    }
     
+    func calculateScore(startLocation: CLLocation, endDict: [String: [Any]], completion: @escaping ([String: Int]) -> ()) {
+        var dateScore = [String: Int]()
+        for res in endDict {
+            let resCord = res.value[3] as! [Float]
+            calculateTime(startLocation: startLocation, endLocation: CLLocation(latitude: CLLocationDegrees(resCord[0]), longitude: CLLocationDegrees(resCord[1]))) { time in
+                dateScore[res.key] = time
+                if dateScore.count == endDict.count {
+                    completion(dateScore)
+                }
+            }
+        }
+    }
     
-    
+    func calculateTime(startLocation: CLLocation, endLocation: CLLocation, completion: @escaping (Int) -> ()) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: startLocation.coordinate, addressDictionary: nil))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: endLocation.coordinate, addressDictionary: nil))
+        request.requestsAlternateRoutes = true // if you want multiple possible routes
+        request.transportType = .automobile
+        let directions = MKDirections(request: request)
+        directions.calculate {(response, error) in
+
+            guard let response = response else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+                return
+            }
+
+          // Lets Get the first suggested route and its travel time
+            if response.routes.count > 0 {
+                let route = response.routes[0]
+                completion(Int(route.expectedTravelTime))
+            }
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width * 0.8, height: 500)
@@ -118,7 +152,9 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     var restaurantModel:RestaurantModel!
     var activityModel: ActivityModel!
     var userSelectedModel: UserSelectedModel!
+
     override func viewDidLoad() {
+        
         view.addSubview(resultsCollectionView)
         resultsCollectionView.frame = CGRect(x:0,y:0,width:view.frame.width, height:view.frame.height)
         resultsCollectionView.delegate = self
@@ -126,7 +162,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         setupNav()
         
         print(restaurantModel.restaurants)
-        
+        rateDates()
     }
     
     func setupNav() {

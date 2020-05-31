@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
-class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate {
+import MapKit
+
+class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate ,CLLocationManagerDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = typeList?.count
         return count!
@@ -80,9 +82,10 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         setupNav()
         
         
-        
-        
-        
+        //user location things
+        locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestLocation()
         
         
         
@@ -173,6 +176,24 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         
     }
     
+    
+    //user location things
+    var locationManager = CLLocationManager()
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 
-
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        userLocation = locations.last
+        print(userLocation)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
+
+var userLocation: CLLocation!

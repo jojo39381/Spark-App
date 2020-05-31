@@ -29,79 +29,78 @@ struct ActivityManager {
     
     func performRequest(urlString: String) {
         if let url = URL(string:urlString) {
-            
-            
-            
-            
-            var latitude = "37.866309"
-            var longitude =  "-122.254605"
+
+
+
+            var latitude = "\(userLocation.coordinate.latitude)"
+            var longitude =  "\(userLocation.coordinate.longitude)"
             var components = URLComponents(string: urlString)
-            
+
             components?.queryItems = [
-                
-               
+
+
                 URLQueryItem(name: "radius", value: "30000"),
                 URLQueryItem(name: "latitude", value: latitude),
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
                 URLQueryItem(name: "limit", value: "10")
-            
-                
-                
-               
-            
-            ]
-            
-            
-            
-            
-            
 
-            
-            
+
+
+
+
+            ]
+
+
+
+
+
+
+
+
             var request = URLRequest(url: (components?.url)!)
             let session = URLSession(configuration: .default)
             print(components?.url)
             var count = 0
-            var result = [String:[[Any]]]()
+            var result = [String:[Any]]()
             for (key, value) in categories {
-                
+
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
                 var request = URLRequest(url: (components?.url)!)
                 request.addValue("Bearer \(API_KEY2)", forHTTPHeaderField: "Authorization")
                 let task = session.dataTask(with: request) { (data, response, error) in
-                    
+
                     if let safeData = data {
-                        
+
                         if let parsed = self.parseData(restaurantData: safeData) {
                             let dataString = String(data: safeData, encoding: .utf8)
                             print(dataString)
                             result.merge(dict:parsed)
                         }
                     }
-                    
+
                     do {
                         count += 1
                         if count == self.categories.count {
                             self.handleCompletion(data: result, response: response, error: error)
                         }
                     }
-                    
+
                 }
-            
+
                 print(components?.url)
                 let count = components?.queryItems?.count
                 components?.queryItems?.remove(at: count! - 1)
                 
                 task.resume()
             }
-            
+
         }
-        
+
         
     }
 
-    func handleCompletion(data: [String: [[Any]]]?, response: URLResponse?, error: Error?) {
+    func handleCompletion(data: [String: [Any]]?, response: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
             return
@@ -112,7 +111,7 @@ struct ActivityManager {
 
     }
     
-    func parseData(restaurantData: Data) -> [String: [[Any]]]? {
+    func parseData(restaurantData: Data) -> [String: [Any]]? {
         let decoder = JSONDecoder()
         
         do {
@@ -124,14 +123,14 @@ struct ActivityManager {
                 
                 print(business.name)
                 print(business.categories)
-                var result = [[Any]]()
+                var result = [Any]()
                 var alias = [String]()
                 for category in business.categories {
                     alias.append(category.alias)
                 }
                 result.append(alias)
-                result.append([business.rating])
-                result.append([business.review_count])
+                result.append(business.rating)
+                result.append(business.review_count)
                 let coordinates = [business.coordinates.latitude, business.coordinates.longitude]
                 result.append(coordinates)
                 
