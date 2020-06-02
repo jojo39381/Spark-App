@@ -197,3 +197,4 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
 }
 
 var userLocation: CLLocation!
+var radius = 30000

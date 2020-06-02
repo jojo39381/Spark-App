@@ -17,21 +17,19 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        print(restaurantModel.restaurants.count)
-        print(activityModel.restaurants.count)
-        
-        return min(restaurantModel.restaurants.count, activityModel.restaurants.count)
+        return dates.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
-        myCell.sections = 5
+        myCell.sections = 3
         myCell.setupViews()
-        myCell.restaurant.text = Array(restaurantModel.restaurants.keys)[indexPath.item]
+        myCell.restaurant.text = dates[sortedDateScores[indexPath.item].key]![0]
         myCell.contentView.backgroundColor = UIColor.white
-        let activity1 = Array(activityModel.restaurants.keys)[indexPath.item]
+        let activity1 = dates[sortedDateScores[indexPath.item].key]![1]
         myCell.activity.text = activity1
+        myCell.restaurant2.text = dates[sortedDateScores[indexPath.item].key]![2]
 //        var activity = Array(activityModel.restaurants.keys)[Int.random(in: 0..<min(restaurantModel.restaurants.count, activityModel.restaurants.count))]
 //        while (activityModel.restaurants[activity]?.filter () { (activityModel.restaurants[activity1]?.contains($0))!}.count)! > 0
 //            {
@@ -54,65 +52,94 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     var foodCentric = true
     var numActivities = 2
-    var centricList: [String: [Any]]!
-    var dependList: [String: [Any]]!
+    var startDict: [String: [Any]]!
+    var endDict: [String: [Any]]!
+    var sortedDateScores = [Dictionary<String, Int>.Element]()
+    var dates = [String: [String]]()
     
     func rateDates() {
-        var dates = [[String]]()
         if foodCentric {
-            centricList = restaurantModel.restaurants
-            dependList = activityModel.restaurants
+            startDict = restaurantModel.restaurants
+            endDict = activityModel.restaurants
         } else {
-            centricList = activityModel.restaurants
-            dependList = restaurantModel.restaurants
+            startDict = activityModel.restaurants
+            endDict = restaurantModel.restaurants
         }
-        calculateScore(startLocation: userLocation, endDict: centricList) { list in
-            let dateScore = list.sorted {$0.1 < $1.1}
-            for score in dateScore {
-                self.makeDate(score: score) { date in
-                    dates.append(date)
-                }
-            }
+        var i = 0
+        var dateScores = [String: Int]()
+        for initialPlace in calculateScore(startName: "userLocation", startLocation: userLocation, startDict: ["userLocation": [["userLocation"]]], endDict: startDict).sorted(by: {$0.1 > $1.1}) {
+            let date = makeDate(initialPlace: initialPlace)
+            dateScores["Date \(i)"] = date[0] as? Int
+            dates["Date \(i)"] = Array(date[1..<date.count]) as? [String]
+            i += 1
         }
+        sortedDateScores = dateScores.sorted {$0.1 > $1.1}
     }
     
-    func makeDate(score: Dictionary<String, Int>.Element, completion: @escaping ([String]) -> ()) {
-        var date = [String]()
-        date.append(score.key)
-        var start = centricList[score.key]
-        for i in 1...self.numActivities {
-            let cord = start![3] as! [Float]
-            self.calculateScore(startLocation: CLLocation(latitude: CLLocationDegrees(cord[0]), longitude: CLLocationDegrees(cord[1])), endDict: dependList) { list in
-                let name = list.sorted {$0.1 < $1.1}.first!.key
-                date.append(name)
-                start = self.dependList[name]!
-                self.dependList = self.activityModel.restaurants
-                if i == self.numActivities {
-                    print(date)
-                    completion(date)
-                }
-            }
+    func makeDate(initialPlace: Dictionary<String, Int>.Element) -> [Any] {
+        var startP = startDict!
+        var endP = endDict!
+        var date = [Any]()
+        var startPlace = initialPlace
+        date.append(startPlace.value)
+        date.append(startPlace.key)
+        for _ in 1...self.numActivities {
+            let startCord = startP[startPlace.key]![3] as! [Float]
+            startPlace = self.calculateScore(startName: startPlace.key, startLocation: CLLocation(latitude: CLLocationDegrees(startCord[0]), longitude: CLLocationDegrees(startCord[1])), startDict: startP, endDict: endP).sorted {$0.1 > $1.1}.first!
+            date[0] = date[0] as! Int + startPlace.value
+            date.append(startPlace.key)
+            startP = endP
+            endP = activityModel.restaurants
         }
+        date[0] = date[0] as! Int / (self.numActivities + 1)
+        return date
     }
     
-    func calculateScore(startLocation: CLLocation, endDict: [String: [Any]], completion: @escaping ([String: Int]) -> ()) {
+    func calculateScore(startName: String, startLocation: CLLocation, startDict: [String: [Any]], endDict: [String: [Any]]) -> [String: Int] {
         var dateScore = [String: Int]()
-        for res in endDict {
-            let resCord = res.value[3] as! [Float]
-            calculateTime(startLocation: startLocation, endLocation: CLLocation(latitude: CLLocationDegrees(resCord[0]), longitude: CLLocationDegrees(resCord[1]))) { time in
-                dateScore[res.key] = time
-                if dateScore.count == endDict.count {
-                    completion(dateScore)
+        for end in endDict {
+            if (startName != end.key) {
+                let startCats = startDict[startName]![0] as! [String]
+                let endCats = end.value[0] as! [String]
+                var same = false
+                for startCat in startCats {
+                    for endCat in endCats {
+                        same = (startCat == endCat) || same
+                    }
+                }
+                if !same {
+                    let endCord = end.value[3] as! [Float]
+                    let distance = Int(calculateDistance(startLocation: startLocation, endLocation: CLLocation(latitude: CLLocationDegrees(endCord[0]), longitude: CLLocationDegrees(endCord[1]))))
+                    let distanceScore = (1 - distance * 1000 / radius) * 33
+                    let ratingScore = end.value[1] as! Float / 5 * 33
+                    let reviewScore = min(end.value[2] as! Float / 500 * 33, 33)
+                    dateScore[end.key] = Int(Float(distanceScore) + ratingScore + reviewScore)
+                    print(dateScore[end.key])
                 }
             }
         }
+        return dateScore
+    }
+    
+    func calculateDistance(startLocation: CLLocation, endLocation: CLLocation) -> Double {
+        let lat1 = startLocation.coordinate.latitude
+        let lon1 = startLocation.coordinate.longitude
+        let lat2 = endLocation.coordinate.latitude
+        let lon2 = endLocation.coordinate.longitude
+        
+        let p = 0.017453292519943295;    // Math.PI / 180
+        let a = 0.5 - cos((lat2 - lat1) * p)/2 +
+              cos(lat1 * p) * cos(lat2 * p) *
+              (1 - cos((lon2 - lon1) * p))/2
+
+      return 12742 * asin(sqrt(a)) // 2 * R; R = 6371 km
     }
     
     func calculateTime(startLocation: CLLocation, endLocation: CLLocation, completion: @escaping (Int) -> ()) {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: MKPlacemark(coordinate: startLocation.coordinate, addressDictionary: nil))
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: endLocation.coordinate, addressDictionary: nil))
-        request.requestsAlternateRoutes = true // if you want multiple possible routes
+        request.requestsAlternateRoutes = false // if you want multiple possible routes
         request.transportType = .automobile
         let directions = MKDirections(request: request)
         directions.calculate {(response, error) in
@@ -154,7 +181,8 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     var userSelectedModel: UserSelectedModel!
 
     override func viewDidLoad() {
-        
+        rateDates()
+
         view.addSubview(resultsCollectionView)
         resultsCollectionView.frame = CGRect(x:0,y:0,width:view.frame.width, height:view.frame.height)
         resultsCollectionView.delegate = self
@@ -162,7 +190,6 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         setupNav()
         
         print(restaurantModel.restaurants)
-        rateDates()
     }
     
     func setupNav() {
@@ -210,7 +237,7 @@ class ResultsCell: UICollectionViewCell {
         return image
     }()
     
-    let score:UILabel = {
+    let score: UILabel = {
         let label = UILabel()
         label.text = "95"
         label.textAlignment = .center

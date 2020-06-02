@@ -135,7 +135,7 @@ struct RestaurantsManager {
             components?.queryItems = [
 
 
-                URLQueryItem(name: "radius", value: "30000"),
+                URLQueryItem(name: "radius", value: "\(radius)"),
                 URLQueryItem(name: "latitude", value: latitude),
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
