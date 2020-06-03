@@ -52,7 +52,7 @@ class DescriptionCell: UICollectionViewCell {
         
         
         addConstraintsWithFormat(format: "H:|-20-[v0]", views: titleLabel)
-        addConstraintsWithFormat(format: "V:|-10-[v0(25)]-[v1(100)]-[v2(25)]", views: titleLabel, descriptionLabel, nextButton)
+        addConstraintsWithFormat(format: "V:|-10-[v0(25)]-[v1(80)]-[v2(25)]", views: titleLabel, descriptionLabel, nextButton)
         addConstraintsWithFormat(format: "H:|-20-[v0]-10-|", views: descriptionLabel)
         addConstraintsWithFormat(format: "H:[v0(70)]-20-|", views: nextButton)
         

@@ -34,9 +34,13 @@
 		5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BD7247C733500C9F78D /* DescriptionCell.swift */; };
 		5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A032024791ED400CB5986 /* ActivityDatabase.swift */; };
 		5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A03222479C0FE00CB5986 /* SelectedModel.swift */; };
+		5D56913C248465E000F376F9 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56913B248465E000F376F9 /* PreferencesViewController.swift */; };
 		5D57537E248088C200C190F5 /* UserSelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57537D248088C200C190F5 /* UserSelectedModel.swift */; };
 		5D57538224808EAB00C190F5 /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57538124808EAB00C190F5 /* QuestionsViewController.swift */; };
 		5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D57538324808FB700C190F5 /* QuestionCell.swift */; };
+		5D5C89692486039200939F5D /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C89682486039200939F5D /* ResultsCell.swift */; };
+		5D5C896B2486E95D00939F5D /* DatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C896A2486E95D00939F5D /* DatesCell.swift */; };
+		5D5C896D2487363700939F5D /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C896C2487363700939F5D /* DetailsViewController.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
 		5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D61DD452477434200C10099 /* FilterScreenCell.swift */; };
 		5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFCD9E2475CB1900151A34 /* MenuBar.swift */; };
@@ -100,9 +104,13 @@
 		5D178BD7247C733500C9F78D /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		5D4A032024791ED400CB5986 /* ActivityDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDatabase.swift; sourceTree = "<group>"; };
 		5D4A03222479C0FE00CB5986 /* SelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedModel.swift; sourceTree = "<group>"; };
+		5D56913B248465E000F376F9 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		5D57537D248088C200C190F5 /* UserSelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectedModel.swift; sourceTree = "<group>"; };
 		5D57538124808EAB00C190F5 /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
 		5D57538324808FB700C190F5 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
+		5D5C89682486039200939F5D /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
+		5D5C896A2486E95D00939F5D /* DatesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesCell.swift; sourceTree = "<group>"; };
+		5D5C896C2487363700939F5D /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		5D61DD452477434200C10099 /* FilterScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScreenCell.swift; sourceTree = "<group>"; };
 		5DAFCD9E2475CB1900151A34 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
@@ -180,7 +188,11 @@
 				5D57538124808EAB00C190F5 /* QuestionsViewController.swift */,
 				5D57538324808FB700C190F5 /* QuestionCell.swift */,
 				5D1013A0247A307F004EE552 /* ResultsViewController.swift */,
+				5D5C896C2487363700939F5D /* DetailsViewController.swift */,
+				5D5C89682486039200939F5D /* ResultsCell.swift */,
+				5D5C896A2486E95D00939F5D /* DatesCell.swift */,
 				5D178BD1247C55EE00C9F78D /* TypesController.swift */,
+				5D56913B248465E000F376F9 /* PreferencesViewController.swift */,
 				5D178BCD247C513800C9F78D /* DateModel.swift */,
 				5D07FBBA2470C0B5005F2E33 /* Assets.xcassets */,
 				5D07FBBC2470C0B5005F2E33 /* LaunchScreen.storyboard */,
@@ -499,7 +511,9 @@
 				5D4A032124791ED400CB5986 /* ActivityDatabase.swift in Sources */,
 				5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */,
 				5D101393247A07DF004EE552 /* RestaurantsData.swift in Sources */,
+				5D5C89692486039200939F5D /* ResultsCell.swift in Sources */,
 				5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */,
+				5D5C896B2486E95D00939F5D /* DatesCell.swift in Sources */,
 				5D101395247A1300004EE552 /* RestaurantModel.swift in Sources */,
 				5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */,
 				5D101391247A04C8004EE552 /* RestaurantsManager.swift in Sources */,
@@ -509,6 +523,8 @@
 				5D178BCB247B30CF00C9F78D /* ActivityManager.swift in Sources */,
 				5D0C02E824787C6600463868 /* CategoryData.swift in Sources */,
 				5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */,
+				5D56913C248465E000F376F9 /* PreferencesViewController.swift in Sources */,
+				5D5C896D2487363700939F5D /* DetailsViewController.swift in Sources */,
 				5D178BCC247B30CF00C9F78D /* ActivityData.swift in Sources */,
 				5D57538224808EAB00C190F5 /* QuestionsViewController.swift in Sources */,
 				5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */,
@@ -679,7 +695,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4N6QJA9PG6;
+				DEVELOPMENT_TEAM = 6TD6K89778;
 				INFOPLIST_FILE = spark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -698,7 +714,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4N6QJA9PG6;
+				DEVELOPMENT_TEAM = 6TD6K89778;
 				INFOPLIST_FILE = spark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
