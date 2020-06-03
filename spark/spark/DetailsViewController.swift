@@ -28,12 +28,48 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         }
         view.addSubview(mapView)
         setupNav()
-        mapView.frame = CGRect(x:0, y: 0, width: self.view.frame.width, height: 500)
+        mapView.frame = self.view.frame
         mapView.delegate = self
         placePlaces(dateDict!)
         centerMapOnUserLocation()
+        findRoutes(source: locationManager.location!.coordinate, destination: mapView.annotations[0].coordinate)
+        for i in 0..<mapView.annotations.count - 1 {
+            findRoutes(source: mapView.annotations[i].coordinate, destination: mapView.annotations[i+1].coordinate)
+        }
         // Do any additional setup after loading the view.
     }
+    
+    var arrayOfRoutes: [MKRoute]?
+    func findRoutes(source: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
+        
+        let directionRequest = MKDirections.Request()
+        let destinationPlacemark = MKPlacemark(coordinate: destination)
+        let sourcePlacemark = MKPlacemark(coordinate: source)
+            print("//////////")
+            print(locationManager.location!.coordinate)
+            directionRequest.source = MKMapItem(placemark: sourcePlacemark)
+            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+            directionRequest.transportType = .automobile
+            
+            // calculate the directions / route
+            let directions = MKDirections(request: directionRequest)
+            directions.calculate { (directionsResponse, error) in
+                guard let directionsResponse = directionsResponse else {
+                    if let error = error {
+                        print("error getting directions: \(error.localizedDescription)")
+                    }
+                    return
+                }
+                
+                let route = directionsResponse.routes[0]
+                
+                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+                
+                let routeRect = route.polyline.boundingMapRect
+                self.mapView.setRegion(MKCoordinateRegion(routeRect), animated: true)
+            }
+        }
+    
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
@@ -52,7 +88,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
     }
     func centerMapOnUserLocation() {
         guard let coordinate = locationManager.location?.coordinate else {return}
-        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
 
@@ -77,6 +113,15 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
             CLLocationDegrees(value[0]), longitude: CLLocationDegrees(value[1]))
         mapView.addAnnotation(annotations)
       }
+    }
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer
+    {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        
+        renderer.strokeColor = UIColor.orange
+        renderer.lineWidth = 4.0
+        
+        return renderer
     }
     
     /*
