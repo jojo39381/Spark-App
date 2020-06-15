@@ -124,8 +124,8 @@ class QuestionCell: UICollectionViewCell, UICollectionViewDelegate, UICollection
         addSubview(nextButton)
         catCollectionView.contentInsetAdjustmentBehavior = .always
         addConstraintsWithFormat(format:"H:|-20-[v0]-20-|", views: questionTitle)
-        addConstraintsWithFormat(format:"H:|-[v0]-|", views: catCollectionView)
-        addConstraintsWithFormat(format:"H:|-[v0]-|", views: instruction)
+        addConstraintsWithFormat(format:"H:|-20-[v0]-20-|", views: catCollectionView)
+        addConstraintsWithFormat(format:"H:|-20-[v0]-20-|", views: instruction)
         addConstraintsWithFormat(format:"H:[v0]-50-|", views: nextButton)
         
         addConstraintsWithFormat(format: "V:|-50-[v0]-100-[v1]-20-[v2]-100-[v3]-100-|", views: questionTitle, instruction, catCollectionView, nextButton)

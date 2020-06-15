@@ -224,15 +224,24 @@ struct RestaurantsManager {
                 var result = [Any]()
                 var alias = [String]()
                 for category in business.categories {
-                    alias.append(category.alias)
+                    alias.append(category.title)
                 }
                 result.append(alias)
                 result.append(business.rating)
                 result.append(business.review_count)
                 let coordinates = [business.coordinates.latitude, business.coordinates.longitude]
                 result.append(coordinates)
+                result.append(business.image_url)
+                result.append(business.location.display_address)
                 restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
+            
+            
+            
+            
+            
+            
+            
             return restaurantData.restaurants
                 
         }

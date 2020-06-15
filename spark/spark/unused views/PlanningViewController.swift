@@ -105,9 +105,10 @@ class PlanningViewController: UIViewController, FoodViewControllerDelegate, Acti
         let profile = UIButton();
         profile.setBackgroundImage(UIImage(named:"profile"), for: .normal);
         self.navigationController?.navigationBar.addSubview(profile);
-        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        
         profile.layer.cornerRadius = 32 / 2
         profile.clipsToBounds = true
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
         profile.anchor(top: nil, left: nil, bottom: navigationBar.bottomAnchor, right: navigationBar.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -12, paddingRight: -16, width: 0, height: 0);
         profile.widthAnchor.constraint(equalTo: profile.heightAnchor).isActive = true;
         

@@ -212,19 +212,28 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     func goToDetails(dateArray : [String]) {
         let vc = DetailsViewController()
         var dateDict = [String: [Float]]()
-        
+        var imageDict = [String: String]()
+        var dateInfo = [String: [Any]]()
+        var dateOrder = [String]()
         for act in dateArray {
             if activityModel.restaurants[act] != nil {
                 dateDict.updateValue(activityModel.restaurants[act]![3] as! [Float], forKey: act)
+                imageDict.updateValue(activityModel.restaurants[act]![4] as! String, forKey: act)
+                dateInfo.updateValue(Array(activityModel.restaurants[act]!), forKey: act)
+            
             }
             else {
                 dateDict.updateValue(restaurantModel.restaurants[act]![3] as! [Float], forKey: act)
+                imageDict.updateValue(restaurantModel.restaurants[act]![4] as! String, forKey: act)
+                dateInfo.updateValue(Array(restaurantModel.restaurants[act]!), forKey: act)
             }
+            dateOrder.append(act)
         }
             
         vc.dateDict = dateDict
-        
-        
+        vc.imageDict = imageDict
+        vc.dateInfo = dateInfo
+        vc.dateOrder = dateOrder
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

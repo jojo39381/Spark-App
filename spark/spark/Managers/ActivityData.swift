@@ -14,15 +14,22 @@ struct ActivityData: Decodable {
 }
 
 struct Business: Decodable {
-     var name: String
-       var categories: [Lmao]
-       var rating : Float
-       var review_count: Float
-       var coordinates: Coordinates
+    var name: String
+    var categories: [Lmao]
+    var rating : Float
+    var review_count: Float
+    var coordinates: Coordinates
+    var image_url: String
+    var location: Address
 }
 
 
 struct Lol: Decodable {
-    var alias: String
+    var title: String
 }
+
+struct Address: Decodable {
+    var display_address: [String]
+}
+
 

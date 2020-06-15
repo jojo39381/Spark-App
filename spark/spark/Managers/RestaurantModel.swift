@@ -11,3 +11,10 @@ import Foundation
 struct RestaurantModel {
     var restaurants: [String:[Any]]
 }
+
+
+
+
+
+
+

@@ -15,7 +15,18 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         return map
     }()
     
+    var scoreButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("97", for: .normal)
+        button.backgroundColor = .gray
+        button.layer.cornerRadius = 40;
+        
+        return button
+    }()
     var dateDict: [String: [Float]]?
+    var imageDict: [String : String]?
+    var dateInfo: [String: [Any]]?
+    var dateOrder : [String]?
     let locationManager = CLLocationManager()
     let regionRadius: Double = 20000
     override func viewDidLoad() {
@@ -32,10 +43,18 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         placePlaces(dateDict!)
         centerMapOnUserLocation()
-        findRoutes(source: locationManager.location!.coordinate, destination: mapView.annotations[0].coordinate)
-        for i in 0..<mapView.annotations.count - 1 {
-            findRoutes(source: mapView.annotations[i].coordinate, destination: mapView.annotations[i+1].coordinate)
-        }
+        
+        
+        setupView()
+        
+        scoreButton.frame = CGRect(x:self.view.frame.maxX - 95, y:65, width: 80, height: 80)
+        self.view.addSubview(scoreButton)
+        
+        
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -90,6 +109,10 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         guard let coordinate = locationManager.location?.coordinate else {return}
         let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
+        findRoutes(source: locationManager.location!.coordinate, destination: mapView.annotations[0].coordinate)
+        for i in 0..<mapView.annotations.count - 1 {
+            findRoutes(source: mapView.annotations[i].coordinate, destination: mapView.annotations[i+1].coordinate)
+        }
     }
 
 
@@ -103,6 +126,11 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         self.title = "Spark"
+        
+        
+        
+        
+        
     }
     func placePlaces(_ places: [String: [Float]]) {
       for (key, value) in places {
@@ -118,10 +146,25 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
     {
         let renderer = MKPolylineRenderer(overlay: overlay)
         
-        renderer.strokeColor = UIColor.orange
-        renderer.lineWidth = 4.0
+        renderer.strokeColor = UIColor.rgb(red: 0, green: 166, blue: 215)
+        renderer.lineWidth = 6.0
         
         return renderer
+    }
+    
+    func setupView() {
+        
+        
+        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height - 110, width:self.view.frame.width, height: self.view.frame.height))
+        self.view.addSubview(iView)
+        let vc = ItineraryViewController()
+        let navController = UINavigationController(rootViewController: vc)
+        self.addChild(navController)
+        iView.addSubview(navController.view)
+        vc.imageDict = imageDict
+        vc.dateInfo = dateInfo
+        vc.dateOrder = dateOrder
+        
     }
     
     /*

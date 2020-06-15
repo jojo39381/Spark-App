@@ -19,15 +19,18 @@ struct Businesses: Decodable {
     var rating : Float
     var review_count: Float
     var coordinates: Coordinates
+    var image_url: String
+    var location: Address
     
         
 }
 
 struct Lmao: Decodable {
-    var alias: String
+    var title: String
 }
 
 struct Coordinates: Decodable {
     var latitude: Float
     var longitude: Float
 }
+

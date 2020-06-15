@@ -98,6 +98,7 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
     }
     @objc func handleTap() {
         delegate?.goToDetails(dateArray: dateArray)
+        
     }
     
     
