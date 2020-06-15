@@ -21,6 +21,7 @@ struct Business: Decodable {
     var coordinates: Coordinates
     var image_url: String
     var location: Address
+    var url: URL
 }
 
 

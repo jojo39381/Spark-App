@@ -13,6 +13,11 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
         return imageDict!.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cur = dateOrder![indexPath.item]
+        UIApplication.shared.open(dateInfo![cur]![6] as! URL, options: [:], completionHandler: nil)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! ItineraryCell
         let cur = dateOrder![indexPath.item]

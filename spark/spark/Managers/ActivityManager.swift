@@ -135,6 +135,7 @@ struct ActivityManager {
                 result.append(coordinates)
                 result.append(business.image_url)
                 result.append(business.location.display_address)
+                result.append(business.url)
                 restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
             return restaurantData.restaurants
