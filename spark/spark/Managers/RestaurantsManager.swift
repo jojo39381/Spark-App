@@ -117,6 +117,7 @@ struct RestaurantsManager {
     
     var delegate: RestaurantsManagerDelegate?
     var categories: [String:String]
+    var budget: [String]
     func fetchActivities() {
         let urlString = restaurantsURL
         performRequest(urlString: urlString)
@@ -140,6 +141,7 @@ struct RestaurantsManager {
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
                 URLQueryItem(name: "limit", value: "10"),
+                URLQueryItem(name: "price", value: budget[0])
 
 
 

@@ -21,6 +21,7 @@ struct ActivityManager {
     
     var delegate: ActivityManagerDelegate?
     var categories: [String:String]
+    var budget: [String]
     func fetchActivities() {
         let urlString = activityUrl2
         performRequest(urlString: urlString)
@@ -43,8 +44,8 @@ struct ActivityManager {
                 URLQueryItem(name: "latitude", value: latitude),
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
-                URLQueryItem(name: "limit", value: "10")
-
+                URLQueryItem(name: "limit", value: "10"),
+                URLQueryItem(name: "price", value: budget[0])
 
 
 

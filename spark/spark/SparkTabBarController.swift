@@ -1,0 +1,61 @@
+//
+//  SparkTabBarController.swift
+//  spark
+//
+//  Created by Joseph Yeh on 6/22/20.
+//  Copyright © 2020 Joseph Yeh. All rights reserved.
+//
+
+import UIKit
+
+class SparkTabBarController: UITabBarController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let first = UIViewController();
+        first.title = "Home"
+        let navigation = UINavigationController(rootViewController:first);
+        
+        let second = CalendarViewController();
+        second.title = "Calendar"
+        let secondNav = UINavigationController(rootViewController:second);
+        
+        let third = QuestionsViewController();
+        third.title = "Add"
+        let thirdNav = UINavigationController(rootViewController:third);
+        
+        let fourth = QuestionsViewController();
+        fourth.title = "Invite"
+        let fourthNav = UINavigationController(rootViewController:fourth);
+        
+        let fifth = QuestionsViewController();
+        fifth.title = "Profile"
+        let navigation5 = UINavigationController(rootViewController:fifth);
+        
+        
+        
+        viewControllers = [navigation, secondNav, thirdNav, fourthNav, navigation5]
+        self.tabBar.items![0].image = UIImage(named:"house")
+        self.tabBar.items![1].image = UIImage(named:"calendar")
+        self.tabBar.items![2].image = UIImage(named:"plus.circle")
+        self.tabBar.items![3].image = UIImage(named:"envelope")
+        self.tabBar.items![4].image = UIImage(named:"person.crop.circle")
+        
+        self.tabBar.unselectedItemTintColor = .black
+        self.tabBar.unselectedItemTintColor = .black
+        self.tabBar.barTintColor = .white
+        // Do any additional setup after loading the view.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}

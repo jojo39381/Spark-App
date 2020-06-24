@@ -6,9 +6,10 @@ project 'spark.xcodeproj'
 target 'spark' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod "Magnetic"
+  
   pod "ChameleonFramework"
   pod "Alamofire"
+  pod 'JTAppleCalendar'
   # Pods for spark
 
   target 'sparkTests' do
