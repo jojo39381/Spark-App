@@ -10,6 +10,13 @@ target 'spark' do
   pod "ChameleonFramework"
   pod "Alamofire"
   pod 'JTAppleCalendar'
+	pod 'Firebase/Analytics'
+	pod 'Firebase/Auth'
+	pod 'Firebase/Storage'	
+	pod 'Firebase/Database'
+	pod 'Firebase/Core'
+	pod 'Firebase/Firestore'
+
   # Pods for spark
 
   target 'sparkTests' do

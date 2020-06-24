@@ -12,7 +12,7 @@ class SparkTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let first = UIViewController();
+        let first = HomeViewController();
         first.title = "Home"
         let navigation = UINavigationController(rootViewController:first);
         
@@ -28,13 +28,13 @@ class SparkTabBarController: UITabBarController {
         fourth.title = "Invite"
         let fourthNav = UINavigationController(rootViewController:fourth);
         
-        let fifth = QuestionsViewController();
+        let fifth = ProfileViewController();
         fifth.title = "Profile"
-        let navigation5 = UINavigationController(rootViewController:fifth);
+        let fifthNav = UINavigationController(rootViewController:fifth);
         
         
         
-        viewControllers = [navigation, secondNav, thirdNav, fourthNav, navigation5]
+        self.viewControllers = [navigation, secondNav, thirdNav, fourthNav, fifthNav]
         self.tabBar.items![0].image = UIImage(named:"house")
         self.tabBar.items![1].image = UIImage(named:"calendar")
         self.tabBar.items![2].image = UIImage(named:"plus.circle")
@@ -46,8 +46,6 @@ class SparkTabBarController: UITabBarController {
         self.tabBar.barTintColor = .white
         // Do any additional setup after loading the view.
     }
-    
-
     /*
     // MARK: - Navigation
 

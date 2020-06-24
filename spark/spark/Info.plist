@@ -62,5 +62,9 @@
 	<string></string>
 	<key>NSLocationUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RopaSans-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

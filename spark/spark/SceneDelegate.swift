@@ -17,17 +17,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene);
-            let first = SparkTabBarController()
-           
-            window.rootViewController = first
-            self.window = window;
-            window.makeKeyAndVisible();
-            
-            
-            
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.windowScene = windowScene
+        if auth.currentUser == nil {
+            window?.rootViewController = StartViewController()
+        } else {
+            Utilities.fetchProfileData() {
+                self.window?.rootViewController = SparkTabBarController()
+                self.window?.makeKeyAndVisible()
+            }
         }
+        // your ViewController
+        window?.makeKeyAndVisible()
         
     }
 
