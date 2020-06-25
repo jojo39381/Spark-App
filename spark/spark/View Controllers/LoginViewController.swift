@@ -109,11 +109,7 @@ class LoginViewController: UIViewController {
                     let sparkTabBarController = SparkTabBarController()
                     self.view.window!.rootViewController = sparkTabBarController
                     self.view.window?.makeKeyAndVisible()
-                    var goToSetupUsername = false
-                    for users in self.firstTimeUser {
-                        goToSetupUsername = users == self.emailTextField.text!
-                    }
-                    if goToSetupUsername {
+                    if self.firstTimeUser.contains(self.emailTextField.text!) {
                         sparkTabBarController.selectedIndex = 4
                         let profileNav = sparkTabBarController.selectedViewController as! UINavigationController
                         let setupUsernameViewController = SetupUsernameViewController()
