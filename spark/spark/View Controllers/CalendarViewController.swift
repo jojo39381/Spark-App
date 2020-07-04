@@ -14,31 +14,59 @@ class CalendarViewController: UIViewController, JTACMonthViewDelegate, JTACMonth
     
     let layout = UICollectionViewFlowLayout()
     let calendarView = JTACMonthView()
+    let dayView = DayView()
     
-    
+    let theme = UIColor.rgb(red: 251, green: 228, blue: 85)
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.rgb(red: 251, green: 228, blue: 85)
        
         
         self.view.addSubview(calendarView)
         
-        view.addConstraintsWithFormat(format: "H:|-10-[v0]-10-|", views: calendarView)
-        view.addConstraintsWithFormat(format: "V:|-100-[v0(300)]", views: calendarView)
+         self.view.addSubview(dayView)
+        dayView.backgroundColor = .white
+        view.addConstraintsWithFormat(format: "H:|-20-[v0]-20-|", views: calendarView)
+        view.addConstraintsWithFormat(format: "H:|-20-[v0]-20-|", views: dayView)
+        view.addConstraintsWithFormat(format: "V:|-100-[v0(300)]-20-[v1]-100-|", views: calendarView, dayView)
+        
+        
+        
         calendarView.register(DateCell.self, forCellWithReuseIdentifier: "dateCell")
         calendarView.register(DateHeader.self, forSupplementaryViewOfKind:  UICollectionView.elementKindSectionHeader, withReuseIdentifier: "DateHeader")
         calendarView.calendarDelegate = self
         calendarView.calendarDataSource = self
         calendarView.isPagingEnabled = true
         calendarView.scrollDirection = .horizontal
-        
-        calendarView.backgroundColor = UIColor.flatWhite()
+      
+        calendarView.backgroundColor = UIColor.white
         calendarView.showsHorizontalScrollIndicator = false
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
+        calendarView.layer.cornerRadius = 20
+        dayView.layer.shadowColor = UIColor.flatPurple().cgColor
+         dayView.layer.shadowOpacity = 1
+         dayView.layer.shadowOffset = .zero
+         dayView.layer.shadowRadius = 5
         
+        calendarView.layer.cornerRadius = 20
+       calendarView.layer.shadowColor = UIColor.flatPurple().cgColor
+        calendarView.layer.shadowOpacity = 1
+        calendarView.layer.shadowOffset = .zero
+        calendarView.layer.shadowRadius = 5
+        
+        calendarView.clipsToBounds = false
+        calendarView.layer.masksToBounds = false
+       
+       guard let navigationBar = self.navigationController?.navigationBar else { return }
+        navigationBar.backgroundColor = theme
+        navigationBar.barTintColor = theme
+        navigationBar.tintColor = .white
+        navigationBar.shadowImage = UIImage()
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
        
         
+        self.calendarView.selectDates([ Date() ])
         
         
         
@@ -47,7 +75,7 @@ class CalendarViewController: UIViewController, JTACMonthViewDelegate, JTACMonth
     
     
     
-    
+
     
     
     
@@ -65,6 +93,15 @@ class CalendarViewController: UIViewController, JTACMonthViewDelegate, JTACMonth
         if cellState.isSelected {
             cell.selectedView.layer.cornerRadius =  25
             cell.selectedView.isHidden = false
+           let formatter = DateFormatter()  // Declare this outside, to avoid instancing this heavy class multiple times.
+                  formatter.dateFormat = "EEE\nMM.dd.yy"
+            print(cellState.date)
+            let myCalendar = Calendar(identifier: .gregorian)
+            
+            dayView.dateLabel.text = formatter.string(from: cellState.date)
+            
+            
+            
         } else {
             cell.selectedView.isHidden = true
         }
@@ -99,7 +136,7 @@ class DateCell: JTACDayCell {
     }()
     var selectedView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor.rgb(red: 251, green: 228, blue: 85)
         view.layer.cornerRadius = 100
         return view
     }()
@@ -135,16 +172,90 @@ class DateHeader: JTACMonthReusableView {
            let la = UILabel()
            return la
        }()
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var weekStack: UIStackView = {
+        let stackView = UIStackView()
+        let mon = UILabel()
+        mon.text = "Mon"
+        mon.textAlignment = .center
+
+        let tue = UILabel()
+        tue.text = "Tue"
+        tue.textAlignment = .center
+   
+        let wed = UILabel()
+        wed.text  = "Wed"
+        wed.textAlignment = .center
+   
+        let thu = UILabel()
+        thu.text = "Thu"
+        thu.textAlignment = .center
+    
+        let fri = UILabel()
+        fri.text = "Fri"
+        fri.textAlignment = .center
+      
+        let sat = UILabel()
+        sat.text = "Sat"
+        sat.textAlignment = .center
+      
+        
+        let sun = UILabel()
+        sun.text = "Sun"
+        sun.textAlignment = .center
+       
+        
+        
+        stackView.addArrangedSubview(mon)
+        stackView.addArrangedSubview(tue)
+        stackView.addArrangedSubview(wed)
+        stackView.addArrangedSubview(thu)
+        stackView.addArrangedSubview(fri)
+        stackView.addArrangedSubview(sat)
+        stackView.addArrangedSubview(sun)
+        
+        stackView.distribution = .fillEqually
+        
+        
+       
+        return stackView
+    }()
     override init(frame: CGRect) {
         super.init(frame:frame)
         self.addSubview(monthTitle)
-       
+        self.addSubview(weekStack)
        
         
-        addConstraintsWithFormat(format: "H:[v0]", views: monthTitle)
-        addConstraintsWithFormat(format: "V:[v0]", views: monthTitle)
-        addConstraints([NSLayoutConstraint(item: monthTitle, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)])
+        addConstraintsWithFormat(format: "H:|[v0]|", views: monthTitle)
+        addConstraintsWithFormat(format: "H:|[v0]|", views: weekStack)
+        addConstraintsWithFormat(format: "V:|-[v0]-[v1]-|", views: monthTitle, weekStack)
+        
         addConstraints([NSLayoutConstraint(item: monthTitle, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)])
+        
         
         
     }
@@ -157,8 +268,10 @@ extension CalendarViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy MM dd"
 
-        let startDate = formatter.date(from: "2018 01 01")!
-        let endDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.year = 1
+        let startDate = Date()
+        let endDate = Calendar.current.date(byAdding: dateComponent, to: startDate)!
         return ConfigurationParameters(startDate: startDate,
                                        endDate: endDate,
                                        generateInDates: .forAllMonths,
@@ -181,11 +294,12 @@ extension CalendarViewController {
         
         let header = calendar.dequeueReusableJTAppleSupplementaryView(withReuseIdentifier: "DateHeader", for: indexPath) as! DateHeader
         header.monthTitle.text = formatter.string(from: range.start)
+        header.monthTitle.textAlignment = .center
         return header
     }
 
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
-        return MonthSize(defaultSize: 50)
+        return MonthSize(defaultSize: 70)
     }
     
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {

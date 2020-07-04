@@ -46,7 +46,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         mapView.frame = self.view.frame
         mapView.delegate = self
         placePlaces(dateDict!)
-        centerMapOnUserLocation()
+        
         
         setupView()
         
@@ -116,7 +116,10 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
         findRoutes(source: locationManager.location!.coordinate, destination: mapView.annotations[0].coordinate)
+        
+        print(mapView.annotations[0].title)
         for i in 0..<mapView.annotations.count - 1 {
+            print(mapView.annotations[i].title)
             findRoutes(source: mapView.annotations[i].coordinate, destination: mapView.annotations[i+1].coordinate)
         }
     }
@@ -125,7 +128,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
 
     func setupNav() {
         let navigationBar = self.navigationController?.navigationBar
-        navigationItem.hidesBackButton = true
+        navigationItem.hidesBackButton = false
         
         navigationBar?.backgroundColor = .clear
        navigationController?.navigationBar.isTranslucent = true
@@ -139,14 +142,16 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         
     }
     func placePlaces(_ places: [String: [Float]]) {
-      for (key, value) in places {
-        print(key)
-        let annotations = MKPointAnnotation()
-        annotations.title = key
-        annotations.coordinate = CLLocationCoordinate2D(latitude:
-            CLLocationDegrees(value[0]), longitude: CLLocationDegrees(value[1]))
-        mapView.addAnnotation(annotations)
-      }
+        for date in dateOrder! {
+            let annotations = MKPointAnnotation()
+            annotations.title = date
+            annotations.coordinate = CLLocationCoordinate2D(latitude:
+                CLLocationDegrees(places[date]![0]), longitude: CLLocationDegrees(places[date]![1]))
+            mapView.addAnnotation(annotations)
+        }
+        centerMapOnUserLocation()
+        
+     
     }
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer
     {
@@ -161,7 +166,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     func setupView() {
         
         
-        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height - 110, width:self.view.frame.width, height: self.view.frame.height))
+        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height * 0.8, width:self.view.frame.width, height: self.view.frame.height))
         self.view.addSubview(iView)
         let vc = ItineraryViewController()
         vc.delegate = self

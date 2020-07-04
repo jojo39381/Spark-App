@@ -49,7 +49,7 @@ class ItineraryView: UIView, UIGestureRecognizerDelegate {
 
             if let viewToDrag = sender.view {
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    viewToDrag.frame = CGRect(x:0, y:300, width: self.frame.width, height: self.frame.height)
+                    viewToDrag.frame = CGRect(x:0, y:self.frame.height * 0.2, width: self.frame.width, height: self.frame.height)
                 }, completion: nil)
                 
                 
@@ -60,7 +60,7 @@ class ItineraryView: UIView, UIGestureRecognizerDelegate {
         else if sender.direction == .down {
             if let viewToDrag = sender.view {
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                                   viewToDrag.frame = CGRect(x:0, y:self.frame.height - 110, width: self.frame.width, height: self.frame.height)
+                    viewToDrag.frame = CGRect(x:0, y:self.frame.height * 0.8, width: self.frame.width, height: self.frame.height)
                                }, completion: nil)
                 
                 
