@@ -49,6 +49,8 @@
 		5D83278C249C876800A719F5 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D83278B249C876800A719F5 /* SuccessViewController.swift */; };
 		5D8D647C24987BD50015ED58 /* ConfirmButtonFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D647B24987BD50015ED58 /* ConfirmButtonFooter.swift */; };
 		5DAFCD9F2475CB1900151A34 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFCD9E2475CB1900151A34 /* MenuBar.swift */; };
+		5DB9DA5324AC632300B485B7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5224AC632300B485B7 /* HomeViewController.swift */; };
+		5DB9DA5524AD313800B485B7 /* ExploreViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5424AD313800B485B7 /* ExploreViewCell.swift */; };
 		5DCAB64D24A283690077E648 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCAB64C24A283690077E648 /* CalendarViewController.swift */; };
 		5DCE10D324A1473D005F2345 /* SparkTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE10D224A1473D005F2345 /* SparkTabBarController.swift */; };
 		5DCE10D524A1495A005F2345 /* icons8-home-50 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE10D424A1495A005F2345 /* icons8-home-50 (1).png */; };
@@ -56,7 +58,6 @@
 		6D198BEC24A33EC80094CC35 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BEB24A33EC80094CC35 /* SignUpNameViewController.swift */; };
 		6D198BEE24A33EEF0094CC35 /* SignUpAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BED24A33EEF0094CC35 /* SignUpAccountViewController.swift */; };
 		6D198BF024A33F130094CC35 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BEF24A33F130094CC35 /* LoginViewController.swift */; };
-		6D198BF224A33F420094CC35 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BF124A33F420094CC35 /* HomeViewController.swift */; };
 		6D198BF424A33F7D0094CC35 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BF324A33F7D0094CC35 /* ProfileViewController.swift */; };
 		6D198BF624A33F9C0094CC35 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BF524A33F9C0094CC35 /* SettingsViewController.swift */; };
 		6D198BF824A33FB40094CC35 /* SetupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D198BF724A33FB40094CC35 /* SetupProfileViewController.swift */; };
@@ -144,6 +145,8 @@
 		5D83278B249C876800A719F5 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		5D8D647B24987BD50015ED58 /* ConfirmButtonFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmButtonFooter.swift; sourceTree = "<group>"; };
 		5DAFCD9E2475CB1900151A34 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		5DB9DA5224AC632300B485B7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		5DB9DA5424AD313800B485B7 /* ExploreViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewCell.swift; sourceTree = "<group>"; };
 		5DCAB64C24A283690077E648 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		5DCE10D224A1473D005F2345 /* SparkTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTabBarController.swift; sourceTree = "<group>"; };
 		5DCE10D424A1495A005F2345 /* icons8-home-50 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-home-50 (1).png"; sourceTree = "<group>"; };
@@ -151,7 +154,6 @@
 		6D198BEB24A33EC80094CC35 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		6D198BED24A33EEF0094CC35 /* SignUpAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAccountViewController.swift; sourceTree = "<group>"; };
 		6D198BEF24A33F130094CC35 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		6D198BF124A33F420094CC35 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6D198BF324A33F7D0094CC35 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6D198BF524A33F9C0094CC35 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		6D198BF724A33FB40094CC35 /* SetupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileViewController.swift; sourceTree = "<group>"; };
@@ -327,12 +329,13 @@
 				5D57538124808EAB00C190F5 /* QuestionsViewController.swift */,
 				5D1013A0247A307F004EE552 /* ResultsViewController.swift */,
 				5DCAB64C24A283690077E648 /* CalendarViewController.swift */,
+				5DB9DA5224AC632300B485B7 /* HomeViewController.swift */,
+				5DB9DA5424AD313800B485B7 /* ExploreViewCell.swift */,
 				5D4991B324A56FFD00121DBF /* DayView.swift */,
 				6D198BE924A33EA60094CC35 /* StartViewController.swift */,
 				6D198BEB24A33EC80094CC35 /* SignUpNameViewController.swift */,
 				6D198BED24A33EEF0094CC35 /* SignUpAccountViewController.swift */,
 				6D198BEF24A33F130094CC35 /* LoginViewController.swift */,
-				6D198BF124A33F420094CC35 /* HomeViewController.swift */,
 				6D198BF324A33F7D0094CC35 /* ProfileViewController.swift */,
 				6D198BF524A33F9C0094CC35 /* SettingsViewController.swift */,
 				6D198BF724A33FB40094CC35 /* SetupProfileViewController.swift */,
@@ -604,7 +607,6 @@
 				5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */,
 				5D178BD6247C732D00C9F78D /* Descriptions.swift in Sources */,
 				5D1013A1247A307F004EE552 /* ResultsViewController.swift in Sources */,
-				6D198BF224A33F420094CC35 /* HomeViewController.swift in Sources */,
 				5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */,
 				5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */,
 				5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */,
@@ -618,6 +620,7 @@
 				5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */,
 				6D198BFC24A3400F0094CC35 /* SetupUsernameViewController.swift in Sources */,
 				5D101393247A07DF004EE552 /* RestaurantsData.swift in Sources */,
+				5DB9DA5324AC632300B485B7 /* HomeViewController.swift in Sources */,
 				5D5C89692486039200939F5D /* ResultsCell.swift in Sources */,
 				5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */,
 				6D198C0024A340550094CC35 /* DateCollectionViewCell.swift in Sources */,
@@ -637,6 +640,7 @@
 				5D178BCB247B30CF00C9F78D /* ActivityManager.swift in Sources */,
 				5DCE10D324A1473D005F2345 /* SparkTabBarController.swift in Sources */,
 				5D207CB8249D96A4006E4349 /* BudgetCell.swift in Sources */,
+				5DB9DA5524AD313800B485B7 /* ExploreViewCell.swift in Sources */,
 				5D0C02E824787C6600463868 /* CategoryData.swift in Sources */,
 				5D61DD462477434200C10099 /* FilterScreenCell.swift in Sources */,
 				6D198BF024A33F130094CC35 /* LoginViewController.swift in Sources */,

@@ -167,7 +167,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     func setupView() {
         
         
-        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height - 110, width:self.view.frame.width, height: self.view.frame.height))
+        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height * 0.8, width:self.view.frame.width, height: self.view.frame.height))
         self.view.addSubview(iView)
         let vc = ItineraryViewController()
         vc.delegate = self
