@@ -94,6 +94,7 @@ class Utilities {
                         lastName = document?.get("lastName") as! String
                         username = document?.get("username") as! String
                         bio = document?.get("bio") as! String
+                        preferences = document?.get("preferences") as! [String: [String]]
                         completion()
                     }
                 }
@@ -106,6 +107,7 @@ class Utilities {
                 lastName = document?.get("lastName") as! String
                 username = document?.get("username") as! String
                 bio = document?.get("bio") as! String
+                preferences = document?.get("preferences") as! [String: [String]]
                 completion()
             }
         }

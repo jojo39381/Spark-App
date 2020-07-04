@@ -8,9 +8,8 @@
 
 import Foundation
 import UIKit
-import MapKit
 
-class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate ,CLLocationManagerDelegate {
+class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = typeList?.count
         return count!
@@ -66,8 +65,9 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     
     let dateModel = DateModel()
     var typeList: [String]?
-    var userSelectedModel: UserSelectedModel!
+    var userSelectedModel = UserSelectedModel()
     override func viewDidLoad() {
+        userSelectedModel.preferences = preferences
         view.addSubview(typesCollectionView)
         view.addSubview(instructions)
         view.backgroundColor = .white
@@ -84,11 +84,6 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         typeList = dateModel.dateCategories
         setupNav()
         
-        
-        //user location things
-        locationManager.delegate = self
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.requestLocation()
         
         
         
@@ -175,29 +170,5 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         
         
         
-        
-        
-    }
-    
-    
-    //user location things
-    var locationManager = CLLocationManager()
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        userLocation = locations.last
-        print(userLocation)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
     }
 }
-
-var userLocation: CLLocation!
-var radius = 30000

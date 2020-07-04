@@ -14,6 +14,7 @@ var bio: String!
 var image: UIImage!
 var firstName: String!
 var lastName: String!
+var preferences = [String: [String]]()
 
 class ProfileViewController: UIViewController {
     var usernameLabel: UILabel!

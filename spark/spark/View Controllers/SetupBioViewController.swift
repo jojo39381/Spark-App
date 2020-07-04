@@ -29,11 +29,7 @@ class SetupBioViewController: UIViewController {
     
     @objc func doneButtonTapped() {
         bio = bioTextField.text
-        for viewController in navigationController!.viewControllers {
-            if viewController is SetupProfileViewController {
-                navigationController?.popToViewController(viewController, animated: true)
-            }
-        }
+        self.navigationController?.popViewController(animated: false)
     }
     /*
     // MARK: - Navigation

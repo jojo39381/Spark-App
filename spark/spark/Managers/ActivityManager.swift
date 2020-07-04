@@ -44,7 +44,7 @@ struct ActivityManager {
                 URLQueryItem(name: "latitude", value: latitude),
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
-                URLQueryItem(name: "limit", value: "10"),
+                URLQueryItem(name: "limit", value: "20"),
                 URLQueryItem(name: "price", value: budget[0])
 
 

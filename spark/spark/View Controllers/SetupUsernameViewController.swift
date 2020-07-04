@@ -83,13 +83,11 @@ class SetupUsernameViewController: UIViewController {
     @objc func confirmButtonTapped() {
         username = usernameTextField.text
         if firstTimeUser {
-            navigationController?.pushViewController(SetupProfileViewController(), animated: true)
+            let setupProfileViewController = SetupProfileViewController()
+            setupProfileViewController.firstTimeUser = true
+            navigationController?.pushViewController(setupProfileViewController, animated: true)
         } else {
-            for viewController in navigationController!.viewControllers {
-                if viewController is SetupProfileViewController {
-                    navigationController?.popToViewController(viewController, animated: true)
-                }
-            }
+            self.navigationController?.popViewController(animated: false)
         }
     }
     

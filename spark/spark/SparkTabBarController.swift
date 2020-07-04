@@ -20,7 +20,7 @@ class SparkTabBarController: UITabBarController {
         second.title = "Calendar"
         let secondNav = UINavigationController(rootViewController:second);
         
-        let third = QuestionsViewController();
+        let third = TypesController();
         third.title = "Add"
         let thirdNav = UINavigationController(rootViewController:third);
         
