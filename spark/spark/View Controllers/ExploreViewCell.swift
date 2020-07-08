@@ -12,18 +12,23 @@ import UIKit
 class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 1
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! SelectCell
+        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! CategoryCell
+        myCell.backgroundColor = .red
+        myCell.category.text = exploreArray[indexPath.row]
         return myCell
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width:140, height:140)
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
@@ -34,7 +39,7 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     var catCollectionView : UICollectionView = {
         let layout = CustomViewFlowLayout()
-        
+        layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.rgb(red: 27, green: 108, blue: 168)
         
@@ -49,6 +54,12 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     
     
+    
+    
+    
+    
+    
+    let exploreArray = ["Exploratorium", "Golden gate", "California museum of art", "Soma", "Lmao", "Sorry", "hio"]
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -57,14 +68,14 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
  
         addSubview(catCollectionView)
         self.backgroundColor = .blue
-        catCollectionView.backgroundColor = .black
+        
        
-        addConstraintsWithFormat(format:"H:|-20-[v0]-20-|", views: catCollectionView)
-        addConstraintsWithFormat(format:"V:|-10-[v0]-10-|", views: catCollectionView)
+        addConstraintsWithFormat(format:"H:|-[v0]-|", views: catCollectionView)
+        addConstraintsWithFormat(format:"V:|-[v0]-|", views: catCollectionView)
         
         catCollectionView.delegate = self
         catCollectionView.dataSource = self
-        catCollectionView.register(SelectCell.self, forCellWithReuseIdentifier: "myCell")
+        catCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "myCell")
         
         
         

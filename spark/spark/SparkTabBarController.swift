@@ -54,7 +54,7 @@ class SparkTabBarController: UITabBarController {
           print("hello)")
     
         if item.tag == 1 {
-            let third = QuestionsViewController()
+            let third = TypesController()
             third.title = "Add"
             let thirdNav = UINavigationController(rootViewController:third);
             

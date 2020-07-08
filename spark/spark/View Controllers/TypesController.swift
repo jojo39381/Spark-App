@@ -75,7 +75,7 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         view.addConstraintsWithFormat(format: "H:|-20-[v0]-20-|", views: instructions)
         
         view.addConstraintsWithFormat(format: "H:|[v0]|", views: typesCollectionView)
-        view.addConstraintsWithFormat(format: "V:|-20-[v0]-20-[v1]|", views: instructions, typesCollectionView )
+        view.addConstraintsWithFormat(format: "V:|-50-[v0]-20-[v1]|", views: instructions, typesCollectionView )
         typesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
      
         typesCollectionView.dataSource = self
