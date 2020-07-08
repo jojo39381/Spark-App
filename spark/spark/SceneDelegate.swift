@@ -23,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if auth.currentUser == nil {
             window?.rootViewController = StartViewController()
         } else {
+            
             Utilities.fetchProfileData() {
                 self.window?.rootViewController = SparkTabBarController()
                 self.window?.makeKeyAndVisible()

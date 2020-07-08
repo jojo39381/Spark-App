@@ -7,9 +7,30 @@
 //
 
 import UIKit
+import MapKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITabBarDelegate {
+
+var userLocation: CLLocation!
+var radius = 40000
+
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITabBarDelegate, CLLocationManagerDelegate {
     
+    
+    
+    var locationManager = CLLocationManager()
+
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            print("/////////////////////")
+            userLocation = locations.last
+            print(userLocation)
+        }
+            
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print(error)
+        }
+    
+        
   
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -68,8 +89,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         exploreView.register(TitleView.self, forSupplementaryViewOfKind:  UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
         view.addConstraintsWithFormat(format: "H:|-[v0]-|", views: exploreView)
         view.addConstraintsWithFormat(format: "V:|-[v0(200)]-[v1]-|", views: locationView, exploreView)
-       
-   
+        locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestLocation()
         
         
         
@@ -96,14 +118,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width, height: 60)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+

@@ -21,9 +21,8 @@ class SparkTabBarController: UITabBarController {
         second.title = "Calendar"
         let secondNav = UINavigationController(rootViewController:second);
         
-        let third = UIViewController()
+        let third = UINavigationController(rootViewController: TypesController());
         third.title = "Add"
-        let thirdNav = UINavigationController(rootViewController:third);
         
         let fourth = UIViewController();
         fourth.title = "Notifications"
@@ -51,6 +50,7 @@ class SparkTabBarController: UITabBarController {
         
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
+
           print("hello)")
     
         if item.tag == 1 {
@@ -61,8 +61,8 @@ class SparkTabBarController: UITabBarController {
             thirdNav.modalPresentationStyle = .fullScreen
             self.present(thirdNav, animated: true, completion: nil)
           }
-          
-      }
+    }
+
     /*
     // MARK: - Navigation
 

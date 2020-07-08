@@ -9,11 +9,15 @@
 import UIKit
 
 class SetupProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    var firstTimeUser = false
     var profileTableView: UITableView!
     var imagePicker: UIImagePickerController = UIImagePickerController()
     var doneButton: UIButton!
     
     override func viewDidLoad() {
+        if firstTimeUser {
+            navigationItem.hidesBackButton = true
+        }
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
@@ -72,21 +76,21 @@ class SetupProfileViewController: UIViewController, UIImagePickerControllerDeleg
         if auth.currentUser?.photoURL != nil {
             storage.reference(withPath: "\(auth.currentUser!.uid)/profile.jpg").putFile(from: (auth.currentUser?.photoURL)!, metadata: nil) { (data, error) in
                 db.collection("users").document(auth.currentUser!.uid).updateData(["firstName": firstName!, "lastName": lastName!, "username": username!, "bio": bio!]) { (error) in
-                    for viewController in self.navigationController!.viewControllers {
-                        if viewController is ProfileViewController {
-                            self.navigationController?.popToViewController(viewController, animated: false)
-                        }
-                    }
+                    self.navigate()
                 }
             }
         } else {
             db.collection("users").document(auth.currentUser!.uid).updateData(["firstName": firstName!, "lastName": lastName!, "username": username!, "bio": bio!]) { (error) in
-                for viewController in self.navigationController!.viewControllers {
-                    if viewController is ProfileViewController {
-                        self.navigationController?.popToViewController(viewController, animated: false)
-                    }
-                }
+                self.navigate()
             }
+        }
+    }
+    
+    func navigate() {
+        if firstTimeUser {
+            self.navigationController?.pushViewController(QuestionsViewController(), animated: false)
+        } else {
+            self.navigationController?.popToRootViewController(animated: false)
         }
     }
 }

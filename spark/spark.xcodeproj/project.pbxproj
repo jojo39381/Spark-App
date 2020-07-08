@@ -11,7 +11,6 @@
 		5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */; };
 		5D07FBB62470C0B4005F2E33 /* PlanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */; };
 		5D07FBBB2470C0B5005F2E33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D07FBBA2470C0B5005F2E33 /* Assets.xcassets */; };
-		5D07FBBE2470C0B5005F2E33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D07FBBC2470C0B5005F2E33 /* LaunchScreen.storyboard */; };
 		5D07FBC92470C0B5005F2E33 /* sparkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBC82470C0B5005F2E33 /* sparkTests.swift */; };
 		5D07FBD42470C0B5005F2E33 /* sparkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBD32470C0B5005F2E33 /* sparkUITests.swift */; };
 		5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBE22470F601005F2E33 /* Extensions.swift */; };
@@ -54,6 +53,7 @@
 		5DB9DA5724B08CE100B485B7 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5624B08CE100B485B7 /* TitleView.swift */; };
 		5DB9DA5924B3D7C000B485B7 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5824B3D7BF00B485B7 /* LocationView.swift */; };
 		5DB9DA5B24B3F84500B485B7 /* sparklogogif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5A24B3F84400B485B7 /* sparklogogif.gif */; };
+		5DB9DA5D24B5BC2100B485B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DB9DA5C24B5BC2100B485B7 /* LaunchScreen.storyboard */; };
 		5DCAB64D24A283690077E648 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCAB64C24A283690077E648 /* CalendarViewController.swift */; };
 		5DCE10D324A1473D005F2345 /* SparkTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCE10D224A1473D005F2345 /* SparkTabBarController.swift */; };
 		5DCE10D524A1495A005F2345 /* icons8-home-50 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 5DCE10D424A1495A005F2345 /* icons8-home-50 (1).png */; };
@@ -105,7 +105,6 @@
 		5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningViewController.swift; sourceTree = "<group>"; };
 		5D07FBBA2470C0B5005F2E33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5D07FBBD2470C0B5005F2E33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D07FBBF2470C0B5005F2E33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D07FBC42470C0B5005F2E33 /* sparkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sparkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D07FBC82470C0B5005F2E33 /* sparkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sparkTests.swift; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		5DB9DA5624B08CE100B485B7 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		5DB9DA5824B3D7BF00B485B7 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		5DB9DA5A24B3F84400B485B7 /* sparklogogif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sparklogogif.gif; sourceTree = "<group>"; };
+		5DB9DA5C24B5BC2100B485B7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5DCAB64C24A283690077E648 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		5DCE10D224A1473D005F2345 /* SparkTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTabBarController.swift; sourceTree = "<group>"; };
 		5DCE10D424A1495A005F2345 /* icons8-home-50 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-home-50 (1).png"; sourceTree = "<group>"; };
@@ -245,7 +245,6 @@
 				5D07FBBA2470C0B5005F2E33 /* Assets.xcassets */,
 				5DB9DA5A24B3F84400B485B7 /* sparklogogif.gif */,
 				5DCE10D424A1495A005F2345 /* icons8-home-50 (1).png */,
-				5D07FBBC2470C0B5005F2E33 /* LaunchScreen.storyboard */,
 				6D198C0324A341750094CC35 /* GoogleService-Info.plist */,
 				6D198C0524A3422F0094CC35 /* RopaSans-Regular.ttf */,
 				5D07FBBF2470C0B5005F2E33 /* Info.plist */,
@@ -340,6 +339,7 @@
 				5DB9DA5824B3D7BF00B485B7 /* LocationView.swift */,
 				5DB9DA5624B08CE100B485B7 /* TitleView.swift */,
 				5DB9DA5424AD313800B485B7 /* ExploreViewCell.swift */,
+				5DB9DA5C24B5BC2100B485B7 /* LaunchScreen.storyboard */,
 				5D4991B324A56FFD00121DBF /* DayView.swift */,
 				6D198BE924A33EA60094CC35 /* StartViewController.swift */,
 				6D198BEB24A33EC80094CC35 /* SignUpNameViewController.swift */,
@@ -489,10 +489,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB9DA5D24B5BC2100B485B7 /* LaunchScreen.storyboard in Resources */,
 				5DB9DA5B24B3F84500B485B7 /* sparklogogif.gif in Resources */,
 				5DCE10D524A1495A005F2345 /* icons8-home-50 (1).png in Resources */,
 				6D198C0424A341750094CC35 /* GoogleService-Info.plist in Resources */,
-				5D07FBBE2470C0B5005F2E33 /* LaunchScreen.storyboard in Resources */,
 				5D07FBBB2470C0B5005F2E33 /* Assets.xcassets in Resources */,
 				6D198C0624A3422F0094CC35 /* RopaSans-Regular.ttf in Resources */,
 			);
@@ -699,17 +699,6 @@
 			targetProxy = 5D07FBD02470C0B5005F2E33 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		5D07FBBC2470C0B5005F2E33 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5D07FBBD2470C0B5005F2E33 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5D07FBD62470C0B5005F2E33 /* Debug */ = {

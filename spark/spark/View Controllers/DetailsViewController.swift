@@ -22,20 +22,17 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         return map
     }()
     
-    var scoreButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("97", for: .normal)
-        button.backgroundColor = .gray
-        button.layer.cornerRadius = 40;
-        
-        return button
-    }()
     var dateDict: [String: [Float]]?
     var imageDict: [String : String]?
     var dateInfo: [String: [Any]]?
     var dateOrder : [String]?
+    var dateScores:[Int]!
+    var showScores = false
+    var scoresTableView: UITableView!
+    var scoreButton: UIButton!
     let locationManager = CLLocationManager()
     let regionRadius: Double = 20000
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -51,19 +48,27 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         placePlaces(dateDict!)
         
         
-        
         setupView()
         
-        scoreButton.frame = CGRect(x:self.view.frame.maxX - 95, y:65, width: 80, height: 80)
-        self.view.addSubview(scoreButton)
+        scoresTableView = UITableView()
         
-        
-        
-        
-        
-        
-        // Do any additional setup after loading the view.
     }
+    
+    override func viewDidLayoutSubviews() {
+        navigationController!.navigationBar.addSubview(scoresTableView)
+        scoresTableView.delegate = self
+        scoresTableView.dataSource = self
+        scoresTableView.backgroundColor = .clear
+        scoresTableView.isScrollEnabled = false
+        scoresTableView.register(UITableViewCell.self, forCellReuseIdentifier: "scores")
+        scoresTableView.translatesAutoresizingMaskIntoConstraints = false
+        scoresTableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: view.frame.height * 0.025).isActive = true
+        scoresTableView.rightAnchor.constraint(equalTo: (navigationController?.navigationBar.rightAnchor)!, constant: -view.frame.height * 0.025).isActive = true
+        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+    }
+    
+   
     
     var arrayOfRoutes: [MKRoute]?
     func findRoutes(source: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
@@ -164,6 +169,13 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         return renderer
     }
     
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+       
+        scoresTableView.removeFromSuperview()
+    }
+    
     func setupView() {
         
         
@@ -190,4 +202,69 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     }
     */
 
+}
+
+extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return view.frame.height * 0.1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.frame.height * 0.05
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        scoreButton = UIButton()
+        scoreButton.layer.cornerRadius = view.frame.height * 0.05
+        scoreButton.backgroundColor = .gray
+        scoreButton.setTitle(String(dateScores.reduce(0, +) / 3), for: .normal)
+        scoreButton.addTarget(self, action: #selector(handleDropDown), for: .touchUpInside)
+        return scoreButton
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return showScores ? dateScores.count: 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var type: String
+        let cell = tableView.dequeueReusableCell(withIdentifier: "scores", for: indexPath)
+        switch indexPath.item {
+        case 0:
+            type = "Rating: "
+        case 1:
+            type = "Popularity: "
+        case 2:
+            type = "Distance: "
+        default:
+            type = ""
+        }
+        cell.textLabel?.font = .systemFont(ofSize: 8)
+        cell.textLabel?.text = type + String(dateScores[indexPath.item])
+        return cell
+    }
+        
+    @objc func handleDropDown() {
+        showScores = !showScores
+        var indexPaths = [IndexPath]()
+        for i in 0..<dateScores.count {
+           indexPaths.append(IndexPath(row: i, section: 0))
+        }
+        if showScores {
+           scoresTableView.removeConstraint(scoresTableView.constraints[1])
+           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.25).isActive = true
+           scoresTableView.insertRows(at: indexPaths, with: .none)
+        } else {
+           scoresTableView.deleteRows(at: indexPaths, with: .none)
+           scoresTableView.removeConstraint(scoresTableView.constraints[1])
+           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+        }
+    }
+}
+
+extension UINavigationBar {
+open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "tapNavigationBar"), object: nil, userInfo: ["point": point, "event": event as Any])
+    return super.hitTest(point, with: event)
+    }
 }

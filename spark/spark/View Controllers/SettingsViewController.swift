@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     var settingsTableView: UITableView!
-    var settings = ["Edit Profile", "Log Out"]
+    var settings = ["Edit Profile", "Preferences", "Log Out"]
     
     override func viewDidLoad() {
         navigationItem.title = "Settings"
@@ -33,6 +33,10 @@ class SettingsViewController: UIViewController {
         self.view.window?.rootViewController = StartViewController()
         self.view.window?.makeKeyAndVisible()
     }
+    
+    func preferencesButtonTapped() {
+        navigationController?.pushViewController(QuestionsViewController(), animated: false)
+    }
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -51,6 +55,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             editButtonTapped()
         case 1:
+            preferencesButtonTapped()
+        case 2:
             logoutButtonTapped()
         default:
             print("nothing")

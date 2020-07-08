@@ -61,7 +61,7 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     let key = ["Food", "Chill", "Romantic", "Budget"]
     
-    let type = ["What is you or your partner's favorite types of food?", "What are some activities you would do on a chill date?", "QWhat are some activities you would do on a romantic date?", "Choose a general budget for your dates"]
+    let type = ["What is you or your partner's favorite types of food?", "What are some activities you would do on a chill date?", "What are some activities you would do on a romantic date?", "Choose a general budget for your dates"]
     let array = [["Chinese", "Japanese", "American", "French", "Korean", "Indian", "Burgers", "Fast Food", "Thai", "Canadian", "Italian", "Filipino", "German", "Mediterranean", "Mexican"],["Bowling", "Movies", "Stargazing", "Beaches", "Hiking", "Parks", "Fishing", "Shopping", "Escape Rooms", "Skydiving", "Swimming", "Golfing"], ["Dancing", "Beaches", "Sightseeing", "Wine Tasting", "Swimming", "Museum", "Camping", "Spa", "Food Tours", "Skydiving", "Trampolines", "Golfing"]]
     
     
@@ -69,7 +69,7 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
     @objc func nextAction(_ sender : UIButton) {
         print("////////")
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! QuestionCell
-        userSelectedModel.preferences.updateValue(cell.selectedItems, forKey: cell.key)
+        preferences.updateValue(cell.selectedItems, forKey: cell.key)
         questionsView.scrollToNextItem()
         
         
@@ -77,21 +77,15 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
     @objc func doneAction(_ sender : UIButton) {
         print("////////")
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! BudgetCell
-        userSelectedModel.preferences.updateValue(cell.selectedItems, forKey: cell.key)
-        print(userSelectedModel.preferences)
-        let vc = TypesController()
-        vc.userSelectedModel = userSelectedModel
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-        
-        
+        preferences.updateValue(cell.selectedItems, forKey: cell.key)
+        db.collection("users").document(auth.currentUser!.uid).setData(["preferences": preferences], merge: true) { (error) in
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     
     
     
-    var userSelectedModel = UserSelectedModel()
     
     
 

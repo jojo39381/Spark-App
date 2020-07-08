@@ -19,6 +19,8 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! DatesCell
+        
+       
         myCell.activity.text = dateArray[indexPath.item]
         print(dateArray)
         return myCell
@@ -67,6 +69,7 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
     }
     
     
+    
     func setupViews() {
         
         contentView.addSubview(score)
@@ -100,6 +103,7 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
         delegate?.goToDetails(dateArray: dateArray)
         
     }
+    
     
     
 }

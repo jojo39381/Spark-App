@@ -22,6 +22,8 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
         myCell.numberOfItems = numActivities + 1
         myCell.setupViews()
@@ -29,26 +31,12 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         myCell.score.text = String(sortedDateScores[indexPath.item].value)
         myCell.contentView.backgroundColor = .white
         myCell.delegate = self
-        
-//        var activity = Array(activityModel.restaurants.keys)[Int.random(in: 0..<min(restaurantModel.restaurants.count, activityModel.restaurants.count))]
-//        while (activityModel.restaurants[activity]?.filter () { (activityModel.restaurants[activity1]?.contains($0))!}.count)! > 0
-//            {
-//
-//
-//
-//
-//
-//            let random = Int.random(in: 0..<min(restaurantModel.restaurants.count, activityModel.restaurants.count))
-//            activity = Array(activityModel.restaurants.keys)[random]
-//
-//        }
-//        
-//
-//        myCell.restaurant2.text = activity
+        myCell.dateCollectionView.reloadData()
+
         return myCell
     }
     
-    
+  
     
     var foodCentric = true
     var numActivities = 2
@@ -56,6 +44,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     var endDict: [String: [Any]]!
     var sortedDateScores = [Dictionary<String, Int>.Element]()
     var dates = [String: [String]]()
+    var usedPlace = [String]()
     
     func rateDates() {
         if foodCentric {
@@ -85,9 +74,14 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         date.append(startPlace.key)
         for _ in 1...self.numActivities {
             let startCord = startP[startPlace.key]![3] as! [Float]
+            print("lmao")
+            
+            
             startPlace = self.calculateScore(startName: startPlace.key, startLocation: CLLocation(latitude: CLLocationDegrees(startCord[0]), longitude: CLLocationDegrees(startCord[1])), startDict: startP, endDict: endP).sorted {$0.1 > $1.1}.first!
+            
             date[0] = date[0] as! Int + startPlace.value
             date.append(startPlace.key)
+            usedPlace.append(startPlace.key)
             startP = endP
             endP = activityModel.restaurants
         }
@@ -97,24 +91,38 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     func calculateScore(startName: String, startLocation: CLLocation, startDict: [String: [Any]], endDict: [String: [Any]]) -> [String: Int] {
         var dateScore = [String: Int]()
+        print("CountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCountCount")
+        print(endDict.count)
+        print(usedPlace.count)
+        if (endDict.count == usedPlace.count + 1) {
+            usedPlace.removeAll()
+        }
         for end in endDict {
-            if (startName != end.key) {
-                let startCats = startDict[startName]![0] as! [String]
-                let endCats = end.value[0] as! [String]
-                var same = false
-                for startCat in startCats {
-                    for endCat in endCats {
-                        same = (startCat == endCat) || same
+            if !usedPlace.contains(end.key) {
+                if (startName != end.key) {
+                    let startCats = startDict[startName]![0] as! [String]
+                    let endCats = end.value[0] as! [String]
+                    var same = false
+                    for startCat in startCats {
+                        for endCat in endCats {
+                            let scArr = startCat.lowercased().split(separator: " ")
+                            let ecArr = endCat.lowercased().split(separator: " ")
+                            for scWord in scArr {
+                                for ecWord in ecArr {
+                                    same = same || scWord == ecWord || scWord.contains(ecWord) || ecWord.contains(scWord)
+                                }
+                            }
+                        }
                     }
-                }
-                if !same {
-                    let endCord = end.value[3] as! [Float]
-                    let distance = Int(calculateDistance(startLocation: startLocation, endLocation: CLLocation(latitude: CLLocationDegrees(endCord[0]), longitude: CLLocationDegrees(endCord[1]))))
-                    let distanceScore = (1 - distance * 1000 / radius) * 33
-                    let ratingScore = end.value[1] as! Float / 5 * 33
-                    let reviewScore = min(end.value[2] as! Float / 500 * 33, 33)
-                    dateScore[end.key] = Int(Float(distanceScore) + ratingScore + reviewScore)
-                    print(dateScore[end.key])
+                    if !same {
+                        let endCord = end.value[3] as! [Float]
+                        let distance = calculateDistance(startLocation: startLocation, endLocation: CLLocation(latitude: CLLocationDegrees(endCord[0]), longitude: CLLocationDegrees(endCord[1]))) * 1000
+                        let distanceScore = Int((1 - distance / Double(radius)) * 33)
+                        let ratingScore = end.value[1] as! Float / 5 * 33
+                        let reviewScore = min(end.value[2] as! Float / 500 * 33, 33)
+                        dateScore[end.key] = Int(Float(distanceScore) + ratingScore + reviewScore)
+                        
+                    }
                 }
             }
         }
@@ -215,17 +223,32 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         var imageDict = [String: String]()
         var dateInfo = [String: [Any]]()
         var dateOrder = [String]()
+        var dateScores = [0 , 0, 0]
+        var startLocation = userLocation
         for act in dateArray {
             if activityModel.restaurants[act] != nil {
-                dateDict.updateValue(activityModel.restaurants[act]![3] as! [Float], forKey: act)
+                let actCoordinates = activityModel.restaurants[act]![3] as! [Float]
+                dateDict.updateValue(actCoordinates, forKey: act)
                 imageDict.updateValue(activityModel.restaurants[act]![4] as! String, forKey: act)
                 dateInfo.updateValue(Array(activityModel.restaurants[act]!), forKey: act)
-            
+                dateScores[0] += Int(activityModel.restaurants[act]![1] as! Float / 5 * 33)
+                dateScores[1] += Int(min(activityModel.restaurants[act]![2] as! Float / 500 * 33, 33))
+                let actLocation = CLLocation(latitude: CLLocationDegrees(actCoordinates[0]), longitude: CLLocationDegrees(actCoordinates[1]))
+                let distance = calculateDistance(startLocation: startLocation!, endLocation: actLocation) * 1000
+                dateScores[2] += Int((1 -  distance / Double(radius)) * 33)
+                startLocation = actLocation
             }
             else {
-                dateDict.updateValue(restaurantModel.restaurants[act]![3] as! [Float], forKey: act)
+                let resCoordinates = restaurantModel.restaurants[act]![3] as! [Float]
+                dateDict.updateValue(resCoordinates, forKey: act)
                 imageDict.updateValue(restaurantModel.restaurants[act]![4] as! String, forKey: act)
                 dateInfo.updateValue(Array(restaurantModel.restaurants[act]!), forKey: act)
+                dateScores[0] += Int(restaurantModel.restaurants[act]![1] as! Float / 5 * 33)
+                dateScores[1] += Int(min(restaurantModel.restaurants[act]![2] as! Float / 500 * 33, 33))
+                let resLocation = CLLocation(latitude: CLLocationDegrees(resCoordinates[0]), longitude: CLLocationDegrees(resCoordinates[1]))
+                let distance = calculateDistance(startLocation: startLocation!, endLocation: resLocation) * 1000
+                dateScores[2] += Int((1 -  distance / Double(radius)) * 33)
+                startLocation = resLocation
             }
             dateOrder.append(act)
         }
@@ -234,6 +257,9 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         vc.imageDict = imageDict
         vc.dateInfo = dateInfo
         vc.dateOrder = dateOrder
+        vc.dateScores = dateScores
+        
+        print(dateScores)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

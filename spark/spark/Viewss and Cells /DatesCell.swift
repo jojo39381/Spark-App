@@ -9,6 +9,10 @@
 import UIKit
 
 class DatesCell: UICollectionViewCell {
+    
+    
+   
+    
     let restaurant: UILabel = {
         let label = UILabel()
         label.text = "haha"
@@ -47,14 +51,16 @@ class DatesCell: UICollectionViewCell {
         addConstraints([NSLayoutConstraint(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)])
         addConstraints([NSLayoutConstraint(item: activity, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)])
          
-        
-        
-            
     }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("error")
     }
     
+    
+   
+       
     
     
     
