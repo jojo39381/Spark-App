@@ -21,13 +21,8 @@ class SparkTabBarController: UITabBarController {
         second.title = "Calendar"
         let secondNav = UINavigationController(rootViewController:second);
         
-<<<<<<< HEAD
-        let third = TypesController();
-=======
-        let third = UIViewController()
->>>>>>> 3fbdaa845bbb5f85a6e65637e780cef65416b4fb
+        let third = UINavigationController(rootViewController: TypesController());
         third.title = "Add"
-        let thirdNav = UINavigationController(rootViewController:third);
         
         let fourth = UIViewController();
         fourth.title = "Notifications"
@@ -55,16 +50,13 @@ class SparkTabBarController: UITabBarController {
         
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-          print("hello)")
-    
-        if item.tag == 1 {
-            let third = QuestionsViewController()
-            third.title = "Add"
-            let thirdNav = UINavigationController(rootViewController:third);
-            
-            thirdNav.modalPresentationStyle = .fullScreen
-            self.present(thirdNav, animated: true, completion: nil)
-          }
+//          print("hello)")
+//    
+//        if item.tag == 1 {
+//            let thirdNav = UINavigationController(rootViewController: TypesController())
+//            thirdNav.modalPresentationStyle = .fullScreen
+//            self.present(thirdNav, animated: true, completion: nil)
+//          }
           
       }
     /*

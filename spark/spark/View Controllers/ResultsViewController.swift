@@ -74,7 +74,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
             startPlace = self.calculateScore(startName: startPlace.key, startLocation: CLLocation(latitude: CLLocationDegrees(startCord[0]), longitude: CLLocationDegrees(startCord[1])), startDict: startP, endDict: endP).sorted {$0.1 > $1.1}.first!
             date[0] = date[0] as! Int + startPlace.value
             date.append(startPlace.key)
-            usedPlace.append(startPlace.key)
+//            usedPlace.append(startPlace.key)
             startP = endP
             endP = activityModel.restaurants
         }
