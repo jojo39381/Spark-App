@@ -8,7 +8,7 @@
 
 import UIKit
 import MapKit
-
+import CoreLocation
 
 var userLocation: CLLocation!
 var radius = 40000
@@ -69,19 +69,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     
-    let activities = ["Swimming", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking", "Walking"]
-    
+    let activities = ["Popular Destinations", "Romantic Spots", "New and Rising"]
+    var cityName = "Current Location"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let locationView = LocationView()
+        
         view.backgroundColor = .white
         view.addSubview(locationView)
         view.addConstraintsWithFormat(format: "H:[v0]", views: locationView)
         view.addSubview(exploreView)
         exploreView.frame = view.frame
-        exploreView.backgroundColor = .red
+        exploreView.backgroundColor = UIColor.flatSkyBlueColorDark()
+        
         exploreView.delegate = self
         exploreView.dataSource = self
         exploreView.register(ExploreViewCell.self, forCellWithReuseIdentifier: "myCell")
@@ -92,6 +93,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestLocation()
+        
+
+
+        
         
         
         
@@ -105,7 +110,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
         case UICollectionView.elementKindSectionHeader:
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! TitleView
-            footer.titleLabel.text = activities[indexPath.item]
+            print(activities[indexPath.section])
+            footer.titleLabel.text = activities[indexPath.section]
             
             return footer
 
@@ -119,6 +125,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return CGSize(width: self.view.frame.width, height: 60)
     }
 
+
+    
+    
+    
+    
 
 }
 

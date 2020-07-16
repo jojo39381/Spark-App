@@ -40,23 +40,22 @@ class CalendarViewController: UIViewController, JTACMonthViewDelegate, JTACMonth
         calendarView.scrollDirection = .horizontal
       
         calendarView.backgroundColor = UIColor.white
+        
         calendarView.showsHorizontalScrollIndicator = false
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
-        calendarView.layer.cornerRadius = 20
+  
+        
         dayView.layer.shadowColor = UIColor.flatPurple().cgColor
-         dayView.layer.shadowOpacity = 1
-         dayView.layer.shadowOffset = .zero
+      
          dayView.layer.shadowRadius = 5
         
         calendarView.layer.cornerRadius = 20
-       calendarView.layer.shadowColor = UIColor.flatPurple().cgColor
-        calendarView.layer.shadowOpacity = 1
-        calendarView.layer.shadowOffset = .zero
-        calendarView.layer.shadowRadius = 5
+    
+      
         
-        calendarView.clipsToBounds = false
-        calendarView.layer.masksToBounds = false
+       
+        calendarView.layer.masksToBounds = true
        
        guard let navigationBar = self.navigationController?.navigationBar else { return }
         navigationBar.backgroundColor = theme

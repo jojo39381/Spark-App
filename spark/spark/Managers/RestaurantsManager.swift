@@ -13,7 +13,7 @@
 //}
 //struct RestaurantsManager {
 //    let restaurantsURL = "https://api.yelp.com/v3/businesses/search"
-//    let API_KEY = "iM7_IkVflupwpcOMUguJXQJK5649MyfnIu7PZnyd6y9T_pFdDUXD4_KO6WofOXm_lIELDMo_tVgi0cY9QFj9gDb7L8j1p95nC1qi1vBH3GUKE586c9bMtqlRVynIXnYx"
+//
 //
 //
 //
@@ -110,8 +110,7 @@ protocol RestaurantsManagerDelegate {
     func didLoadRestaurants(data: RestaurantModel)
 }
 struct RestaurantsManager {
-    let restaurantsURL = "https://api.yelp.com/v3/businesses/search"
-    let API_KEY = "iM7_IkVflupwpcOMUguJXQJK5649MyfnIu7PZnyd6y9T_pFdDUXD4_KO6WofOXm_lIELDMo_tVgi0cY9QFj9gDb7L8j1p95nC1qi1vBH3GUKE586c9bMtqlRVynIXnYx"
+    
 
     
     

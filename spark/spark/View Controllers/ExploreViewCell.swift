@@ -20,7 +20,7 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! CategoryCell
-        myCell.backgroundColor = .red
+        myCell.backgroundColor = .white
         myCell.category.text = exploreArray[indexPath.row]
         return myCell
         
@@ -41,7 +41,7 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         let layout = CustomViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.rgb(red: 27, green: 108, blue: 168)
+        cv.backgroundColor = UIColor.flatSkyBlueColorDark()
         
         
         return cv
@@ -67,7 +67,7 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     func setupView() {
  
         addSubview(catCollectionView)
-        self.backgroundColor = .blue
+        self.backgroundColor = UIColor.flatSkyBlueColorDark()
         
        
         addConstraintsWithFormat(format:"H:|-[v0]-|", views: catCollectionView)

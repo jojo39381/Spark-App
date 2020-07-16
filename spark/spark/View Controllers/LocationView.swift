@@ -10,6 +10,15 @@ import UIKit
 
 class LocationView: UIView {
 
+    
+
+    
+    
+    
+    
+    
+    
+    var cityName:String?
     var image: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named:"library")!.alpha(0.5)
@@ -18,7 +27,7 @@ class LocationView: UIView {
     }()
     var locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "Berkeley"
+        
         label.font = UIFont.boldSystemFont(ofSize: 30)
         label.textColor = .black
    
