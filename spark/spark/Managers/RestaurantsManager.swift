@@ -17,6 +17,7 @@
 //
 //
 //
+
 //
 //    var delegate: RestaurantsManagerDelegate?
 //    var categories: [String:String]
