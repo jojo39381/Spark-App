@@ -5,64 +5,91 @@
 //  Created by Hugo Zhan on 6/24/20.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
-
 import UIKit
 import Firebase
-
 var username: String!
 var bio: String!
 var image: UIImage!
-var firstName: String!
-var lastName: String!
 var preferences = [String: [String]]()
-
 class ProfileViewController: UIViewController {
     var usernameLabel: UILabel!
     var bioTextView: UITextView!
-    var buttonStack: UIStackView!
-    var pastDateButton: UIButton!
-    var likedDateButton: UIButton!
+    var stack: UIStackView!
+    var posts: UILabel!
+    var adventures: UILabel!
+    var friends: UILabel!
+    var imagePicker: UIImagePickerController = UIImagePickerController()
     var profileImageView: UIImageView!
-    var dateCollectionView: UICollectionView!
-    var sortByTableView: UITableView!
-    var sortByButton: UIButton!
-    var sortByLabel: UILabel!
-    var showSortBy = false
-    var sortBy = ["Recent", "Oldest", "Favorite", "$-$$$$", "$$$$-$"]
-    
+    var dateTableView: UITableView!
+    var friendButton: UIButton!
+    var numPos: Int = 10
+    var numAdv: Int = 10
+    var numFri: Int = 10
     override func viewWillAppear(_ animated: Bool) {
         usernameLabel.text = username
         bioTextView.text = bio
         profileImageView.image = image
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        imagePicker.delegate = self
         setupProfileInfo()
-        setupButtonStack()
-        setupSortByTableView()
-        setupDateCollection()
+        setupStack()
+        setupDateTable()
+        let gear = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: #selector(settingsButtonTapped))
+        gear.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36), NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        navigationItem.rightBarButtonItem = gear
     }
-    
     @objc func settingsButtonTapped() {
-        navigationController?.pushViewController(SettingsViewController(), animated: false)
+        navigationController?.pushViewController(SetupProfileViewController(), animated: false)
     }
-    
+    @objc func friendButtonTapped() {
+        print("friends!")
+    }
+    @objc func pfpImageTapped() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+               self.openCamera()
+           }))
+        alert.addAction(UIAlertAction(title: "Library", style: .default, handler: { _ in
+               self.openLibrary()
+           }))
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    func openCamera() {
+        imagePicker.sourceType = .camera
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    func openLibrary() {
+        imagePicker.sourceType = .photoLibrary
+        self.present(imagePicker, animated: true, completion: nil)
+    }
     func setupProfileInfo() {
         profileImageView = UIImageView()
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.backgroundColor = .lightGray
         view.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width * 0.25).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width * 0.35).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.2).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.4).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.4).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
         profileImageView.clipsToBounds = true
-        profileImageView.layer.cornerRadius = view.frame.width * 0.2
-        
+        profileImageView.layer.cornerRadius = view.frame.width * 0.1
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pfpImageTapped)))
+        friendButton = UIButton()
+        view.addSubview(friendButton)
+        let image = UIImage(systemName: "person.badge.plus.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25))?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        friendButton.setImage(image, for: .normal)
+        friendButton.addTarget(self, action: #selector(friendButtonTapped), for: .touchUpInside)
+        friendButton.translatesAutoresizingMaskIntoConstraints = false
+        friendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width * 0.35).isActive = true
+        friendButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.2).isActive = true
+        friendButton.widthAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
+        friendButton.heightAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
@@ -70,9 +97,8 @@ class ProfileViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
         stackView.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-        stackView.leftAnchor.constraint(equalTo: profileImageView.rightAnchor).isActive = true
-        stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 10).isActive = true
-
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.4).isActive = true
         usernameLabel = UILabel()
         usernameLabel.font = UIFont(name: "RopaSans-Regular", size: 18)
         usernameLabel.textColor = UIColor(red: 23/255, green: 50/255, blue: 69/255, alpha: 1)
@@ -81,7 +107,6 @@ class ProfileViewController: UIViewController {
         usernameLabel.numberOfLines = 1
         usernameLabel.sizeToFit()
         stackView.addArrangedSubview(usernameLabel)
-        
         bioTextView = UITextView()
         bioTextView.isEditable = false
         bioTextView.isScrollEnabled = false
@@ -89,148 +114,68 @@ class ProfileViewController: UIViewController {
         bioTextView.textColor = UIColor(red: 23/255, green: 50/255, blue: 69/255, alpha: 1)
         stackView.addArrangedSubview(bioTextView)
     }
-    
-    func setupButtonStack() {
-        pastDateButton = UIButton()
-        pastDateButton.setTitle("Past Dates", for: .normal)
-        pastDateButton.setTitleColor(.black, for: .normal)
-        pastDateButton.titleLabel?.font = UIFont(name: "RopaSans-Regular", size: 32)
-//        pastDateButton.addTarget(self, action: #selector(something), for: .touchUpInside)
-        
-        likedDateButton = UIButton()
-        likedDateButton.setTitle("Liked Dates", for: .normal)
-        likedDateButton.setTitleColor(.black, for: .normal)
-        likedDateButton.titleLabel?.font = UIFont(name: "RopaSans-Regular", size: 32)
-//        likedDateButton.addTarget(self, action: #selector(somethingElse), for: .touchUpInside)
-        
-        buttonStack = UIStackView()
-        view.addSubview(buttonStack)
-        buttonStack.distribution = .fillEqually
-        buttonStack.translatesAutoresizingMaskIntoConstraints = false
-        buttonStack.center = buttonStack.center
-        buttonStack.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        buttonStack.heightAnchor.constraint(equalToConstant: view.frame.height * 0.08).isActive = true
-        buttonStack.topAnchor.constraint(equalTo: profileImageView.bottomAnchor).isActive = true
-        
-        buttonStack.addArrangedSubview(pastDateButton)
-        buttonStack.addArrangedSubview(likedDateButton)
+    func setupStack() {
+        posts = UILabel()
+        posts.text = "\(numPos)\nPosts"
+        posts.textAlignment = .center
+        posts.numberOfLines = 2
+        adventures = UILabel()
+        adventures.text = "\(numAdv)\nAdventures"
+        adventures.textAlignment = .center
+        adventures.numberOfLines = 2
+        friends = UILabel()
+        friends.text = "\(numFri)\nFriends"
+        friends.textAlignment = .center
+        friends.numberOfLines = 2
+        stack = UIStackView()
+        view.addSubview(stack)
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.widthAnchor.constraint(equalToConstant: view.frame.width * 0.8).isActive = true
+        stack.heightAnchor.constraint(equalToConstant: view.frame.height * 0.08).isActive = true
+        stack.topAnchor.constraint(equalTo: profileImageView.bottomAnchor).isActive = true
+        stack.addArrangedSubview(posts)
+        stack.addArrangedSubview(adventures)
+        stack.addArrangedSubview(friends)
     }
-    
-    func setupSortByTableView() {
-        sortByTableView = UITableView()
-        sortByTableView.delegate = self
-        sortByTableView.dataSource = self
-        sortByTableView.backgroundColor = .clear
-        sortByTableView.translatesAutoresizingMaskIntoConstraints = false
-        sortByTableView.separatorStyle = .none
-        sortByTableView.isScrollEnabled = false
-        sortByTableView.rowHeight = 50
-
-        sortByTableView.register(UITableViewCell.self, forCellReuseIdentifier: "sort")
-
-        view.addSubview(sortByTableView)
-        sortByTableView.topAnchor.constraint(equalTo: buttonStack.bottomAnchor).isActive = true
-        sortByTableView.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width * 0.25).isActive = true
-        sortByTableView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
-        sortByTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.16 / 6).isActive = true
-        
-        sortByLabel = UILabel()
-        sortByLabel.text = "Sort by:"
-        sortByLabel.font = UIFont(name: "RopaSans-Regular", size: 14)
-        view.addSubview(sortByLabel)
-        sortByLabel.translatesAutoresizingMaskIntoConstraints = false
-        sortByLabel.topAnchor.constraint(equalTo: buttonStack.bottomAnchor).isActive = true
-        sortByLabel.rightAnchor.constraint(equalTo: sortByTableView.leftAnchor).isActive = true
-        sortByLabel.heightAnchor.constraint(equalToConstant: view.frame.height * 0.16 / 6).isActive = true
-    }
-    
-    @objc func handleDropDown() {
-        showSortBy = !showSortBy
-        var indexPaths = [IndexPath]()
-        for i in 0..<sortBy.count {
-            indexPaths.append(IndexPath(row: i, section: 0))
-        }
-        if showSortBy {
-            sortByTableView.removeConstraint(sortByTableView.constraints[1])
-            sortByTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.16).isActive = true
-            sortByTableView.insertRows(at: indexPaths, with: .none)
-        } else {
-            sortByTableView.deleteRows(at: indexPaths, with: .none)
-            sortByTableView.removeConstraint(sortByTableView.constraints[1])
-            sortByTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.16 / 6).isActive = true
-        }
-    }
-    
-    func setupDateCollection() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: view.frame.width * 0.1, bottom: view.frame.width * 0.1, right: view.frame.width * 0.1)
-        layout.itemSize = CGSize(width: view.frame.width * 0.35, height: view.frame.width * 0.35)
-
-        dateCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        dateCollectionView.dataSource = self
-        dateCollectionView.delegate = self
-        dateCollectionView.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "dates")
-        dateCollectionView.showsVerticalScrollIndicator = false
-        dateCollectionView.backgroundColor = UIColor.white
-        self.view.addSubview(dateCollectionView)
-
-        dateCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        dateCollectionView.topAnchor.constraint(equalTo: sortByLabel.bottomAnchor).isActive = true
-        dateCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        dateCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        dateCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        view.bringSubviewToFront(sortByTableView)
+    func setupDateTable() {
+        dateTableView = UITableView()
+        dateTableView.dataSource = self
+        dateTableView.delegate = self
+        dateTableView.register(DateTableViewCell.self, forCellReuseIdentifier: "dates")
+        dateTableView.showsVerticalScrollIndicator = false
+        dateTableView.backgroundColor = UIColor.white
+        self.view.addSubview(dateTableView)
+        dateTableView.translatesAutoresizingMaskIntoConstraints = false
+        dateTableView.rowHeight = view.frame.height * 0.2
+        dateTableView.topAnchor.constraint(equalTo: stack.bottomAnchor).isActive = true
+        dateTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.1).isActive = true
+        dateTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: view.frame.width * 0.08).isActive = true
+        dateTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
-
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return view.frame.height * 0.16 / 6
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.height * 0.16 / 6
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        sortByButton = UIButton(type: .system)
-        sortByButton.setTitle("Recent", for: .normal)
-        sortByButton.setTitleColor(.black, for: .normal)
-        sortByButton.titleLabel?.font = UIFont(name: "RopaSans-Regular", size: 14)
-        sortByButton.addTarget(self, action: #selector(handleDropDown), for: .touchUpInside)
-        
-        return sortByButton
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return showSortBy ? sortBy.count: 0
+        return numPos
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "sort", for: indexPath)
-        cell.textLabel?.textAlignment = .center
-        cell.textLabel!.text = sortBy[indexPath.item]
-        cell.textLabel!.font = UIFont(name: "RopaSans-Regular", size: 14)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dates", for: indexPath as IndexPath)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        sortByButton.setTitle(sortBy[indexPath.item], for: .normal)
     }
 }
-
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-       
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = dateCollectionView.dequeueReusableCell(withReuseIdentifier: "dates", for: indexPath) as! DateCollectionViewCell
-        cell.backgroundColor = .gray
-        return cell
-    }
-       
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+           image = pickedImage
+        }
+        let changeRequest = auth.currentUser?.createProfileChangeRequest()
+        changeRequest?.photoURL = info[.imageURL] as? URL
+        changeRequest?.commitChanges { (error) in
+            storage.reference(withPath: "\(auth.currentUser!.uid)/profile.jpg").putFile(from: (auth.currentUser?.photoURL)!, metadata: nil) { (data, error) in
+            }
+        }
+        self.profileImageView.image = image
+        self.imagePicker.dismiss(animated: true, completion: nil)
     }
 }

@@ -1,91 +1,43 @@
-//
-//  SetupProfileViewController.swift
-//  spark
-//
-//  Created by Hugo Zhan on 6/24/20.
-//  Copyright © 2020 Joseph Yeh. All rights reserved.
-//
-
 import UIKit
-
-class SetupProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SetupProfileViewController: UIViewController {
     var firstTimeUser = false
+    var titleLabel: UILabel!
     var profileTableView: UITableView!
-    var imagePicker: UIImagePickerController = UIImagePickerController()
-    var doneButton: UIButton!
-    
     override func viewDidLoad() {
         if firstTimeUser {
             navigationItem.hidesBackButton = true
         }
         super.viewDidLoad()
-        view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-        profileTableView = UITableView()
-        profileTableView.frame = view.frame
+        view.backgroundColor = .systemGray6
+        titleLabel = UILabel()
+        view.addSubview(titleLabel)
+        titleLabel.font = .systemFont(ofSize: 28, weight: .bold)
+        titleLabel.text = "Settings"
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: view.frame.width * 0.05).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.1).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+        profileTableView = UITableView(frame: view.frame, style: .grouped)
         view.addSubview(profileTableView)
+        profileTableView.translatesAutoresizingMaskIntoConstraints = false
+        profileTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -view.frame.height * 0.04).isActive = true
+        profileTableView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        profileTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         profileTableView.delegate = self
         profileTableView.dataSource = self
         profileTableView.register(UITableViewCell.self, forCellReuseIdentifier: "profile")
+        view.bringSubviewToFront(titleLabel)
         // Do any additional setup after loading the view.
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         profileTableView.reloadData()
     }
-    
-    func pfpImageTapped() {
-        imagePicker.delegate = self
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-               self.openCamera()
-           }))
-
-        alert.addAction(UIAlertAction(title: "Library", style: .default, handler: { _ in
-               self.openLibrary()
-           }))
-
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func openCamera() {
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-
-    func openLibrary() {
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage {
-            image = pickedImage
-        }
-        let changeRequest = auth.currentUser?.createProfileChangeRequest()
-        changeRequest?.photoURL = info[.imageURL] as? URL
-        changeRequest?.commitChanges { (error) in
-            self.imagePicker.dismiss(animated: true, completion: nil)
-        }
-        profileTableView.reloadData()
-    }
-    
-    @objc func doneButtonTapped() {
-        if auth.currentUser?.photoURL != nil {
-            storage.reference(withPath: "\(auth.currentUser!.uid)/profile.jpg").putFile(from: (auth.currentUser?.photoURL)!, metadata: nil) { (data, error) in
-                db.collection("users").document(auth.currentUser!.uid).updateData(["firstName": firstName!, "lastName": lastName!, "username": username!, "bio": bio!]) { (error) in
-                    self.navigate()
-                }
-            }
-        } else {
-            db.collection("users").document(auth.currentUser!.uid).updateData(["firstName": firstName!, "lastName": lastName!, "username": username!, "bio": bio!]) { (error) in
-                self.navigate()
-            }
+    override func viewWillDisappear(_ animated: Bool) {
+        db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!, "bio": bio!]) { (error) in
+            super.viewWillDisappear(animated)
         }
     }
-    
     func navigate() {
         if firstTimeUser {
             self.navigationController?.pushViewController(QuestionsViewController(), animated: false)
@@ -93,82 +45,80 @@ class SetupProfileViewController: UIViewController, UIImagePickerControllerDeleg
             self.navigationController?.popToRootViewController(animated: false)
         }
     }
+    func logoutButtonTapped() {
+        try! auth.signOut()
+        self.view.window?.rootViewController = StartViewController()
+        self.view.window?.makeKeyAndVisible()
+    }
 }
-
 extension SetupProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.item {
-        case 0:
-            return view.frame.height * 0.15
-        case 3:
-            return view.frame.height * 0.15
+        switch section {
+        case 2:
+            return 1
         default:
-            return view.frame.height * 0.1
+            return 2
         }
     }
-    
-    func resizeImage(image:UIImage, toTheSize size:CGSize)->UIImage{
-
-
-        let scale = CGFloat(max(size.width/image.size.width,
-            size.height/image.size.height))
-        let width:CGFloat  = image.size.width * scale
-        let height:CGFloat = image.size.height * scale
-
-        let rr:CGRect = CGRect( x: 0, y: 0, width: width, height: height)
-
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        image.draw(in: rr)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        return newImage!
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell!
-        switch indexPath.item {
+        var cell = UITableViewCell(style: .value1, reuseIdentifier: "profile")
+        switch indexPath.section {
         case 0:
-            cell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath)
-            let newImage = resizeImage(image: image, toTheSize: CGSize(width: cell.contentView.frame.height * 0.9, height: cell.contentView.frame.height * 0.9))
-            cell.imageView?.layer.cornerRadius = cell.contentView.frame.height * 0.45
-            cell.imageView?.layer.masksToBounds = true
-            cell?.imageView?.image = newImage
-            cell.textLabel?.text = "Tap to change profile picture"
+            switch indexPath.row {
+            case 0:
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "Username"
+                cell.detailTextLabel?.text = username
+            case 1:
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "Bio"
+                cell.detailTextLabel?.text = bio
+            default:
+                print("nothing")
+            }
         case 1:
-            cell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath)
-            cell.textLabel?.text = "name: " + firstName + " " + lastName
-        case 2:
-            cell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath)
-            cell.textLabel?.text = "username: " + username
-        case 3:
-            cell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath)
-            cell.textLabel?.text = "bio: " + bio
+            switch indexPath.row {
+            case 0:
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "Email"
+                cell.detailTextLabel?.text = (auth.currentUser?.email)!
+            case 1:
+                cell.textLabel?.text = "Password"
+            default:
+                print("nothing")
+            }
         default:
-            cell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath)
+            cell = UITableViewCell(style: .default, reuseIdentifier: "profile")
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.text = "Log Out"
         }
         return cell
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.item {
+        switch indexPath.section {
         case 0:
-            pfpImageTapped()
+            switch indexPath.row {
+            case 0:
+                navigationController?.pushViewController(SetupUsernameViewController(), animated: true)
+            case 1:
+                navigationController?.pushViewController(SetupBioViewController(), animated: true)
+            default:
+                print("nothing")
+            }
         case 1:
-            navigationController?.pushViewController(SetupNameViewController(), animated: false)
-        case 2:
-            navigationController?.pushViewController(SetupUsernameViewController(), animated: false)
-        case 3:
-            navigationController?.pushViewController(SetupBioViewController(), animated: false)
-//
-//        case 4:
-//
+            switch indexPath.row {
+            case 0:
+                navigationController?.pushViewController(SetupEmailViewController(), animated: true)
+            case 1:
+                navigationController?.pushViewController(SetupPasswordViewController(), animated: true)
+            default:
+                print("nothing")
+            }
         default:
-            print("nothing")
+            logoutButtonTapped()
         }
     }
-    
 }
