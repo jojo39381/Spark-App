@@ -23,16 +23,32 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
+        let dateArray = dates[sortedDateScores[indexPath.item].key]!
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
-        myCell.numberOfItems = numActivities + 1
+        myCell.numberOfItems = 1
         myCell.setupViews()
         myCell.dateArray = dates[sortedDateScores[indexPath.item].key]!
+        var dateTitle = dates[sortedDateScores[indexPath.item].key]![0]
         myCell.score.text = String(sortedDateScores[indexPath.item].value)
         myCell.contentView.backgroundColor = .white
         myCell.delegate = self
-        myCell.dateCollectionView.reloadData()
-
+        myCell.titleLabel.text = dateTitle
+        
+         var dateInfo = [String: [Any]]()
+        
+        
+        dateInfo.updateValue(Array(restaurantModel.restaurants[dateTitle]!), forKey: dateTitle)
+        let address = dateInfo[dateTitle]![5] as! [String]
+        
+        var addressString = ""
+               for i in 0..<address.count {
+                   addressString.append(address[i])
+                   if i != address.count - 1 {
+                       addressString.append("\n")
+                   }
+               }
+        myCell.descriptionLabel.text = addressString
+        
         return myCell
     }
     
@@ -168,7 +184,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width * 0.8, height: 500)
+        return CGSize(width: collectionView.frame.width * 0.9, height: 150)
     }
     
     
@@ -217,7 +233,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     }
     
     
-    func goToDetails(dateArray : [String]) {
+    func goToDetails(dateTitle : String) {
         let vc = DetailsViewController()
         var dateDict = [String: [Float]]()
         var imageDict = [String: String]()
@@ -225,33 +241,33 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         var dateOrder = [String]()
         var dateScores = [0 , 0, 0]
         var startLocation = userLocation
-        for act in dateArray {
-            if activityModel.restaurants[act] != nil {
-                let actCoordinates = activityModel.restaurants[act]![3] as! [Float]
-                dateDict.updateValue(actCoordinates, forKey: act)
-                imageDict.updateValue(activityModel.restaurants[act]![4] as! String, forKey: act)
-                dateInfo.updateValue(Array(activityModel.restaurants[act]!), forKey: act)
-                dateScores[0] += Int(activityModel.restaurants[act]![1] as! Float / 5 * 33)
-                dateScores[1] += Int(min(activityModel.restaurants[act]![2] as! Float / 500 * 33, 33))
+        let act = activityModel.restaurants[dateTitle]
+            if act != nil {
+                let actCoordinates = activityModel.restaurants[dateTitle]![3] as! [Float]
+                dateDict.updateValue(actCoordinates, forKey: dateTitle)
+                imageDict.updateValue(activityModel.restaurants[dateTitle]![4] as! String, forKey: dateTitle)
+                dateInfo.updateValue(Array(activityModel.restaurants[dateTitle]!), forKey: dateTitle)
+                dateScores[0] += Int(activityModel.restaurants[dateTitle]![1] as! Float / 5 * 33)
+                dateScores[1] += Int(min(activityModel.restaurants[dateTitle]![2] as! Float / 500 * 33, 33))
                 let actLocation = CLLocation(latitude: CLLocationDegrees(actCoordinates[0]), longitude: CLLocationDegrees(actCoordinates[1]))
                 let distance = calculateDistance(startLocation: startLocation!, endLocation: actLocation) * 1000
                 dateScores[2] += Int((1 -  distance / Double(radius)) * 33)
                 startLocation = actLocation
             }
             else {
-                let resCoordinates = restaurantModel.restaurants[act]![3] as! [Float]
-                dateDict.updateValue(resCoordinates, forKey: act)
-                imageDict.updateValue(restaurantModel.restaurants[act]![4] as! String, forKey: act)
-                dateInfo.updateValue(Array(restaurantModel.restaurants[act]!), forKey: act)
-                dateScores[0] += Int(restaurantModel.restaurants[act]![1] as! Float / 5 * 33)
-                dateScores[1] += Int(min(restaurantModel.restaurants[act]![2] as! Float / 500 * 33, 33))
+                let resCoordinates = restaurantModel.restaurants[dateTitle]![3] as! [Float]
+                dateDict.updateValue(resCoordinates, forKey: dateTitle)
+                imageDict.updateValue(restaurantModel.restaurants[dateTitle]![4] as! String, forKey: dateTitle)
+                dateInfo.updateValue(Array(restaurantModel.restaurants[dateTitle]!), forKey: dateTitle)
+                dateScores[0] += Int(restaurantModel.restaurants[dateTitle]![1] as! Float / 5 * 33)
+                dateScores[1] += Int(min(restaurantModel.restaurants[dateTitle]![2] as! Float / 500 * 33, 33))
                 let resLocation = CLLocation(latitude: CLLocationDegrees(resCoordinates[0]), longitude: CLLocationDegrees(resCoordinates[1]))
                 let distance = calculateDistance(startLocation: startLocation!, endLocation: resLocation) * 1000
                 dateScores[2] += Int((1 -  distance / Double(radius)) * 33)
                 startLocation = resLocation
             }
-            dateOrder.append(act)
-        }
+            dateOrder.append(dateTitle)
+        
             
         vc.dateDict = dateDict
         vc.imageDict = imageDict

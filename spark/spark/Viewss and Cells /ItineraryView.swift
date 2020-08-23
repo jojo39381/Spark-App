@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItineraryView: UIView, UIGestureRecognizerDelegate {
+class ItineraryView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -24,17 +24,15 @@ class ItineraryView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         self.backgroundColor = .white
         self.isUserInteractionEnabled = true
-        let swipeGestureUp = UISwipeGestureRecognizer(target: self, action: #selector(handleDrag(_:)))
-        swipeGestureUp.direction = .up
-        swipeGestureUp.delegate = self
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+            self.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+            self.layer.shadowOpacity = 1.0
+            self.layer.shadowRadius = 2
+            self.layer.masksToBounds = false
+            self.layer.cornerRadius = 15
+            self.clipsToBounds = false
         
-        let swipeGestureDown = UISwipeGestureRecognizer(target: self, action: #selector(handleDrag(_:)))
-        swipeGestureDown.direction = .down
-        swipeGestureDown.delegate = self
         
-        self.addGestureRecognizer(swipeGestureUp)
-        self.addGestureRecognizer(swipeGestureDown)
-
         
     }
     
@@ -43,40 +41,7 @@ class ItineraryView: UIView, UIGestureRecognizerDelegate {
     }
     
     
-    @objc func handleDrag(_ sender: UISwipeGestureRecognizer) {
-        print("///////")
-        if sender.direction == .up {
-
-            if let viewToDrag = sender.view {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    viewToDrag.frame = CGRect(x:0, y:self.frame.height * 0.2, width: self.frame.width, height: self.frame.height)
-                }, completion: nil)
-                
-                
-            }
-            
-        }
-        
-        else if sender.direction == .down {
-            if let viewToDrag = sender.view {
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    viewToDrag.frame = CGRect(x:0, y:self.frame.height * 0.8, width: self.frame.width, height: self.frame.height)
-                               }, completion: nil)
-                
-                
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+   
     
     
 }

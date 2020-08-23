@@ -176,19 +176,30 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         scoresTableView.removeFromSuperview()
     }
     
+    let startButton: UIButton = {
+        let button = UIButton()
+        button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowRadius = 2
+        button.layer.masksToBounds = false
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = false
+        button.backgroundColor = .black
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Start Adventure", for: .normal)
+        return button
+    }()
+    
     func setupView() {
         
         
-        let iView = ItineraryView(frame: CGRect(x:0, y:self.view.frame.height * 0.8, width:self.view.frame.width, height: self.view.frame.height))
+        let iView = ItineraryView()
         self.view.addSubview(iView)
-        let vc = ItineraryViewController()
-        vc.delegate = self
-        let navController = UINavigationController(rootViewController: vc)
-        self.addChild(navController)
-        iView.addSubview(navController.view)
-        vc.imageDict = imageDict
-        vc.dateInfo = dateInfo
-        vc.dateOrder = dateOrder
+        iView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 100)
+        self.view.addSubview(startButton)
+        startButton.anchor(top: iView.bottomAnchor, left:view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 50)
+        
+       
         
     }
     

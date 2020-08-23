@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D00C22824F08E4100520274 /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22724F08E4100520274 /* ItineraryView.swift */; };
 		5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBB12470C0B4005F2E33 /* AppDelegate.swift */; };
 		5D07FBB42470C0B4005F2E33 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */; };
 		5D07FBB62470C0B4005F2E33 /* PlanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */; };
@@ -40,7 +41,6 @@
 		5D5C89692486039200939F5D /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C89682486039200939F5D /* ResultsCell.swift */; };
 		5D5C896B2486E95D00939F5D /* DatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C896A2486E95D00939F5D /* DatesCell.swift */; };
 		5D5C896D2487363700939F5D /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C896C2487363700939F5D /* DetailsViewController.swift */; };
-		5D5C896F2488882D00939F5D /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C896E2488882D00939F5D /* ItineraryView.swift */; };
 		5D5C89712488A4B900939F5D /* ItineraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C89702488A4B900939F5D /* ItineraryViewController.swift */; };
 		5D5C89732488CF2900939F5D /* ItineraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C89722488CF2900939F5D /* ItineraryCell.swift */; };
 		5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0FEC24763D1C0038C339 /* Filters.swift */; };
@@ -100,6 +100,7 @@
 		3E04AB7C5EB6A218E7B41FED /* Pods_sparkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sparkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		47F050540A0FAC80F7D33732 /* Pods-sparkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sparkTests/Pods-sparkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BAF0527398B1E134B564D11 /* Pods-sparkUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sparkUITests/Pods-sparkUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5D00C22724F08E4100520274 /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		5D07FBAE2470C0B4005F2E33 /* spark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D07FBB12470C0B4005F2E33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D07FBB32470C0B4005F2E33 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,7 +140,6 @@
 		5D5C89682486039200939F5D /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
 		5D5C896A2486E95D00939F5D /* DatesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesCell.swift; sourceTree = "<group>"; };
 		5D5C896C2487363700939F5D /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
-		5D5C896E2488882D00939F5D /* ItineraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		5D5C89702488A4B900939F5D /* ItineraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryViewController.swift; sourceTree = "<group>"; };
 		5D5C89722488CF2900939F5D /* ItineraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryCell.swift; sourceTree = "<group>"; };
 		5D5D0FEC24763D1C0038C339 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 				5D178BD5247C732D00C9F78D /* Descriptions.swift */,
 				5D5C896A2486E95D00939F5D /* DatesCell.swift */,
 				5D5C89682486039200939F5D /* ResultsCell.swift */,
-				5D5C896E2488882D00939F5D /* ItineraryView.swift */,
+				5D00C22724F08E4100520274 /* ItineraryView.swift */,
 				5D178BD7247C733500C9F78D /* DescriptionCell.swift */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
 				5D8D647B24987BD50015ED58 /* ConfirmButtonFooter.swift */,
@@ -624,7 +624,6 @@
 				5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */,
 				5D4991B424A56FFD00121DBF /* DayView.swift in Sources */,
 				5D83278C249C876800A719F5 /* SuccessViewController.swift in Sources */,
-				5D5C896F2488882D00939F5D /* ItineraryView.swift in Sources */,
 				6D198BF824A33FB40094CC35 /* SetupProfileViewController.swift in Sources */,
 				6D198BF624A33F9C0094CC35 /* SettingsViewController.swift in Sources */,
 				5D57538424808FB700C190F5 /* QuestionCell.swift in Sources */,
@@ -659,6 +658,7 @@
 				5D56913C248465E000F376F9 /* PreferencesViewController.swift in Sources */,
 				5D5C896D2487363700939F5D /* DetailsViewController.swift in Sources */,
 				6D198BEC24A33EC80094CC35 /* SignUpNameViewController.swift in Sources */,
+				5D00C22824F08E4100520274 /* ItineraryView.swift in Sources */,
 				5D178BCC247B30CF00C9F78D /* ActivityData.swift in Sources */,
 				5D5C89732488CF2900939F5D /* ItineraryCell.swift in Sources */,
 				6D198BFE24A340290094CC35 /* SetupBioViewController.swift in Sources */,

@@ -9,48 +9,38 @@
 import UIKit
 
 protocol ResultsDelegate {
-    func goToDetails(dateArray: [String])
+    func goToDetails(dateTitle: String)
 }
 
-class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfItems
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! DatesCell
-        
-       
-        myCell.activity.text = dateArray[indexPath.item]
-        print(dateArray)
-        return myCell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-       print(self.contentView.frame.height/CGFloat(numberOfItems))
-        
-        return CGSize(width: self.contentView.frame.width, height: (self.contentView.frame.height - 70)/CGFloat(numberOfItems))
-    }
-
+class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+   
     
     let score: UILabel = {
         let label = UILabel()
         label.text = "95"
         label.textAlignment = .center
-        label.font = label.font.withSize(50)
+        label.font = label.font.withSize(30)
         label.numberOfLines = 0
         label.textColor = .black
         return label
     }()
   
-    let dateCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.allowsSelection = true
-        cv.isScrollEnabled = false
-        return cv
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
+    
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .gray
+        label.numberOfLines = 0
+        return label
+    }()
+    
     
     
     var numberOfItems = 0
@@ -73,14 +63,12 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
     func setupViews() {
         
         contentView.addSubview(score)
-        score.frame = CGRect(x: 0, y: 20, width:100, height: 50)
-        contentView.addSubview(dateCollectionView)
-        
-        dateCollectionView.frame = CGRect(x:0, y: 70, width: self.frame.width, height: self.frame.height - 70)
-        dateCollectionView.register(DatesCell.self, forCellWithReuseIdentifier: "myCell")
-        dateCollectionView.delegate = self
-        dateCollectionView.dataSource = self
-        
+        score.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        contentView.addSubview(titleLabel)
+        titleLabel.anchor(top: score.bottomAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.anchor(top: titleLabel.bottomAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+    
          self.contentView.layer.cornerRadius = 35
          self.contentView.layer.borderWidth = 1.0
          self.contentView.layer.borderColor = UIColor.clear.cgColor
@@ -100,7 +88,7 @@ class ResultsCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UIC
         
     }
     @objc func handleTap() {
-        delegate?.goToDetails(dateArray: dateArray)
+        delegate?.goToDetails(dateTitle: titleLabel.text!)
         
     }
     

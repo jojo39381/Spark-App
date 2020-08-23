@@ -90,8 +90,7 @@ class Utilities {
                     image = UIImage(data: data)
                     let docRef = db.collection("users").document(auth.currentUser!.uid)
                     docRef.getDocument {(document, error) in
-                        firstName = document?.get("firstName") as! String
-                        lastName = document?.get("lastName") as! String
+                        
                         username = document?.get("username") as! String
                         bio = document?.get("bio") as! String
                         preferences = document?.get("preferences") as! [String: [String]]
@@ -103,8 +102,7 @@ class Utilities {
             let docRef = db.collection("users").document(auth.currentUser!.uid)
             docRef.getDocument {(document, error) in
                 image = UIImage()
-                firstName = document?.get("firstName") as! String
-                lastName = document?.get("lastName") as! String
+                
                 username = document?.get("username") as! String
                 bio = document?.get("bio") as! String
                 preferences = document?.get("preferences") as! [String: [String]]

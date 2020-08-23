@@ -17,30 +17,28 @@ class SparkTabBarController: UITabBarController {
         let navigation = UINavigationController(rootViewController:first);
         
         
-        let second = CalendarViewController();
-        second.title = "Calendar"
-        let secondNav = UINavigationController(rootViewController:second);
+       
         
-        let third = UINavigationController(rootViewController: TypesController());
-        third.title = "Add"
+        let secondNav = UINavigationController(rootViewController: TypesController());
+        secondNav.title = "Add"
         
-        let fourth = UIViewController();
-        fourth.title = "Notifications"
+        let third = UIViewController();
+        third.title = "Notifications"
+        let thirdNav = UINavigationController(rootViewController:third);
+        
+        let fourth = ProfileViewController();
+        fourth.title = "Profile"
         let fourthNav = UINavigationController(rootViewController:fourth);
         
-        let fifth = ProfileViewController();
-        fifth.title = "Profile"
-        let fifthNav = UINavigationController(rootViewController:fifth);
         
         
-        
-        self.viewControllers = [navigation, secondNav, third, fourthNav, fifthNav]
+        self.viewControllers = [navigation, secondNav, third, fourthNav]
         self.tabBar.items![0].image = UIImage(named:"house")
         self.tabBar.items![1].image = UIImage(named:"calendar")
         self.tabBar.items![2].image = UIImage(named:"plus.circle")
         self.tabBar.items![2].tag = 1
         self.tabBar.items![3].image = UIImage(named:"envelope")
-        self.tabBar.items![4].image = UIImage(named:"person.crop.circle")
+       
         
         self.tabBar.unselectedItemTintColor = .black
         self.tabBar.unselectedItemTintColor = .black
@@ -59,6 +57,7 @@ class SparkTabBarController: UITabBarController {
             let thirdNav = UINavigationController(rootViewController:third);
             
             thirdNav.modalPresentationStyle = .fullScreen
+            
             self.present(thirdNav, animated: true, completion: nil)
           }
     }
