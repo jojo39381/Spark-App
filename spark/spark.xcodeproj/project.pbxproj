@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5D00C22824F08E4100520274 /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22724F08E4100520274 /* ItineraryView.swift */; };
-		5D00C22A24F24D6100520274 /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22924F24D6000520274 /* HalfSizePresentationController.swift */; };
 		5D00C22C24F24F3E00520274 /* SetupEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22B24F24F3E00520274 /* SetupEmailViewController.swift */; };
 		5D00C22E24F24F7400520274 /* SetupPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22D24F24F7400520274 /* SetupPasswordViewController.swift */; };
 		5D00C23024F24FC900520274 /* UITextFieldPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00C22F24F24FC900520274 /* UITextFieldPadding.swift */; };
@@ -22,7 +21,6 @@
 		5D07FBE32470F601005F2E33 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D07FBE22470F601005F2E33 /* Extensions.swift */; };
 		5D0C02E824787C6600463868 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02E724787C6600463868 /* CategoryData.swift */; };
 		5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02E92478877A00463868 /* CategoryModel.swift */; };
-		5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C02EB2478C37800463868 /* ActivityViewController.swift */; };
 		5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CEDB92478614C006C672C /* CategoriesManager.swift */; };
 		5D101391247A04C8004EE552 /* RestaurantsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D101390247A04C8004EE552 /* RestaurantsManager.swift */; };
 		5D101393247A07DF004EE552 /* RestaurantsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D101392247A07DF004EE552 /* RestaurantsData.swift */; };
@@ -37,6 +35,8 @@
 		5D178BD6247C732D00C9F78D /* Descriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BD5247C732D00C9F78D /* Descriptions.swift */; };
 		5D178BD8247C733500C9F78D /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D178BD7247C733500C9F78D /* DescriptionCell.swift */; };
 		5D207CB8249D96A4006E4349 /* BudgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D207CB7249D96A4006E4349 /* BudgetCell.swift */; };
+		5D2FE2C924F39127001DBB0D /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2FE2C824F39127001DBB0D /* HalfSizePresentationController.swift */; };
+		5D2FE2CB24F3917D001DBB0D /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2FE2CA24F3917D001DBB0D /* Activity.swift */; };
 		5D4991B424A56FFD00121DBF /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4991B324A56FFD00121DBF /* DayView.swift */; };
 		5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A03222479C0FE00CB5986 /* SelectedModel.swift */; };
 		5D56913C248465E000F376F9 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D56913B248465E000F376F9 /* PreferencesViewController.swift */; };
@@ -103,7 +103,6 @@
 		47F050540A0FAC80F7D33732 /* Pods-sparkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sparkTests/Pods-sparkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5BAF0527398B1E134B564D11 /* Pods-sparkUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sparkUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-sparkUITests/Pods-sparkUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D00C22724F08E4100520274 /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
-		5D00C22924F24D6000520274 /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HalfSizePresentationController.swift; path = "/Users/josephyeh/Desktop/Spark-App/spark/spark/View Controllers/HalfSizePresentationController.swift"; sourceTree = "<absolute>"; };
 		5D00C22B24F24F3E00520274 /* SetupEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupEmailViewController.swift; sourceTree = "<group>"; };
 		5D00C22D24F24F7400520274 /* SetupPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupPasswordViewController.swift; sourceTree = "<group>"; };
 		5D00C22F24F24FC900520274 /* UITextFieldPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldPadding.swift; sourceTree = "<group>"; };
@@ -123,7 +122,6 @@
 		5D07FBE22470F601005F2E33 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5D0C02E724787C6600463868 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		5D0C02E92478877A00463868 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
-		5D0C02EB2478C37800463868 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		5D0CEDB92478614C006C672C /* CategoriesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesManager.swift; sourceTree = "<group>"; };
 		5D101390247A04C8004EE552 /* RestaurantsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsManager.swift; sourceTree = "<group>"; };
 		5D101392247A07DF004EE552 /* RestaurantsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsData.swift; sourceTree = "<group>"; };
@@ -138,6 +136,8 @@
 		5D178BD5247C732D00C9F78D /* Descriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Descriptions.swift; sourceTree = "<group>"; };
 		5D178BD7247C733500C9F78D /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		5D207CB7249D96A4006E4349 /* BudgetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCell.swift; sourceTree = "<group>"; };
+		5D2FE2C824F39127001DBB0D /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HalfSizePresentationController.swift; path = "/Users/josephyeh/Desktop/Spark-App/spark/spark/Viewss and Cells /HalfSizePresentationController.swift"; sourceTree = "<absolute>"; };
+		5D2FE2CA24F3917D001DBB0D /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		5D4991B324A56FFD00121DBF /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		5D4A03222479C0FE00CB5986 /* SelectedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedModel.swift; sourceTree = "<group>"; };
 		5D56913B248465E000F376F9 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +288,6 @@
 			children = (
 				5D07FBB52470C0B4005F2E33 /* PlanningViewController.swift */,
 				5D1435C42472593900275DC0 /* FoodViewController.swift */,
-				5D0C02EB2478C37800463868 /* ActivityViewController.swift */,
 			);
 			path = "unused views";
 			sourceTree = "<group>";
@@ -318,6 +317,7 @@
 				5D5C896A2486E95D00939F5D /* DatesCell.swift */,
 				5D5C89682486039200939F5D /* ResultsCell.swift */,
 				5D00C22724F08E4100520274 /* ItineraryView.swift */,
+				5D2FE2C824F39127001DBB0D /* HalfSizePresentationController.swift */,
 				5D178BD7247C733500C9F78D /* DescriptionCell.swift */,
 				5DAFCD9E2475CB1900151A34 /* MenuBar.swift */,
 				5D8D647B24987BD50015ED58 /* ConfirmButtonFooter.swift */,
@@ -331,12 +331,12 @@
 		5DCAB64B24A281B80077E648 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5D00C22924F24D6000520274 /* HalfSizePresentationController.swift */,
-				5D178BD1247C55EE00C9F78D /* TypesController.swift */,
 				5D56913B248465E000F376F9 /* PreferencesViewController.swift */,
 				5D5C89702488A4B900939F5D /* ItineraryViewController.swift */,
+				5D178BD1247C55EE00C9F78D /* TypesController.swift */,
 				5D5C896C2487363700939F5D /* DetailsViewController.swift */,
 				5D83278B249C876800A719F5 /* SuccessViewController.swift */,
+				5D2FE2CA24F3917D001DBB0D /* Activity.swift */,
 				5D57538124808EAB00C190F5 /* QuestionsViewController.swift */,
 				5D1013A0247A307F004EE552 /* ResultsViewController.swift */,
 				5DCAB64C24A283690077E648 /* CalendarViewController.swift */,
@@ -621,7 +621,6 @@
 				5D07FBB62470C0B4005F2E33 /* PlanningViewController.swift in Sources */,
 				5D8D647C24987BD50015ED58 /* ConfirmButtonFooter.swift in Sources */,
 				5D0C02EA2478877A00463868 /* CategoryModel.swift in Sources */,
-				5D00C22A24F24D6100520274 /* HalfSizePresentationController.swift in Sources */,
 				5D178BD6247C732D00C9F78D /* Descriptions.swift in Sources */,
 				5D1013A1247A307F004EE552 /* ResultsViewController.swift in Sources */,
 				5D5D0FED24763D1C0038C339 /* Filters.swift in Sources */,
@@ -629,6 +628,7 @@
 				5D0CEDBA2478614C006C672C /* CategoriesManager.swift in Sources */,
 				5D1435C52472593900275DC0 /* FoodViewController.swift in Sources */,
 				5D4A03232479C0FE00CB5986 /* SelectedModel.swift in Sources */,
+				5D2FE2CB24F3917D001DBB0D /* Activity.swift in Sources */,
 				5D07FBB22470C0B4005F2E33 /* AppDelegate.swift in Sources */,
 				5D4991B424A56FFD00121DBF /* DayView.swift in Sources */,
 				5D83278C249C876800A719F5 /* SuccessViewController.swift in Sources */,
@@ -651,7 +651,7 @@
 				5D101391247A04C8004EE552 /* RestaurantsManager.swift in Sources */,
 				5D57537E248088C200C190F5 /* UserSelectedModel.swift in Sources */,
 				6D198C0224A340860094CC35 /* Utilities.swift in Sources */,
-				5D0C02EC2478C37800463868 /* ActivityViewController.swift in Sources */,
+				5D2FE2C924F39127001DBB0D /* HalfSizePresentationController.swift in Sources */,
 				6D198BEA24A33EA60094CC35 /* StartViewController.swift in Sources */,
 				5D00C23224F2508800520274 /* DateTableViewCell.swift in Sources */,
 				6D198BEE24A33EEF0094CC35 /* SignUpViewController.swift in Sources */,

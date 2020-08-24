@@ -19,11 +19,11 @@ class SparkTabBarController: UITabBarController {
         
        
         
-        let secondNav = UINavigationController(rootViewController: TypesController());
-        secondNav.title = "Add"
+        let secondNav = UINavigationController(rootViewController:ActivityViewController());
+        secondNav.title = "Activities"
         
         let third = UIViewController();
-        third.title = "Notifications"
+        third.title = "Inbox"
         let thirdNav = UINavigationController(rootViewController:third);
         
         let fourth = ProfileViewController();

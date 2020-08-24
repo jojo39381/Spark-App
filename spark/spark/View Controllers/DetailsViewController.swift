@@ -45,7 +45,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         setupNav()
         mapView.frame = self.view.frame
         mapView.delegate = self
-        placePlaces(dateDict!)
+        placePlaces(dateDetails!.coordinates)
         
         
         setupView()
@@ -147,18 +147,66 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         
         
     }
-    func placePlaces(_ places: [String: [Float]]) {
-        for date in dateOrder! {
-            let annotations = MKPointAnnotation()
-            annotations.title = date
-            annotations.coordinate = CLLocationCoordinate2D(latitude:
-                CLLocationDegrees(places[date]![0]), longitude: CLLocationDegrees(places[date]![1]))
+    func placePlaces(_ places: Coordinates) {
+        
+        let annotations = MKPointAnnotation()
+        annotations.title = dateTitle
+        annotations.coordinate = CLLocationCoordinate2D(latitude:
+            CLLocationDegrees(places.latitude), longitude: CLLocationDegrees(places.longitude))
             mapView.addAnnotation(annotations)
-        }
+        
         centerMapOnUserLocation()
         
      
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer
     {
         let renderer = MKPolylineRenderer(overlay: overlay)
@@ -190,6 +238,10 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         return button
     }()
     
+    
+    
+    var dateTitle: String?
+    var dateDetails: Details?
     func setupView() {
         
         

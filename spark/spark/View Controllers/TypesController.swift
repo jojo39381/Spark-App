@@ -120,7 +120,15 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
 
             let vc = ResultsViewController()
             vc.activityModel = self.activities
-            vc.restaurantModel = self.restaurants
+            
+        
+        
+        
+        
+        
+        
+        
+        
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
@@ -133,10 +141,18 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
             dict.updateValue("", forKey: food)
         }
         
-        var manager = RestaurantsManager(categories: dict, budget:userSelectedModel.preferences["Budget"]! )
-        manager.delegate = self
-        manager.fetchActivities()
+        DispatchQueue.main.async {
+
+                   let vc = ResultsViewController()
+                   vc.activityModel = self.activities
+                   
+                   self.navigationController?.pushViewController(vc, animated: true)
+               }
         
+//        var manager = RestaurantsManager(categories: dict, budget:userSelectedModel.preferences["Budget"]! )
+//        manager.delegate = self
+//        manager.fetchActivities()
+//
         
         
         

@@ -63,7 +63,7 @@ struct ActivityManager {
             let session = URLSession(configuration: .default)
             print(components?.url)
             var count = 0
-            var result = [String:[Any]]()
+            var result = [String:Details]()
             for (key, value) in categories {
 
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
@@ -101,7 +101,7 @@ struct ActivityManager {
         
     }
 
-    func handleCompletion(data: [String: [Any]]?, response: URLResponse?, error: Error?) {
+    func handleCompletion(data: [String: Details]?, response: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
             return
@@ -112,31 +112,26 @@ struct ActivityManager {
 
     }
     
-    func parseData(restaurantData: Data) -> [String: [Any]]? {
+    func parseData(restaurantData: Data) -> [String: Details]? {
         let decoder = JSONDecoder()
         
         do {
             let decodedData = try decoder.decode(ActivityData.self, from: restaurantData)
-            var array = [String:[[String]]]()
+            var array = [String:Details]()
             var restaurantData = ActivityModel(restaurants:array)
             
             for business in decodedData.businesses {
                 
                 print(business.name)
                 print(business.categories)
-                var result = [Any]()
+                
                 var alias = [String]()
                 for category in business.categories {
-                    alias.append(category.title)
-                }
-                result.append(alias)
-                result.append(business.rating)
-                result.append(business.review_count)
-                let coordinates = [business.coordinates.latitude, business.coordinates.longitude]
-                result.append(coordinates)
-                result.append(business.image_url)
-                result.append(business.location.display_address)
-                result.append(business.url)
+                        alias.append(category.title)
+                    }
+                var result = Details(categories: alias, ratings: business.rating, numReviews: business.review_count, coordinates: business.coordinates, image_url: business.image_url, address: business.location.display_address)
+               
+               
                 restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
             return restaurantData.restaurants
