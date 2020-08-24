@@ -16,16 +16,16 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         return 45
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return dates.count
+        print(dateTitles.count)
+        print("..........`")
+        return dateTitles.count
     }
     
     
-    let dateTitles = [String]()
+    var dateTitles:[String]!
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-//        let dateArray = dates[sortedDateScores[indexPath.item].key]!
+        //        let dateArray = dates[sortedDateScores[indexPath.item].key]!
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
         let currentPlace = dateTitles[indexPath.item]
         myCell.titleLabel.text = currentPlace
@@ -203,8 +203,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.collectionViewLayout = layout
-        collectionView.register(ResultsCell.self, forCellWithReuseIdentifier: "lol")
-        collectionView.backgroundColor = .white
+        
         return collectionView
     }()
     
@@ -218,7 +217,9 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewDidLoad() {
 //        rateDates()
-        
+        print("////////")
+        print(dateTitles)
+
         view.addSubview(resultsCollectionView)
         
         
@@ -228,6 +229,8 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         resultsCollectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         resultsCollectionView.delegate = self
         resultsCollectionView.dataSource = self
+        resultsCollectionView.register(ResultsCell.self, forCellWithReuseIdentifier: "lol")
+        resultsCollectionView.backgroundColor = .white
         setupNav()
         
         

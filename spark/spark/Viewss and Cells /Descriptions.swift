@@ -90,7 +90,7 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     var delegate: DescriptionsDelegate?
     @objc func searchDates(_ sender : UIButton) {
         self.handleDismiss()
-        self.delegate?.didSearchForDates(key: key!)
+        self.delegate?.didSearchForDates(key: "tourist")
     }
     @objc func selectTime(_ sender: UIButton) {
         if !sender.isSelected {

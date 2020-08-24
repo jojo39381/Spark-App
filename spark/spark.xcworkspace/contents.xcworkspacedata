@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/josephyeh/Desktop/Spark-App/spark/spark/Viewss and Cells /HalfSizePresentationController.swift">
-   </FileRef>
-   <FileRef
       location = "group:spark.xcodeproj">
    </FileRef>
    <FileRef

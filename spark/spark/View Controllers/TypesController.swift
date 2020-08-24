@@ -100,11 +100,12 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     func didSearchForDates(key: String) {
         
         
-        var dict = [String:String]()
-        for activity in userSelectedModel.preferences[key]! {
-            dict.updateValue("", forKey: activity)
-        }
-        var manager = ActivityManager(categories: dict, budget: userSelectedModel.preferences["Budget"]!)
+        var dict = ["tourist":""]
+        
+//        for activity in userSelectedModel.preferences[key]! {
+//            dict.updateValue("", forKey: activity)
+//        }
+        var manager = ActivityManager(categories: dict, budget:["2"])
             manager.delegate = self
             manager.fetchActivities()
         
@@ -136,16 +137,18 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     
     func didLoadActivities(data: ActivityModel) {
         activities = data
-        var dict = [String:String]()
-        for food in userSelectedModel.preferences["Food"]! {
-            dict.updateValue("", forKey: food)
-        }
+//        var dict = [String:String]()
+//        for food in userSelectedModel.preferences["Food"]! {
+//            dict.updateValue("", forKey: food)
+//        }
         
         DispatchQueue.main.async {
 
                    let vc = ResultsViewController()
                    vc.activityModel = self.activities
-                   
+                    vc.dateTitles = Array(self.activities.restaurants.keys)
+            
+                  
                    self.navigationController?.pushViewController(vc, animated: true)
                }
         

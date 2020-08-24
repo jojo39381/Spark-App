@@ -43,13 +43,13 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     
     
-    var numberOfItems = 0
+    var numberOfItems = 1
     var dateArray = [String]()
     var tapGestureRecognizer : UITapGestureRecognizer!
     var delegate: ResultsDelegate?
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupViews()
         
         
             
