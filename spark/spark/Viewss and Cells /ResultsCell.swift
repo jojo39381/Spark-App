@@ -8,9 +8,6 @@
     
 import UIKit
 
-protocol ResultsDelegate {
-    func goToDetails(dateTitle: String)
-}
 
 class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
    
@@ -30,6 +27,7 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -37,16 +35,49 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .gray
-        label.numberOfLines = 0
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 15)
+       
         return label
     }()
     
+    
+    let placeImageView: UIImageView = {
+        let iv = UIImageView()
+        return iv
+    }()
+    
+    
+       let stack : UIStackView = {
+           let sv = UIStackView()
+           sv.alignment = .center
+           sv.distribution = .fill
+           return sv
+       }()
+       
+    let ratingLabel:UILabel = {
+        let label = UILabel()
+        label.text = "Rating: 4.8"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .gray
+        
+        return label
+    }()
+    
+    let priceLabel:UILabel = {
+        let label = UILabel()
+        label.text = "$$$"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .black
+        
+        return label
+    }()
     
     
     var numberOfItems = 1
     var dateArray = [String]()
     var tapGestureRecognizer : UITapGestureRecognizer!
-    var delegate: ResultsDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -62,35 +93,45 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     func setupViews() {
         
-        contentView.addSubview(score)
-        score.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        contentView.addSubview(titleLabel)
-        titleLabel.anchor(top: score.bottomAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        contentView.addSubview(descriptionLabel)
-        descriptionLabel.anchor(top: titleLabel.bottomAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        self.addSubview(placeImageView)
+        self.addSubview(stack)
+        stack.addArrangedSubview(placeImageView)
+        stack.backgroundColor = .white
+        let sv2 = UIStackView()
+        placeImageView.widthAnchor.constraint(equalToConstant:70).isActive = true
+        placeImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        placeImageView.backgroundColor = .white
+        sv2.alignment = .fill
+        sv2.distribution = .fill
+        sv2.axis = .vertical
+        sv2.addArrangedSubview(titleLabel)
+        sv2.addArrangedSubview(descriptionLabel)
+        stack.addArrangedSubview(sv2)
+        stack.spacing = 20
+        stack.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: -10, width: 0, height: 0)
+        self.addSubview(ratingLabel)
+        self.addSubview(priceLabel)
+        ratingLabel.anchor(top: stack.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        priceLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -20, width: 0, height: 0)
+        self.backgroundColor = .white
+        let shadowSize : CGFloat = 5.0
+        let shadowPath = UIBezierPath(roundedRect: CGRect(x: -shadowSize / 2,
+        y: -shadowSize / 2,
+        width: self.frame.size.width
+            + shadowSize,
+        height: self.frame.size.height + shadowSize), cornerRadius: 15)
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        self.layer.shadowOpacity = 0.5
+                self.layer.shadowRadius = 2
     
-         self.contentView.layer.cornerRadius = 35
-         self.contentView.layer.borderWidth = 1.0
-         self.contentView.layer.borderColor = UIColor.clear.cgColor
-         self.contentView.layer.masksToBounds = true
-
-         
-         self.layer.shadowColor = UIColor.gray.cgColor
-         self.layer.shadowOffset = CGSize(width: 0, height: 7.0)//CGSizeMake(0, 2.0);
-         self.layer.shadowRadius = 17
-         self.layer.shadowOpacity = 0.5
-         self.layer.masksToBounds = false
-         self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
-        
-        self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.tapGestureRecognizer.delegate = self
-        self.addGestureRecognizer(tapGestureRecognizer)
-        
+                self.layer.masksToBounds = false
+                self.layer.cornerRadius = 15
+                self.clipsToBounds = false
+            self.layer.shadowPath = shadowPath.cgPath
+       
     }
-    @objc func handleTap() {
-        delegate?.goToDetails(dateTitle: titleLabel.text!)
-        
-    }
+    
     
     
     

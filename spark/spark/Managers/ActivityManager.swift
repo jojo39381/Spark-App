@@ -63,7 +63,8 @@ struct ActivityManager {
             let session = URLSession(configuration: .default)
             print(components?.url)
             var count = 0
-            var result = [String:Details]()
+            var result = [Place]()
+            
             for (key, value) in categories {
 
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
@@ -76,7 +77,7 @@ struct ActivityManager {
                         if let parsed = self.parseData(restaurantData: safeData) {
                             let dataString = String(data: safeData, encoding: .utf8)
                             print(dataString)
-                            result.merge(dict:parsed)
+                            result += parsed
                         }
                     }
 
@@ -101,40 +102,46 @@ struct ActivityManager {
         
     }
 
-    func handleCompletion(data: [String: Details]?, response: URLResponse?, error: Error?) {
+    func handleCompletion(data: [Place]?, response: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
             return
         }
-        let model = ActivityModel(restaurants: data!)
+        let model = ActivityModel(activities: data!)
         self.delegate?.didLoadActivities(data: model)
 
 
     }
     
-    func parseData(restaurantData: Data) -> [String: Details]? {
+    func parseData(restaurantData: Data) -> [Place]? {
         let decoder = JSONDecoder()
         
         do {
             let decodedData = try decoder.decode(ActivityData.self, from: restaurantData)
-            var array = [String:Details]()
-            var restaurantData = ActivityModel(restaurants:array)
+            var array = [Place]()
+           
             
             for business in decodedData.businesses {
                 
-                print(business.name)
-                print(business.categories)
+                
                 
                 var alias = [String]()
                 for category in business.categories {
                         alias.append(category.title)
                     }
-                var result = Details(categories: alias, ratings: business.rating, numReviews: business.review_count, coordinates: business.coordinates, image_url: business.image_url, address: business.location.display_address)
+                var result = Place()
+                result.categories = alias
+                result.ratings = business.rating
+                result.numReviews = business.review_count
+                result.coordinates = business.coordinates
+                result.image_url = business.image_url
+                result.address = business.location.display_address
+                result.name = business.name
+                array.append(result)
                
-               
-                restaurantData.restaurants.updateValue(result, forKey: business.name)
             }
-            return restaurantData.restaurants
+            var activityData = ActivityModel(activities:array)
+            return activityData.activities
                 
         }
         catch {

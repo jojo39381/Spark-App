@@ -8,14 +8,10 @@
 
 import UIKit
 import MapKit
-class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDelegate {
+class DetailsViewController: UIViewController, MKMapViewDelegate {
     
     
-    func displaySuccessView() {
-        let vc = SuccessViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
+   
 
     var mapView: MKMapView = {
         let map = MKMapView()
@@ -45,7 +41,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
         setupNav()
         mapView.frame = self.view.frame
         mapView.delegate = self
-        placePlaces(dateDetails!.coordinates)
+        placePlaces(place!.coordinates)
         
         
         setupView()
@@ -55,17 +51,17 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     }
     
     override func viewDidLayoutSubviews() {
-        navigationController!.navigationBar.addSubview(scoresTableView)
-        scoresTableView.delegate = self
-        scoresTableView.dataSource = self
-        scoresTableView.backgroundColor = .clear
-        scoresTableView.isScrollEnabled = false
-        scoresTableView.register(UITableViewCell.self, forCellReuseIdentifier: "scores")
-        scoresTableView.translatesAutoresizingMaskIntoConstraints = false
-        scoresTableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: view.frame.height * 0.025).isActive = true
-        scoresTableView.rightAnchor.constraint(equalTo: (navigationController?.navigationBar.rightAnchor)!, constant: -view.frame.height * 0.025).isActive = true
-        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
-        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+//        navigationController!.navigationBar.addSubview(scoresTableView)
+//        scoresTableView.delegate = self
+//        scoresTableView.dataSource = self
+//        scoresTableView.backgroundColor = .clear
+//        scoresTableView.isScrollEnabled = false
+//        scoresTableView.register(UITableViewCell.self, forCellReuseIdentifier: "scores")
+//        scoresTableView.translatesAutoresizingMaskIntoConstraints = false
+//        scoresTableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: view.frame.height * 0.025).isActive = true
+//        scoresTableView.rightAnchor.constraint(equalTo: (navigationController?.navigationBar.rightAnchor)!, constant: -view.frame.height * 0.025).isActive = true
+//        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+//        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
     }
     
    
@@ -150,7 +146,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     func placePlaces(_ places: Coordinates) {
         
         let annotations = MKPointAnnotation()
-        annotations.title = dateTitle
+        annotations.title = place!.name
         annotations.coordinate = CLLocationCoordinate2D(latitude:
             CLLocationDegrees(places.latitude), longitude: CLLocationDegrees(places.longitude))
             mapView.addAnnotation(annotations)
@@ -240,21 +236,33 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
     
     
     
-    var dateTitle: String?
-    var dateDetails: Details?
+    
+    var adventureStart = false
+    var place: Place?
+    let iView = ItineraryView()
     func setupView() {
         
         
-        let iView = ItineraryView()
+        
+        iView.placeTitle.text = place?.name
+        iView.descriptionLabel.text = place?.address[0]
         self.view.addSubview(iView)
         iView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 100)
         self.view.addSubview(startButton)
         startButton.anchor(top: iView.bottomAnchor, left:view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 50)
-        
+        startButton.addTarget(self, action: #selector(startAdventure(_:)), for: .touchUpInside)
        
         
     }
     
+    
+    @objc func startAdventure(_ sender: UIButton) {
+        iView.isHidden = true
+        adventureStart = !adventureStart
+        startButton.setTitle(adventureStart ? "Finish" : "Start Adventure", for: .normal)
+        
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -267,63 +275,63 @@ class DetailsViewController: UIViewController, MKMapViewDelegate, ItineraryDeleg
 
 }
 
-extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return view.frame.height * 0.1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.height * 0.05
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        scoreButton = UIButton()
-        scoreButton.layer.cornerRadius = view.frame.height * 0.05
-        scoreButton.backgroundColor = .gray
-        scoreButton.setTitle(String(dateScores.reduce(0, +) / 3), for: .normal)
-        scoreButton.addTarget(self, action: #selector(handleDropDown), for: .touchUpInside)
-        return scoreButton
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return showScores ? dateScores.count: 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var type: String
-        let cell = tableView.dequeueReusableCell(withIdentifier: "scores", for: indexPath)
-        switch indexPath.item {
-        case 0:
-            type = "Rating: "
-        case 1:
-            type = "Popularity: "
-        case 2:
-            type = "Distance: "
-        default:
-            type = ""
-        }
-        cell.textLabel?.font = .systemFont(ofSize: 8)
-        cell.textLabel?.text = type + String(dateScores[indexPath.item])
-        return cell
-    }
-        
-    @objc func handleDropDown() {
-        showScores = !showScores
-        var indexPaths = [IndexPath]()
-        for i in 0..<dateScores.count {
-           indexPaths.append(IndexPath(row: i, section: 0))
-        }
-        if showScores {
-           scoresTableView.removeConstraint(scoresTableView.constraints[1])
-           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.25).isActive = true
-           scoresTableView.insertRows(at: indexPaths, with: .none)
-        } else {
-           scoresTableView.deleteRows(at: indexPaths, with: .none)
-           scoresTableView.removeConstraint(scoresTableView.constraints[1])
-           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
-        }
-    }
-}
+//extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return view.frame.height * 0.1
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return view.frame.height * 0.05
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        scoreButton = UIButton()
+//        scoreButton.layer.cornerRadius = view.frame.height * 0.05
+//        scoreButton.backgroundColor = .gray
+//        scoreButton.setTitle(String(dateScores.reduce(0, +) / 3), for: .normal)
+//        scoreButton.addTarget(self, action: #selector(handleDropDown), for: .touchUpInside)
+//        return scoreButton
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return showScores ? dateScores.count: 0
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        var type: String
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "scores", for: indexPath)
+//        switch indexPath.item {
+//        case 0:
+//            type = "Rating: "
+//        case 1:
+//            type = "Popularity: "
+//        case 2:
+//            type = "Distance: "
+//        default:
+//            type = ""
+//        }
+//        cell.textLabel?.font = .systemFont(ofSize: 8)
+//        cell.textLabel?.text = type + String(dateScores[indexPath.item])
+//        return cell
+//    }
+//
+//    @objc func handleDropDown() {
+//        showScores = !showScores
+//        var indexPaths = [IndexPath]()
+//        for i in 0..<dateScores.count {
+//           indexPaths.append(IndexPath(row: i, section: 0))
+//        }
+//        if showScores {
+//           scoresTableView.removeConstraint(scoresTableView.constraints[1])
+//           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.25).isActive = true
+//           scoresTableView.insertRows(at: indexPaths, with: .none)
+//        } else {
+//           scoresTableView.deleteRows(at: indexPaths, with: .none)
+//           scoresTableView.removeConstraint(scoresTableView.constraints[1])
+//           scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+//        }
+//    }
+//}
 
 extension UINavigationBar {
 open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

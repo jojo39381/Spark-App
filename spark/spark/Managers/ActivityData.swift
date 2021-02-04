@@ -15,7 +15,7 @@ struct ActivityData: Decodable {
 
 struct Business: Decodable {
     var name: String
-    var categories: [Lmao]
+    var categories: [Lol]
     var rating : Float
     var review_count: Float
     var coordinates: Coordinates
@@ -31,6 +31,18 @@ struct Lol: Decodable {
 
 struct Address: Decodable {
     var display_address: [String]
+}
+
+
+struct Coordinates: Decodable {
+    var latitude: Float
+    var longitude: Float
+    
+    init() {
+        latitude = 0.0
+        longitude = 0.0
+    
+    }
 }
 
 

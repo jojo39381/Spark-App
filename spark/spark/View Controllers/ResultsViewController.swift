@@ -10,15 +10,15 @@ import Foundation
 import UIKit
 import MapKit
 
-class ResultsViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, ResultsDelegate {
+class ResultsViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 45
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(dateTitles.count)
-        print("..........`")
-        return dateTitles.count
+        
+        print("..........")
+        return activityModel.activities.count
     }
     
     
@@ -27,9 +27,36 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //        let dateArray = dates[sortedDateScores[indexPath.item].key]!
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
-        let currentPlace = dateTitles[indexPath.item]
-        myCell.titleLabel.text = currentPlace
-        myCell.descriptionLabel.text = activityModel.restaurants[currentPlace]!.address[0]
+        let infor = activityModel.activities[indexPath.item]
+        myCell.titleLabel.text = infor.name
+        var address = infor.address
+        var addressString = ""
+        addressString.append(address[0] + "\n")
+        addressString.append(address[address.count - 1])
+        
+        print(address)
+        myCell.descriptionLabel.text = addressString
+        let url = URL(string: infor.image_url)
+        
+        URLSession.shared.dataTask(with: url!) { (data, response, err) in
+            //check for the error, then construct the image using data
+            if let err = err {
+                print("Failed to fetch profile image:", err)
+                return
+            }
+            
+            //perhaps check for response status of 200 (HTTP OK)
+            
+            guard let data = data else { return }
+            
+            let image = UIImage(data: data)
+            
+            //need to get back onto the main UI thread
+            DispatchQueue.main.async {
+                myCell.placeImageView.image = image
+            }
+            
+            }.resume()
 //        myCell.setupViews()
 //        myCell.dateArray = dates[sortedDateScores[indexPath.item].key]!
 //        var dateTitle = dates[sortedDateScores[indexPath.item].key]![0]
@@ -44,13 +71,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
 //        dateInfo.updateValue(Array(restaurantModel.restaurants[dateTitle]!), forKey: dateTitle)
 //        let address = dateInfo[dateTitle]![5] as! [String]
 //
-//        var addressString = ""
-//               for i in 0..<address.count {
-//                   addressString.append(address[i])
-//                   if i != address.count - 1 {
-//                       addressString.append("\n")
-//                   }
-//               }
+        
 //        myCell.descriptionLabel.text = addressString
 //
 //        return myCell
@@ -195,9 +216,12 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
 //    }
 //
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width * 0.9, height: 150)
+        return CGSize(width: collectionView.frame.width * 0.9, height: 110)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        goToDetails(place: activityModel.activities[indexPath.item])
+    }
     
     let resultsCollectionView : UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -226,31 +250,62 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         
         resultsCollectionView.frame = CGRect(x:0,y:0,width:view.frame.width, height:view.frame.height)
         
-        resultsCollectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        resultsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         resultsCollectionView.delegate = self
         resultsCollectionView.dataSource = self
         resultsCollectionView.register(ResultsCell.self, forCellWithReuseIdentifier: "lol")
         resultsCollectionView.backgroundColor = .white
+        resultsCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         setupNav()
         
         
     }
     
-    
-    func setupNav() {
-        let navigationBar = self.navigationController?.navigationBar
-        navigationItem.hidesBackButton = true
-        navigationBar?.prefersLargeTitles = true
-        navigationBar?.tintColor = .white
-        navigationBar?.backgroundColor = .white
-        self.title = "Spark"
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+         switch kind {
+
+         case UICollectionView.elementKindSectionHeader:
+
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! UICollectionReusableView
+            let title = UILabel()
+            title.text = "Popular Adventures"
+            title.font = UIFont.boldSystemFont(ofSize: 25)
+            headerView.addSubview(title)
+            title.anchor(top: headerView.topAnchor, left: headerView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+            headerView.addConstraint(NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1, constant: 0))
+            headerView.backgroundColor = UIColor.white;
+            
+               return headerView
+         default:
+            assert(false, "Unexpected element kind")
+    }
     }
     
     
-    func goToDetails(dateTitle : String) {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width:collectionView.frame.size.width, height:50.0)
+    }
+    
+    
+    func setupNav() {
+        let navigationBar = self.navigationController?.navigationBar
+        
+        
+       
+       
+        
+        navigationBar?.isTranslucent = true
+        self.title = "Spark"
+    }
+    
+
+    func goToDetails(place : Place) {
         let vc = DetailsViewController()
-        vc.dateTitle = dateTitle
-        vc.dateDetails = activityModel.restaurants[dateTitle]
+        
+        vc.place = place
         
         var startLocation = userLocation
 //        let act = activityModel.restaurants[dateTitle]

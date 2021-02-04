@@ -12,27 +12,27 @@ class SparkTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let first = HomeViewController();
-        first.title = "Home"
-        let navigation = UINavigationController(rootViewController:first);
         
         
+        
+        let layout = UICollectionViewFlowLayout()
+        let homeViewController = HomeViewController(collectionViewLayout: layout)
+        let navigation = UINavigationController(rootViewController:homeViewController);
        
         
-        let secondNav = UINavigationController(rootViewController:ActivityViewController());
+        let secondNav = UINavigationController(rootViewController:UIViewController());
         secondNav.title = "Activities"
         
-        let third = UIViewController();
-        third.title = "Inbox"
+        let third = TypesController()
+        third.title = "Add"
         let thirdNav = UINavigationController(rootViewController:third);
-        
         let fourth = ProfileViewController();
         fourth.title = "Profile"
         let fourthNav = UINavigationController(rootViewController:fourth);
         
         
         
-        self.viewControllers = [navigation, secondNav, third, fourthNav]
+        self.viewControllers = [navigation, secondNav, thirdNav, fourthNav]
         self.tabBar.items![0].image = UIImage(named:"house")
         self.tabBar.items![1].image = UIImage(named:"calendar")
         self.tabBar.items![2].image = UIImage(named:"plus.circle")
@@ -51,15 +51,7 @@ class SparkTabBarController: UITabBarController {
 
           print("hello)")
     
-        if item.tag == 1 {
-            let third = TypesController()
-            third.title = "Add"
-            let thirdNav = UINavigationController(rootViewController:third);
-            
-            thirdNav.modalPresentationStyle = .fullScreen
-            
-            self.present(thirdNav, animated: true, completion: nil)
-          }
+       
     }
 
     /*

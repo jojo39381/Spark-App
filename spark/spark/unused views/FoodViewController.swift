@@ -328,42 +328,66 @@ class FoodViewController: UIViewController, UICollectionViewDataSource, UICollec
 class CategoryCell: UICollectionViewCell {
     let category: UILabel = {
         let label = UILabel()
-        label.text = "haha"
+        label.text = ""
         label.textAlignment = .center
         label.font = label.font.withSize(20)
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = .black
         return label
     }()
     
     let imageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named:"checkmark")?.withRenderingMode(.alwaysTemplate)
-        image.tintColor = .white
-        image.alpha = 0
+       
         return image
     }()
 
+    var dateInfo:Place? {
+        didSet {
+            downloadImage()
+        }
+    }
+    
+    func downloadImage() {
+        guard let url = URL(string: dateInfo!.image_url) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            //check for the error, then construct the image using data
+            if let err = err {
+                print("Failed to fetch profile image:", err)
+                return
+            }
+            
+            //perhaps check for response status of 200 (HTTP OK)
+            
+            guard let data = data else { return }
+            
+            let image = UIImage(data: data)
+            
+            //need to get back onto the main UI thread
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+            
+            }.resume()
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(category)
-        contentView.addSubview(imageView)
-        imageView.frame = CGRect(x:frame.width - 35,y:20, width:20, height:20)
-        category.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height:0)
-        self.contentView.layer.cornerRadius = 35
-        self.contentView.layer.borderWidth = 1.0
-        self.contentView.layer.borderColor = UIColor.clear.cgColor
-        self.contentView.layer.masksToBounds = true
-        self.layer.cornerRadius = 35
+        self.addSubview(category)
+        self.addSubview(imageView)
+        
+        
+        imageView.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        category.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        self.layer.cornerRadius = 2
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.clear.cgColor
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 20
         
         self.layer.backgroundColor = UIColor.clear.cgColor
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 8)//CGSizeMake(0, 2.0);
-        self.layer.shadowRadius = 6
-        self.layer.shadowOpacity = 0.5
-        self.layer.masksToBounds = false
-        self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
-        
+     
         
             
     }

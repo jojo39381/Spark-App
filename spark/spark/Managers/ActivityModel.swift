@@ -12,10 +12,22 @@ struct ActivityModel {
     
     
     // [businessName : [[categories that it belongs to], ratings, numReviews, [latitude, longitude], image_url, address]
-    var restaurants: [String:Details]
+    var activities: [Place]
 }
 
-struct Details {
+
+
+struct Place {
+    init() {
+        name = ""
+        categories = [String]()
+        ratings = 0.0
+        numReviews = 0
+        coordinates = Coordinates()
+        image_url = ""
+        address = [String]()
+        }
+    var name: String
     var categories: [String]
     var ratings: Float
     var numReviews: Float

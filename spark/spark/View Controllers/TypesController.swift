@@ -9,16 +9,17 @@
 import Foundation
 import UIKit
 
-class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate, RestaurantsManagerDelegate {
+class TypesController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DescriptionsDelegate, ActivityManagerDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = typeList?.count
-        return count!
+        let count = typeList.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath) as! CategoryCell
-        myCell.category.text = typeList?[indexPath.item]
-        myCell.contentView.backgroundColor = colors[indexPath.item]
+        myCell.category.text = typeList[indexPath.item]
+        print(typeList[indexPath.item])
+        myCell.backgroundColor = colors[indexPath.item]
         
         return myCell
     }
@@ -39,7 +40,7 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
-        filterSelected(key: (typeList?[indexPath.item])!)
+        filterSelected(key: (typeList[indexPath.item]))
         
     }
     
@@ -64,37 +65,42 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     
     
     let dateModel = DateModel()
-    var typeList: [String]?
+    var typeList = [String]()
     var userSelectedModel = UserSelectedModel()
     override func viewDidLoad() {
         userSelectedModel.preferences = preferences
+        typeList = dateModel.dateCategories
         view.addSubview(typesCollectionView)
         view.addSubview(instructions)
         view.backgroundColor = .white
         
-        view.addConstraintsWithFormat(format: "H:|-20-[v0]-20-|", views: instructions)
-        
-        view.addConstraintsWithFormat(format: "H:|[v0]|", views: typesCollectionView)
-        view.addConstraintsWithFormat(format: "V:|-50-[v0]-20-[v1]|", views: instructions, typesCollectionView )
+        instructions.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 50, paddingBottom: 0, paddingRight: -50, width: 0, height: 0)
+        typesCollectionView.anchor(top: instructions.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         typesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
      
         typesCollectionView.dataSource = self
         typesCollectionView.delegate = self
         typesCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "myCell")
-        typeList = dateModel.dateCategories
+        
         setupNav()
         
         
         
-        
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setupNav()
+    }
+
     func setupNav() {
         let navigationBar = self.navigationController?.navigationBar
-        navigationItem.hidesBackButton = true
-        navigationBar?.prefersLargeTitles = true
+        navigationItem.hidesBackButton = false
+        
         navigationBar?.tintColor = .white
         navigationBar?.backgroundColor = .white
+        navigationBar?.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
+        
         self.title = "Spark"
     }
     func didSearchForDates(key: String) {
@@ -111,29 +117,9 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         
     }
     
-    
-    
-    var restaurants: RestaurantModel!
-    var activities: ActivityModel!
-    func didLoadRestaurants(data: RestaurantModel) {
-        restaurants = data
-       DispatchQueue.main.async {
 
-            let vc = ResultsViewController()
-            vc.activityModel = self.activities
-            
-        
-        
-        
-        
-        
-        
-        
-        
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        
-    }
+    var activities: ActivityModel!
+
     
     func didLoadActivities(data: ActivityModel) {
         activities = data
@@ -146,7 +132,7 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
 
                    let vc = ResultsViewController()
                    vc.activityModel = self.activities
-                    vc.dateTitles = Array(self.activities.restaurants.keys)
+                    
             
                   
                    self.navigationController?.pushViewController(vc, animated: true)
