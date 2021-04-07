@@ -15,6 +15,7 @@ class Utilities {
         textfield.layer.addSublayer(bottomLine)
         textfield.font = UIFont(name: "RopaSans-Regular", size: 24)
     }
+    
     static func styleYellowButton(_ button:UIButton) {
         // Filled rounded corner style
         button.backgroundColor = UIColor(red: 1, green: 1, blue: 74/255, alpha: 1)
@@ -22,6 +23,7 @@ class Utilities {
         button.titleLabel?.font = UIFont(name: "RopaSans-Regular", size: 36)
         button.layer.cornerRadius = UIScreen.main.bounds.height * 0.04
     }
+    
     static func styleBlueButton(_ button:UIButton) {
         // Filled rounded corner style
         button.backgroundColor = UIColor(red: 23/255, green: 50/255, blue: 69/255, alpha: 1)
@@ -29,10 +31,12 @@ class Utilities {
         button.titleLabel?.font = UIFont(name: "RopaSans-Regular", size: 36)
         button.layer.cornerRadius = UIScreen.main.bounds.height * 0.04
     }
+    
     static func isPasswordValid(_ password : String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
+    
     static func handleError(error: Error) -> String {
        /// the user is not registered
        /// user not found
@@ -55,41 +59,50 @@ class Utilities {
        default: fatalError("*Error not supported here")
        }
     }
+    
     static func fetchProfileData(completion: @escaping () -> Void) {
-        if auth.currentUser?.photoURL != nil {
-            let storageRef = storage.reference(withPath: "\(auth.currentUser!.uid)/profile.jpg")
-            storageRef.getData(maxSize: 999999999) {(data, error) in
-                if error != nil {
-                    print(error!)
-                }
-                if let data = data {
-                    image = UIImage(data: data)
-                    let docRef = db.collection("users").document(auth.currentUser!.uid)
-                    docRef.getDocument {(document, error) in
-                        username = document?.get("username") as! String
-                        bio = document?.get("bio") as! String
-                        preferences = document?.get("preferences") as! [String: [String]]
-                        completion()
-                    }
-                }
+        let storageRef = storage.reference(withPath: "\(auth.currentUser!.uid)/profile.jpg")
+        storageRef.getData(maxSize: 999999999) {(data, error) in
+            if error != nil {
+                print(error!)
             }
-        } else {
+            if let data = data {
+                image = UIImage(data: data)
+            }
             let docRef = db.collection("users").document(auth.currentUser!.uid)
             docRef.getDocument {(document, error) in
-                image = UIImage()
                 username = document?.get("username") as! String
-                bio = document?.get("bio") as! String
                 preferences = document?.get("preferences") as! [String: [String]]
                 completion()
             }
         }
     }
+    
     static func checkUsername(username: String, completion: @escaping (Bool) -> Void) {
         db.collection("users").whereField("username", isEqualTo: username).getDocuments() { (snapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 completion(snapshot?.count != 0)
+            }
+        }
+    }
+    
+    static func searchUser(str: String, completion: @escaping ([String],[String]) -> Void) {
+        var users = [String]()
+        var uids = [String]()
+        db.collection("users").getDocuments() { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in snapshot!.documents {
+                    let user = document.data()["username"] as! String
+                    if (user != username && user.lowercased().contains(str.lowercased())) {
+                        users.append(user)
+                        uids.append(document.documentID)
+                    }
+                }
+                completion(users, uids)
             }
         }
     }

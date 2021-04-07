@@ -1,12 +1,8 @@
 import UIKit
 class SetupProfileViewController: UIViewController {
-    var firstTimeUser = false
     var titleLabel: UILabel!
     var profileTableView: UITableView!
     override func viewDidLoad() {
-        if firstTimeUser {
-            navigationItem.hidesBackButton = true
-        }
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         titleLabel = UILabel()
@@ -34,16 +30,12 @@ class SetupProfileViewController: UIViewController {
         profileTableView.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
-        db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!, "bio": bio!]) { (error) in
+        db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!]) { (error) in
             super.viewWillDisappear(animated)
         }
     }
     func navigate() {
-        if firstTimeUser {
-            self.navigationController?.pushViewController(QuestionsViewController(), animated: false)
-        } else {
-            self.navigationController?.popToRootViewController(animated: false)
-        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     func logoutButtonTapped() {
         try! auth.signOut()
@@ -74,8 +66,7 @@ extension SetupProfileViewController: UITableViewDelegate, UITableViewDataSource
                 cell.detailTextLabel?.text = username
             case 1:
                 cell.accessoryType = .disclosureIndicator
-                cell.textLabel?.text = "Bio"
-                cell.detailTextLabel?.text = bio
+                cell.textLabel?.text = "Preferences"
             default:
                 print("nothing")
             }
@@ -104,7 +95,7 @@ extension SetupProfileViewController: UITableViewDelegate, UITableViewDataSource
             case 0:
                 navigationController?.pushViewController(SetupUsernameViewController(), animated: true)
             case 1:
-                navigationController?.pushViewController(SetupBioViewController(), animated: true)
+                navigationController?.pushViewController(QuestionsViewController(), animated: true)
             default:
                 print("nothing")
             }

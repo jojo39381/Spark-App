@@ -8,12 +8,13 @@
 import UIKit
 import Firebase
 var username: String!
-var bio: String!
 var image: UIImage!
 var preferences = [String: [String]]()
 class ProfileViewController: UIViewController {
+    var pUsername: String!
+    var pImage: UIImage!
+    var pUid: String!
     var usernameLabel: UILabel!
-    var bioTextView: UITextView!
     var stack: UIStackView!
     var posts: UILabel!
     var adventures: UILabel!
@@ -21,14 +22,22 @@ class ProfileViewController: UIViewController {
     var imagePicker: UIImagePickerController = UIImagePickerController()
     var profileImageView: UIImageView!
     var dateTableView: UITableView!
-    var friendButton: UIButton!
     var numPos: Int = 10
     var numAdv: Int = 10
-    var numFri: Int = 10
+    var numFri: Int = 0
     override func viewWillAppear(_ animated: Bool) {
-        usernameLabel.text = username
-        bioTextView.text = bio
-        profileImageView.image = image
+        let docRef = db.collection("users").document(auth.currentUser!.uid)
+        docRef.getDocument {(document, error) in
+            if self.pUid == auth.currentUser?.uid {
+                self.usernameLabel.text = username
+                self.profileImageView.image = image
+                self.friends.text = "\(self.numFri)\nFriends"
+            } else {
+                self.usernameLabel.text = self.pUsername
+                self.profileImageView.image = self.pImage
+                self.friends.text = "\(self.numFri)\nFriends"
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,16 +46,17 @@ class ProfileViewController: UIViewController {
         setupProfileInfo()
         setupStack()
         setupDateTable()
-        let gear = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: #selector(settingsButtonTapped))
-        gear.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36), NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
-        navigationItem.rightBarButtonItem = gear
+        if pUid == auth.currentUser?.uid {
+            let gear = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: #selector(settingsButtonTapped))
+            gear.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36), NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+            navigationItem.rightBarButtonItem = gear
+        }
     }
+    
     @objc func settingsButtonTapped() {
         navigationController?.pushViewController(SetupProfileViewController(), animated: false)
     }
-    @objc func friendButtonTapped() {
-        print("friends!")
-    }
+    
     @objc func pfpImageTapped() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
@@ -80,16 +90,6 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = view.frame.width * 0.1
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pfpImageTapped)))
-        friendButton = UIButton()
-        view.addSubview(friendButton)
-        let image = UIImage(systemName: "person.badge.plus.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25))?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        friendButton.setImage(image, for: .normal)
-        friendButton.addTarget(self, action: #selector(friendButtonTapped), for: .touchUpInside)
-        friendButton.translatesAutoresizingMaskIntoConstraints = false
-        friendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width * 0.35).isActive = true
-        friendButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.2).isActive = true
-        friendButton.widthAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
-        friendButton.heightAnchor.constraint(equalToConstant: view.frame.width * 0.2).isActive = true
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
@@ -107,12 +107,6 @@ class ProfileViewController: UIViewController {
         usernameLabel.numberOfLines = 1
         usernameLabel.sizeToFit()
         stackView.addArrangedSubview(usernameLabel)
-        bioTextView = UITextView()
-        bioTextView.isEditable = false
-        bioTextView.isScrollEnabled = false
-        bioTextView.font = UIFont(name: "RopaSans-Regular", size: 14)
-        bioTextView.textColor = UIColor(red: 23/255, green: 50/255, blue: 69/255, alpha: 1)
-        stackView.addArrangedSubview(bioTextView)
     }
     func setupStack() {
         posts = UILabel()
@@ -148,9 +142,9 @@ class ProfileViewController: UIViewController {
         dateTableView.backgroundColor = UIColor.white
         self.view.addSubview(dateTableView)
         dateTableView.translatesAutoresizingMaskIntoConstraints = false
-        dateTableView.rowHeight = view.frame.height * 0.2
+        dateTableView.rowHeight = view.frame.width * (0.07 + 0.84 * 0.46)
         dateTableView.topAnchor.constraint(equalTo: stack.bottomAnchor).isActive = true
-        dateTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.1).isActive = true
+        dateTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -view.frame.width * 0.08).isActive = true
         dateTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: view.frame.width * 0.08).isActive = true
         dateTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }

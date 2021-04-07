@@ -27,6 +27,7 @@ class SparkTabBarController: UITabBarController {
         third.title = "Add"
         let thirdNav = UINavigationController(rootViewController:third);
         let fourth = ProfileViewController();
+        fourth.pUid = auth.currentUser?.uid
         fourth.title = "Profile"
         let fourthNav = UINavigationController(rootViewController:fourth);
         

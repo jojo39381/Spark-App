@@ -144,8 +144,7 @@ class LoginViewController: UIViewController {
             } else {
                 Utilities.fetchProfileData() {
                     if self.firstTimeUser.contains(self.emailTextField.text!) {
-                        let vc = SetupProfileViewController()
-                        vc.firstTimeUser = true
+                        let vc = QuestionsViewController()
                         self.present(vc, animated: false, completion: nil)
                     } else {
                         let sparkTabBarController = SparkTabBarController()

@@ -24,7 +24,7 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         return myCell
     }
     
-    var colors = [UIColor.flatBlueColorDark(), UIColor.flatRed(), UIColor.flatMint(), UIColor.flatPowderBlueColorDark(), UIColor.flatYellowColorDark(), UIColor.flatTeal()]
+    var colors = [UIColor.blue, UIColor.red, UIColor.magenta, UIColor.blue, UIColor.yellow, UIColor.purple]
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width/2 - 20, height : 180)

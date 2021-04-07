@@ -30,7 +30,7 @@ class DescriptionCell: UICollectionViewCell {
     let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("next", for: .normal)
-        button.backgroundColor = UIColor.flatSkyBlue()  
+        button.backgroundColor = .blue
         
         return button
     }()

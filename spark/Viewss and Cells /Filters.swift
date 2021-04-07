@@ -14,7 +14,7 @@ class Filters: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, U
         
         let cv = UICollectionView(frame:.zero, collectionViewLayout: layout)
         
-        cv.backgroundColor = UIColor.flatBlue()
+        cv.backgroundColor = UIColor.blue
         
         return cv
         
@@ -69,7 +69,7 @@ class Filters: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FilterScreenCell
-        cell.timeButton.backgroundColor = .init(randomFlatColorOf: .light)
+        cell.timeButton.backgroundColor = .init(.cyan)
         cell.timeLabel.text = selectionArray[indexPath.item]
         cell.selectButton.addTarget(self, action: #selector(selectTime(_:)), for: .touchUpInside)
         

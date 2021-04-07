@@ -26,7 +26,7 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         
         let cv = UICollectionView(frame:.zero, collectionViewLayout: layout)
         
-        cv.backgroundColor = UIColor.flatWhite()
+        cv.backgroundColor = .white
         
         return cv
         

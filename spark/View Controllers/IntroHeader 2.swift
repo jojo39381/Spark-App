@@ -10,8 +10,10 @@ import UIKit
 
 
 class IntroHeader: UICollectionViewCell {
+    
     let introLabel:UILabel = {
         let label = UILabel()
+        label.text = "Hi John!\nLet's start your adventure."
         label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
@@ -23,9 +25,9 @@ class IntroHeader: UICollectionViewCell {
         sb.searchBarStyle = .minimal;
         return sb
     }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         backgroundColor = .white
         self.addSubview(introLabel)
         self.addSubview(searchBar)
@@ -33,9 +35,6 @@ class IntroHeader: UICollectionViewCell {
         searchBar.anchor(top: introLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -10, paddingRight: -20, width: 0, height: 0)
     }
     
-    func updateCellWithName(name: String) {
-        introLabel.text = "Hi \(name)!\nLet's start your adventure."
-    }
   
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

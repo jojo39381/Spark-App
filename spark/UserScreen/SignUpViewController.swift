@@ -175,7 +175,7 @@ class SignUpViewController: UIViewController {
                         }
                         else {
                             // User was created successfully, now store the first name and last name
-                            db.collection("users").document(result!.user.uid).setData(["username": self.usernameTextField.text!, "bio": "", "preferences": [String: String]()]) { (error) in
+                            db.collection("users").document(result!.user.uid).setData(["username": self.usernameTextField.text!, "preferences": [String: String]()]) { (error) in
                                 if error != nil {
                                     // Show error message
                                     self.errorLabel.text = Utilities.handleError(error: error!)

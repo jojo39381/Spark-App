@@ -18,6 +18,55 @@ extension UIColor {
         
     }
 }
+
+extension UINavigationController {
+
+    func setStatusBar(backgroundColor: UIColor) {
+        let statusBarFrame: CGRect
+        if #available(iOS 13.0, *) {
+            statusBarFrame = view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
+        } else {
+            statusBarFrame = UIApplication.shared.statusBarFrame
+        }
+        let statusBarView = UIView(frame: statusBarFrame)
+        statusBarView.backgroundColor = backgroundColor
+        view.addSubview(statusBarView)
+    }
+
+}
+extension UILabel
+{
+    func addImage(imageName: String, afterLabel bolAfterLabel: Bool = false)
+    {
+        let attachment: NSTextAttachment = NSTextAttachment()
+        attachment.image = UIImage(named: imageName)
+        let attachmentString: NSAttributedString = NSAttributedString(attachment: attachment)
+
+        if (bolAfterLabel)
+        {
+            let strLabelText: NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
+            strLabelText.append(attachmentString)
+
+            self.attributedText = strLabelText
+        }
+        else
+        {
+            let strLabelText: NSAttributedString = NSAttributedString(string: self.text!)
+            let mutableAttachmentString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attachmentString)
+            mutableAttachmentString.append(strLabelText)
+
+            self.attributedText = mutableAttachmentString
+        }
+    }
+
+    func removeImage()
+    {
+        let text = self.text
+        self.attributedText = nil
+        self.text = text
+    }
+}
+
     
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
