@@ -94,12 +94,10 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     }
     @objc func selectTime(_ sender: UIButton) {
         if !sender.isSelected {
-            print("aaaaaaa")
             sender.backgroundColor = .black
             sender.isSelected = true
         }
         else {
-            print("bbbbbbbbbbb")
             sender.backgroundColor = .clear
             sender.isSelected = false
             

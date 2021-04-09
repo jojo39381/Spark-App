@@ -25,7 +25,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("/////////////////////")
         userLocation = locations.last
         locationSet = true
         print(userLocation)
@@ -36,7 +35,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Profile"
         collectionView?.backgroundColor = .white
         
        
@@ -137,7 +135,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath) as! IntroHeader
-        header.updateCellWithName(name: "John")
+        header.updateCellWithName(name: username)
         return header
     }
     

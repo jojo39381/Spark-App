@@ -9,10 +9,6 @@
 import UIKit
 import MapKit
 class DetailsViewController: UIViewController, MKMapViewDelegate {
-    
-    
-   
-
     var mapView: MKMapView = {
         let map = MKMapView()
         return map
@@ -33,9 +29,9 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         view.backgroundColor = .white
         if CLLocationManager.locationServicesEnabled() {
-           checkLocationAuthorization()
+            checkLocationAuthorization()
         } else {
-           // Do something to let users know why they need to turn it on.
+            // Do something to let users know why they need to turn it on.
         }
         view.addSubview(mapView)
         setupNav()
@@ -51,20 +47,20 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewDidLayoutSubviews() {
-//        navigationController!.navigationBar.addSubview(scoresTableView)
-//        scoresTableView.delegate = self
-//        scoresTableView.dataSource = self
-//        scoresTableView.backgroundColor = .clear
-//        scoresTableView.isScrollEnabled = false
-//        scoresTableView.register(UITableViewCell.self, forCellReuseIdentifier: "scores")
-//        scoresTableView.translatesAutoresizingMaskIntoConstraints = false
-//        scoresTableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: view.frame.height * 0.025).isActive = true
-//        scoresTableView.rightAnchor.constraint(equalTo: (navigationController?.navigationBar.rightAnchor)!, constant: -view.frame.height * 0.025).isActive = true
-//        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
-//        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+        //        navigationController!.navigationBar.addSubview(scoresTableView)
+        //        scoresTableView.delegate = self
+        //        scoresTableView.dataSource = self
+        //        scoresTableView.backgroundColor = .clear
+        //        scoresTableView.isScrollEnabled = false
+        //        scoresTableView.register(UITableViewCell.self, forCellReuseIdentifier: "scores")
+        //        scoresTableView.translatesAutoresizingMaskIntoConstraints = false
+        //        scoresTableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.topAnchor)!, constant: view.frame.height * 0.025).isActive = true
+        //        scoresTableView.rightAnchor.constraint(equalTo: (navigationController?.navigationBar.rightAnchor)!, constant: -view.frame.height * 0.025).isActive = true
+        //        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
+        //        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
     }
     
-   
+    
     
     var arrayOfRoutes: [MKRoute]?
     func findRoutes(source: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
@@ -72,45 +68,43 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         let directionRequest = MKDirections.Request()
         let destinationPlacemark = MKPlacemark(coordinate: destination)
         let sourcePlacemark = MKPlacemark(coordinate: source)
-            print("//////////")
-            print(locationManager.location!.coordinate)
-            directionRequest.source = MKMapItem(placemark: sourcePlacemark)
-            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
-            directionRequest.transportType = .automobile
-            
-            // calculate the directions / route
-            let directions = MKDirections(request: directionRequest)
-            directions.calculate { (directionsResponse, error) in
-                guard let directionsResponse = directionsResponse else {
-                    if let error = error {
-                        print("error getting directions: \(error.localizedDescription)")
-                    }
-                    return
+        directionRequest.source = MKMapItem(placemark: sourcePlacemark)
+        directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+        directionRequest.transportType = .automobile
+        
+        // calculate the directions / route
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate { (directionsResponse, error) in
+            guard let directionsResponse = directionsResponse else {
+                if let error = error {
+                    print("error getting directions: \(error.localizedDescription)")
                 }
-                
-                let route = directionsResponse.routes[0]
-                
-                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-                
-                let routeRect = route.polyline.boundingMapRect
-                self.mapView.setRegion(MKCoordinateRegion(routeRect), animated: true)
+                return
             }
+            
+            let route = directionsResponse.routes[0]
+            
+            self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+            
+            let routeRect = route.polyline.boundingMapRect
+            self.mapView.setRegion(MKCoordinateRegion(routeRect), animated: true)
         }
+    }
     
     
     func checkLocationAuthorization() {
         switch CLLocationManager.authorizationStatus() {
-            case .authorizedWhenInUse:
-                mapView.showsUserLocation = true
-            case .denied: // Show alert telling users how to turn on permissions
-                break
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-                mapView.showsUserLocation = true
-            case .restricted: // Show an alert letting them know what’s up
-                break
-            case .authorizedAlways:
-                break
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+        case .denied: // Show alert telling users how to turn on permissions
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            mapView.showsUserLocation = true
+        case .restricted: // Show an alert letting them know what’s up
+            break
+        case .authorizedAlways:
+            break
         }
     }
     func centerMapOnUserLocation() {
@@ -118,90 +112,29 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
         findRoutes(source: locationManager.location!.coordinate, destination: mapView.annotations[0].coordinate)
-        
-        print(mapView.annotations[0].title)
         for i in 0..<mapView.annotations.count - 1 {
-            print(mapView.annotations[i].title)
             findRoutes(source: mapView.annotations[i].coordinate, destination: mapView.annotations[i+1].coordinate)
         }
     }
-
-
-
+    
     func setupNav() {
         let navigationBar = self.navigationController?.navigationBar
         navigationItem.hidesBackButton = false
-        
         navigationBar?.backgroundColor = .clear
-       navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         self.title = "Spark"
-        
-        
-        
-        
-        
     }
+    
     func placePlaces(_ places: Coordinates) {
-        
         let annotations = MKPointAnnotation()
         annotations.title = place!.name
         annotations.coordinate = CLLocationCoordinate2D(latitude:
-            CLLocationDegrees(places.latitude), longitude: CLLocationDegrees(places.longitude))
-            mapView.addAnnotation(annotations)
-        
+                                                            CLLocationDegrees(places.latitude), longitude: CLLocationDegrees(places.longitude))
+        mapView.addAnnotation(annotations)
         centerMapOnUserLocation()
-        
-     
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer
     {
@@ -213,10 +146,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         return renderer
     }
     
-    
-    
     override func viewWillDisappear(_ animated: Bool) {
-       
         scoresTableView.removeFromSuperview()
     }
     
@@ -234,15 +164,10 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         return button
     }()
     
-    
-    
-    
     var adventureStart = false
     var place: Place?
     let iView = ItineraryView()
     func setupView() {
-        
-        
         
         iView.placeTitle.text = place?.name
         iView.descriptionLabel.text = place?.address[0]
@@ -250,9 +175,7 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         iView.anchor(top: nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 100)
         self.view.addSubview(startButton)
         startButton.anchor(top: iView.bottomAnchor, left:view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: -20, paddingRight: -20, width: 0, height: 50)
-        startButton.addTarget(self, action: #selector(startAdventure(_:)), for: .touchUpInside)
-       
-        
+        startButton.addTarget(self, action: #selector(startAdventure(_:)), for: .touchUpInside)  
     }
     
     
@@ -264,15 +187,15 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 //extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -334,8 +257,8 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
 //}
 
 extension UINavigationBar {
-open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "tapNavigationBar"), object: nil, userInfo: ["point": point, "event": event as Any])
-    return super.hitTest(point, with: event)
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "tapNavigationBar"), object: nil, userInfo: ["point": point, "event": event as Any])
+        return super.hitTest(point, with: event)
     }
 }

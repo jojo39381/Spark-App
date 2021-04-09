@@ -172,8 +172,5 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         descriptions.delegate = self
         descriptions.key = key
         descriptions.showFilters()
-        
-        
-        
     }
 }

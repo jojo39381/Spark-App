@@ -4,6 +4,8 @@ class SetupProfileViewController: UIViewController {
     var profileTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(auth.currentUser)
+
         view.backgroundColor = .systemGray6
         titleLabel = UILabel()
         view.addSubview(titleLabel)
@@ -31,14 +33,14 @@ class SetupProfileViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!]) { (error) in
+            try! auth.signOut()
             super.viewWillDisappear(animated)
         }
     }
     func navigate() {
-        self.navigationController?.popToRootViewController(animated: false)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     func logoutButtonTapped() {
-        try! auth.signOut()
         self.view.window?.rootViewController = StartViewController()
         self.view.window?.makeKeyAndVisible()
     }

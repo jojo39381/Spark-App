@@ -21,10 +21,9 @@ class CategoryCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let image = UIImageView()
-       
         return image
     }()
-
+    
     var dateInfo:Place? {
         didSet {
             downloadImage()
@@ -33,7 +32,6 @@ class CategoryCell: UICollectionViewCell {
     
     func downloadImage() {
         guard let url = URL(string: dateInfo!.image_url) else { return }
-        
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             //check for the error, then construct the image using data
             if let err = err {
@@ -42,7 +40,6 @@ class CategoryCell: UICollectionViewCell {
             }
             
             //perhaps check for response status of 200 (HTTP OK)
-            
             guard let data = data else { return }
             
             let image = UIImage(data: data)
@@ -51,14 +48,12 @@ class CategoryCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 self.imageView.image = image
             }
-            
-            }.resume()
+        }.resume()
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(category)
         self.addSubview(imageView)
-        
         
         imageView.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         category.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -68,11 +63,7 @@ class CategoryCell: UICollectionViewCell {
         self.layer.borderColor = UIColor.clear.cgColor
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 20
-        
         self.layer.backgroundColor = UIColor.clear.cgColor
-     
-        
-            
     }
     
     required init?(coder: NSCoder) {
@@ -83,13 +74,8 @@ class CategoryCell: UICollectionViewCell {
     
     func createGradientLayer() {
         gradientLayer = CAGradientLayer()
-     
         gradientLayer.frame = self.bounds
-     
         gradientLayer.colors = [UIColor.rgb(red: 241, green: 39, blue: 17).cgColor, UIColor.rgb(red: 245, green: 175, blue: 25).cgColor]
-    
         self.layer.addSublayer(gradientLayer)
     }
-    
-    
 }

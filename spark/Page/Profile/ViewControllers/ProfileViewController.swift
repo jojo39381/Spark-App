@@ -54,7 +54,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func settingsButtonTapped() {
-        navigationController?.pushViewController(SetupProfileViewController(), animated: false)
+        navigationController?.pushViewController(SetupProfileViewController(), animated: true)
     }
     
     @objc func pfpImageTapped() {

@@ -59,7 +59,7 @@ class LoginViewController: UIViewController {
                        }, completion: { (isCompleted) in
                            if isCompleted {
                                // Dismiss the view when it dissapeared
-                            self.dismiss(animated: false, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
                            }
                        })
                    } else {
@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     @objc func backTapped() {
-        self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     @objc func loginTapped() {
         errorLabel.textColor = .systemRed
@@ -145,7 +145,8 @@ class LoginViewController: UIViewController {
                 Utilities.fetchProfileData() {
                     if self.firstTimeUser.contains(self.emailTextField.text!) {
                         let vc = QuestionsViewController()
-                        self.present(vc, animated: false, completion: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true, completion: nil)
                     } else {
                         let sparkTabBarController = SparkTabBarController()
                         self.view.window!.rootViewController = sparkTabBarController

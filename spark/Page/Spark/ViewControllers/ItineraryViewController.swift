@@ -8,9 +8,11 @@
 
 import UIKit
 import MapKit
+
 protocol ItineraryDelegate {
     func displaySuccessView()
 }
+
 class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -26,9 +28,6 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
         let cur = dateOrder![indexPath.item]
         myCell.imageView.downloaded(from: dateInfo![cur]![4] as! String)
         let titleString = NSMutableAttributedString.init(string: cur + "\n" + (dateInfo![cur]![0] as! [String])[0])
-        print(";;;;;;;;;;;;")
-        print(cur.count)
-        print(titleString.length)
         titleString.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15),
                                    NSAttributedString.Key.foregroundColor: UIColor.gray],
                                   range: NSMakeRange(cur.count, titleString.length - cur.count))
@@ -37,8 +36,6 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
         myCell.review.text = String(dateInfo![cur]![1] as! Float) + " (\(numReviews))"
         
         let address = dateInfo![cur]![5] as! [String]
-        print("///////////")
-        
         var addressString = ""
         for i in 0..<address.count {
             addressString.append(address[i])
@@ -46,12 +43,9 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
                 addressString.append("\n")
             }
         }
-        print(addressString)
         myCell.address.text = addressString
        
-        print((dateInfo![cur]![0] as! [String])[0])
 //        myCell.category.text = (dateInfo![cur]![0] as! [String])[0]
-        print("/////////")
         
         myCell.goButton.tag = indexPath.item
         myCell.goButton.addTarget(self, action: #selector(getDirection(_:)), for: .touchUpInside)
@@ -67,7 +61,6 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
     }
     
     @objc func getDirection(_ sender: UIButton) {
-        print("hello")
         let cur = dateOrder![sender.tag]
         let coordinates = dateInfo![cur]![3] as! [Float]
         let clCoordinates = CLLocationCoordinate2D(latitude:
@@ -119,6 +112,7 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
     var imageDict: [String : String]?
     var dateInfo: [String: [Any]]?
     var dateOrder: [String]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -146,9 +140,6 @@ class ItineraryViewController: UIViewController, UICollectionViewDelegateFlowLay
             lpgr.delaysTouchesBegan = true
             lpgr.delegate = self
             self.actCollectionView.addGestureRecognizer(lpgr)
-        
-        
-        
     }
     
     var delegate: ItineraryDelegate?

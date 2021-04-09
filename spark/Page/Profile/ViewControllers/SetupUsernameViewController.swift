@@ -66,7 +66,7 @@ class SetupUsernameViewController: UIViewController {
     }
     @objc func confirmButtonTapped() {
         username = usernameTextField.text
-        self.navigationController?.popViewController(animated: false)
+        self.navigationController?.popViewController(animated: true)
     }
     @objc func textfieldEditing() {
         errorLabel.text = ""

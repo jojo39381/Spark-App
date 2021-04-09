@@ -30,35 +30,19 @@ struct ActivityManager {
     
     func performRequest(urlString: String) {
         if let url = URL(string:urlString) {
-
-
-
             var latitude = "\(userLocation.coordinate.latitude)"
             var longitude =  "\(userLocation.coordinate.longitude)"
             var components = URLComponents(string: urlString)
-
+            
             components?.queryItems = [
-
-
                 URLQueryItem(name: "radius", value: "\(radius)"),
                 URLQueryItem(name: "latitude", value: latitude),
                 URLQueryItem(name: "longitude", value: longitude),
                 URLQueryItem(name: "sort_by", value: "best_match"),
                 URLQueryItem(name: "limit", value: "10"),
                 URLQueryItem(name: "price", value: budget[0])
-
-
-
-
             ]
-
-
-
-
-
-
-
-
+            
             var request = URLRequest(url: (components?.url)!)
             let session = URLSession(configuration: .default)
             print(components?.url)
@@ -66,42 +50,42 @@ struct ActivityManager {
             var result = [Place]()
             
             for (key, value) in categories {
-
+                
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
                 var request = URLRequest(url: (components?.url)!)
                 request.addValue("Bearer \(API_KEY2)", forHTTPHeaderField: "Authorization")
                 let task = session.dataTask(with: request) { (data, response, error) in
-
+                    
                     if let safeData = data {
-
+                        
                         if let parsed = self.parseData(restaurantData: safeData) {
                             let dataString = String(data: safeData, encoding: .utf8)
                             print(dataString)
                             result += parsed
                         }
                     }
-
+                    
                     do {
                         count += 1
                         if count == self.categories.count {
                             self.handleCompletion(data: result, response: response, error: error)
                         }
                     }
-
+                    
                 }
-
+                
                 print(components?.url)
                 let count = components?.queryItems?.count
                 components?.queryItems?.remove(at: count! - 1)
                 
                 task.resume()
             }
-
+            
         }
-
+        
         
     }
-
+    
     func handleCompletion(data: [Place]?, response: URLResponse?, error: Error?) {
         if error != nil {
             print(error!)
@@ -109,26 +93,18 @@ struct ActivityManager {
         }
         let model = ActivityModel(activities: data!)
         self.delegate?.didLoadActivities(data: model)
-
-
     }
     
     func parseData(restaurantData: Data) -> [Place]? {
         let decoder = JSONDecoder()
-        
         do {
             let decodedData = try decoder.decode(ActivityData.self, from: restaurantData)
             var array = [Place]()
-           
-            
             for business in decodedData.businesses {
-                
-                
-                
                 var alias = [String]()
                 for category in business.categories {
-                        alias.append(category.title)
-                    }
+                    alias.append(category.title)
+                }
                 var result = Place()
                 result.categories = alias
                 result.ratings = business.rating
@@ -138,32 +114,16 @@ struct ActivityManager {
                 result.address = business.location.display_address
                 result.name = business.name
                 array.append(result)
-               
             }
             var activityData = ActivityModel(activities:array)
             return activityData.activities
-                
         }
         catch {
             print(error)
             return nil
         }
-        
-        
     }
-    
-    
 }
-
-    
-    
-    
-    
-    
-    
-    
-
-
 
 extension Dictionary {
     mutating func merge(dict: [Key: Value]){

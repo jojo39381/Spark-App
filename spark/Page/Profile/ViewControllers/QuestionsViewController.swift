@@ -79,7 +79,9 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! BudgetCell
         preferences.updateValue(cell.selectedItems, forKey: cell.key)
         db.collection("users").document(auth.currentUser!.uid).setData(["preferences": preferences], merge: true) { (error) in
-            self.navigationController?.popToRootViewController(animated: false)
+            let sparkTabBarController = SparkTabBarController()
+            self.view.window!.rootViewController = sparkTabBarController
+            self.view.window?.makeKeyAndVisible()
         }
     }
     

@@ -66,7 +66,6 @@ class BudgetCell: UICollectionViewCell{
         
         sender.setValue(roundf(sender.value), animated: false)
         costLabel.text = costs[Int(sender.value) - 1]
-        print("lmaooooo")
         print(sender.value)
         selectedItems[0] = String(Int(sender.value))
     }

@@ -60,7 +60,7 @@ class SignUpViewController: UIViewController {
                    }, completion: { (isCompleted) in
                        if isCompleted {
                            // Dismiss the view when it dissapeared
-                        self.dismiss(animated: false, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                        }
                    })
                } else {
@@ -129,7 +129,7 @@ class SignUpViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     @objc func cancelButtonTapped() {
-        self.navigationController?.dismiss(animated: false, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     // Check the fields and validate that the data is correct. If everything is correct, this method returns nil. Otherwise, it returns the error message
     func validateFields() -> String? {
@@ -184,7 +184,7 @@ class SignUpViewController: UIViewController {
                             }
                             try! Auth.auth().signOut()
                             let loginViewController = LoginViewController()
-                            self.present(loginViewController, animated: false, completion: nil)
+                            self.present(loginViewController, animated: true, completion: nil)
                             loginViewController.emailTextField.text = email
                             loginViewController.passwordTextField.text = password
                             loginViewController.loginTapped()

@@ -7,20 +7,14 @@
 //
 
 import UIKit
+
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1);
-        
-        
-        
-        
-        
-        
     }
 }
 
 extension UINavigationController {
-
     func setStatusBar(backgroundColor: UIColor) {
         let statusBarFrame: CGRect
         if #available(iOS 13.0, *) {
@@ -32,35 +26,27 @@ extension UINavigationController {
         statusBarView.backgroundColor = backgroundColor
         view.addSubview(statusBarView)
     }
-
 }
 extension UILabel
 {
-    func addImage(imageName: String, afterLabel bolAfterLabel: Bool = false)
-    {
+    func addImage(imageName: String, afterLabel bolAfterLabel: Bool = false) {
         let attachment: NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: imageName)
         let attachmentString: NSAttributedString = NSAttributedString(attachment: attachment)
 
-        if (bolAfterLabel)
-        {
+        if (bolAfterLabel) {
             let strLabelText: NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
             strLabelText.append(attachmentString)
-
             self.attributedText = strLabelText
-        }
-        else
-        {
+        } else {
             let strLabelText: NSAttributedString = NSAttributedString(string: self.text!)
             let mutableAttachmentString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attachmentString)
             mutableAttachmentString.append(strLabelText)
-
             self.attributedText = mutableAttachmentString
         }
     }
 
-    func removeImage()
-    {
+    func removeImage() {
         let text = self.text
         self.attributedText = nil
         self.text = text
@@ -92,9 +78,8 @@ extension UIView {
         if height != 0 {
             self.heightAnchor.constraint(equalToConstant: height).isActive = true;
         }
-        
-    
     }
+    
     func addConstraintsWithFormat(format: String, views: UIView...) {
         var viewsDictionary = [String: UIView]()
         for (index, view) in views.enumerated() {
