@@ -145,6 +145,7 @@ class LoginViewController: UIViewController {
                 Utilities.fetchProfileData() {
                     if self.firstTimeUser.contains(self.emailTextField.text!) {
                         let vc = QuestionsViewController()
+                        vc.firstTimeUser = true
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: nil)
                     } else {

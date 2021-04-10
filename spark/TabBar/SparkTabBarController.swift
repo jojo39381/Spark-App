@@ -14,6 +14,7 @@ class SparkTabBarController: UITabBarController {
         super.viewDidLoad()
         
         let layout = UICollectionViewFlowLayout()
+        
         let homeViewController = HomeViewController(collectionViewLayout: layout)
         homeViewController.title = "Home"
         let navigation = UINavigationController(rootViewController:homeViewController);
@@ -21,6 +22,7 @@ class SparkTabBarController: UITabBarController {
         let third = TypesController()
         third.title = "Spark"
         let thirdNav = UINavigationController(rootViewController:third);
+       
         let profile = ProfileViewController();
         profile.pUid = auth.currentUser?.uid
         profile.title = "Profile"
