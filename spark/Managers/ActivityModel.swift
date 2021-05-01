@@ -26,6 +26,7 @@ struct Place: Equatable {
         coordinates = Coordinates()
         image_url = ""
         address = [String]()
+        price = ""
         }
     var name: String
     var categories: [String]
@@ -34,6 +35,7 @@ struct Place: Equatable {
     var coordinates: Coordinates
     var image_url: String
     var address: [String]
+    var price: String
     
 }
 

@@ -114,6 +114,7 @@ struct ActivityManager {
                 result.image_url = business.image_url
                 result.address = business.location.display_address
                 result.name = business.name
+                result.price = business.price
                 array.append(result)
             }
             var activityData = ActivityModel(activities: array)

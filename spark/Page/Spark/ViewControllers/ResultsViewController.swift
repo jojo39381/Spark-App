@@ -30,6 +30,7 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         myCell.titleLabel.text = infor.name // set text!
         myCell.ratingLabel.text = "Rating: " + String(infor.ratings) // set rating!
         myCell.reviewLabel.text = String(Int(infor.numReviews)) + " reviews" // set reviews!
+        myCell.priceLabel.text = infor.price
         var address = infor.address
         var addressString = ""
         addressString.append(address[0] + "\n")

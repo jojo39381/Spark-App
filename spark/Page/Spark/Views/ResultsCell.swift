@@ -70,6 +70,14 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         return label
     }()
     
+    let priceLabel:UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .black
+        
+        return label
+    }()
+    
     var numberOfItems = 1
     var dateArray = [String]()
     var tapGestureRecognizer : UITapGestureRecognizer!
@@ -100,9 +108,11 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         stack.spacing = 20
         stack.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: -10, width: 0, height: 0)
         self.addSubview(ratingLabel)
+        self.addSubview(priceLabel)
         self.addSubview(reviewLabel)
         ratingLabel.anchor(top: stack.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        reviewLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -20, width: 0, height: 0)
+        priceLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -20, width: 0, height: 0)
+        reviewLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -120, width: 0, height: 0)
         self.backgroundColor = .white
         let shadowSize : CGFloat = 5.0
         let shadowPath = UIBezierPath(roundedRect: CGRect(x: -shadowSize / 2,

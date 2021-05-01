@@ -14,8 +14,6 @@ import CoreLocation
 var userLocation: CLLocation!
 var radius = 40000
 
-
-
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UITabBarDelegate, CLLocationManagerDelegate, ActivityManagerDelegate{
     
     let cellId = "cellId"
@@ -83,10 +81,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     //            dict.updateValue("", forKey: food)
     //        }
             for place in self.activities.activities {
-                if place.numReviews > 200 && !popularArray.contains(place) {
+                if place.numReviews > 500 && !popularArray.contains(place) {
                     popularArray.append(place)
                 }
-                if findRadius(place: place) < 2 && !nearbyArray.contains(place) {
+                if findRadius(place: place) < 1 && !nearbyArray.contains(place) {
                     nearbyArray.append(place)
                 }
                 if place.ratings > 4.5 && findRadius(place: place) < 30 {

@@ -24,6 +24,7 @@ struct Business: Decodable {
     var image_url: String
     var location: Address
     var url: URL
+    var price: String
 }
 
 

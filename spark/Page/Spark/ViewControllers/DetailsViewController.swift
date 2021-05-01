@@ -184,7 +184,6 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         adventureStart = !adventureStart
         startButton.setTitle(adventureStart ? "Finish" : "Start Adventure", for: .normal)
         
-        
     }
     /*
      // MARK: - Navigation
