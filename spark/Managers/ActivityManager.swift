@@ -3,20 +3,21 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/23/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
 import Foundation
 
-protocol ActivityManagerDelegate {
+protocol ActivityManagerDelegate { // protocol in Swift = interface in Java
     func didLoadActivities(data: ActivityModel)
 }
+
 struct ActivityManager {
     let activityUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?parameters"
     let API_KEY = "AIzaSyCyOREZ-tMNFbjcpMcye-58009jQlDh1aA"
     let activityUrl2 = "https://api.yelp.com/v3/businesses/search"
     let API_KEY2 = "iM7_IkVflupwpcOMUguJXQJK5649MyfnIu7PZnyd6y9T_pFdDUXD4_KO6WofOXm_lIELDMo_tVgi0cY9QFj9gDb7L8j1p95nC1qi1vBH3GUKE586c9bMtqlRVynIXnYx"
-    
     
     
     var delegate: ActivityManagerDelegate?
@@ -25,7 +26,6 @@ struct ActivityManager {
     func fetchActivities() {
         let urlString = activityUrl2
         performRequest(urlString: urlString)
-        
     }
     
     func performRequest(urlString: String) {
@@ -45,33 +45,36 @@ struct ActivityManager {
             
             var request = URLRequest(url: (components?.url)!)
             let session = URLSession(configuration: .default)
+            print("components ? .url")
             print(components?.url)
             var count = 0
             var result = [Place]()
             
+            print("categories")
+            print(categories)
             for (key, value) in categories {
-                
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
                 var request = URLRequest(url: (components?.url)!)
                 request.addValue("Bearer \(API_KEY2)", forHTTPHeaderField: "Authorization")
                 let task = session.dataTask(with: request) { (data, response, error) in
                     
                     if let safeData = data {
-                        
                         if let parsed = self.parseData(restaurantData: safeData) {
                             let dataString = String(data: safeData, encoding: .utf8)
-                            print(dataString)
+//                            print(dataString)
+//                            print(parsed)
+                            // dataString: unparsed version
+                            // parsed: parsed version
                             result += parsed
                         }
                     }
-                    
                     do {
                         count += 1
                         if count == self.categories.count {
                             self.handleCompletion(data: result, response: response, error: error)
+                            // pass in result!
                         }
                     }
-                    
                 }
                 
                 print(components?.url)
@@ -80,13 +83,15 @@ struct ActivityManager {
                 
                 task.resume()
             }
-            
+//            print("result")
+//            print(result)
         }
         
         
     }
     
     func handleCompletion(data: [Place]?, response: URLResponse?, error: Error?) {
+        // data = result (a list of Places)
         if error != nil {
             print(error!)
             return
@@ -115,7 +120,7 @@ struct ActivityManager {
                 result.name = business.name
                 array.append(result)
             }
-            var activityData = ActivityModel(activities:array)
+            var activityData = ActivityModel(activities: array)
             return activityData.activities
         }
         catch {

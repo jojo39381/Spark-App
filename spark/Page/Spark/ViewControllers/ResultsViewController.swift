@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/23/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -26,13 +27,15 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         //        let dateArray = dates[sortedDateScores[indexPath.item].key]!
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lol", for: indexPath) as! ResultsCell
         let infor = activityModel.activities[indexPath.item]
-        myCell.titleLabel.text = infor.name
+        myCell.titleLabel.text = infor.name // set text!
+        myCell.ratingLabel.text = "Rating: " + String(infor.ratings) // set rating!
+        myCell.reviewLabel.text = String(Int(infor.numReviews)) + " reviews" // set reviews!
         var address = infor.address
         var addressString = ""
         addressString.append(address[0] + "\n")
         addressString.append(address[address.count - 1])
         
-        print(address)
+//        print(address)
         myCell.descriptionLabel.text = addressString
         let url = URL(string: infor.image_url)
         
@@ -51,9 +54,8 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
             
             //need to get back onto the main UI thread
             DispatchQueue.main.async {
-                myCell.placeImageView.image = image
+                myCell.placeImageView.image = image // set image!
             }
-            
         }.resume()
         //        myCell.setupViews()
         //        myCell.dateArray = dates[sortedDateScores[indexPath.item].key]!
@@ -73,15 +75,9 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         //        myCell.descriptionLabel.text = addressString
         //
         //        return myCell
-        
-        
-        
-        
-        
         return myCell
         
     }
-    
     
     
     var foodCentric = true
@@ -229,22 +225,15 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         return collectionView
     }()
     
-    
-    
-    
-    
     var activityModel: ActivityModel!
     var userSelectedModel: UserSelectedModel!
     var tapGestureRecognizer: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         //        rateDates()
-        print("////////")
         print(dateTitles)
         
         view.addSubview(resultsCollectionView)
-        
-        
         
         resultsCollectionView.frame = CGRect(x:0,y:0,width:view.frame.width, height:view.frame.height)
         
@@ -255,8 +244,6 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         resultsCollectionView.backgroundColor = .white
         resultsCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         setupNav()
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -290,11 +277,6 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
     
     func setupNav() {
         let navigationBar = self.navigationController?.navigationBar
-        
-        
-        
-        
-        
         navigationBar?.isTranslucent = true
         self.title = "Spark"
     }
@@ -332,10 +314,6 @@ class ResultsViewController : UIViewController, UICollectionViewDelegate, UIColl
         //                startLocation = resLocation
         //            }
         //            dateOrder.append(dateTitle)
-        
-        
-        
-        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

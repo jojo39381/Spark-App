@@ -8,14 +8,10 @@
 
 import Foundation
 
-struct ActivityModel {
-    
-    
+struct ActivityModel { // a list a place
     // [businessName : [[categories that it belongs to], ratings, numReviews, [latitude, longitude], image_url, address]
     var activities: [Place]
 }
-
-
 
 struct Place {
     init() {

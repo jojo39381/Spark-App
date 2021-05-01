@@ -9,7 +9,9 @@
 
 import Foundation
 
-struct ActivityData: Decodable {
+// ActivityData is the raw data, it can be parsed to Place struct in ActivityModel
+// and stored in activities (a list of Places)
+struct ActivityData: Decodable { // raw data
     var businesses: [Business]
 }
 

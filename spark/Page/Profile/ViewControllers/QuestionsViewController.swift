@@ -67,7 +67,6 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     
     @objc func nextAction(_ sender : UIButton) {
-        print("////////")
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! QuestionCell
         preferences.updateValue(cell.selectedItems, forKey: cell.key)
         questionsView.scrollToNextItem()
@@ -75,7 +74,6 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     @objc func doneAction(_ sender : UIButton) {
-        print("////////")
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! BudgetCell
         preferences.updateValue(cell.selectedItems, forKey: cell.key)
         db.collection("users").document(auth.currentUser!.uid).setData(["preferences": preferences], merge: true) { (error) in

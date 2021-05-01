@@ -3,8 +3,11 @@
 //  spark
 //
 //  Created by Joseph Yeh on 11/25/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
+
+// Not Called
 
 import UIKit
 
@@ -33,13 +36,12 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     var ratingLabel: UILabel = {
         var label = UILabel()
-        label.text = "4.5"
         return label
     }()
     
-    var priceLabel: UILabel = {
+    var priceLabel: UILabel = {  // not used
         var label = UILabel()
-        label.text = "$$$"
+//        label.text = "$$$$"
         return label
     }()
     
@@ -70,16 +72,11 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     var place: Place? {
         didSet {
-            
             setImage(imageURL:place!.image_url)
-            
-            
-            
-            
-            
             setupView()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNav()
@@ -108,18 +105,15 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func setupView() {
+        print("set up view")
         print("name" + place!.name)
         titleLabel.text = place?.name
         ratingLabel.text = String(place!.ratings)
+        priceLabel.text = String(Int(place!.numReviews)) + " reviews"
+//        ratingLabel.text = "4.9"
         
         descriptionView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        
     }
-    
-    
-    
-    
-    
     
     
     let cellId = "cellId"
@@ -128,23 +122,6 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
         infoCollectionView.delegate = self
         infoCollectionView.dataSource = self
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func setupNav() {
         
@@ -158,11 +135,6 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         self.title = "Spark"
-        
-        
-        
-        
-        
     }
     
     func setImage(imageURL:String) {
@@ -174,20 +146,14 @@ class PlaceViewController: UIViewController, UICollectionViewDelegate, UICollect
                 print("Failed to fetch profile image:", err)
                 return
             }
-            
             //perhaps check for response status of 200 (HTTP OK)
-            
             guard let data = data else { return }
-            
             let image = UIImage(data: data)
-            
             //need to get back onto the main UI thread
             DispatchQueue.main.async {
                 self.placeImageView.image = image
             }
-            
-            }.resume()
-        
+        }.resume()
     }
     
 

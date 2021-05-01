@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/21/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -35,15 +36,10 @@ class DescriptionCell: UICollectionViewCell {
         return button
     }()
     
-    
-    
     override init(frame: CGRect) {
         super.init(frame:frame)
         setupCell()
-            
-        
     }
-    
     
     func setupCell() {
         contentView.addSubview(titleLabel)
@@ -57,27 +53,7 @@ class DescriptionCell: UICollectionViewCell {
         addConstraintsWithFormat(format: "H:[v0(70)]-20-|", views: nextButton)
     
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     required init?(coder: NSCoder) {
         fatalError("error")
     }

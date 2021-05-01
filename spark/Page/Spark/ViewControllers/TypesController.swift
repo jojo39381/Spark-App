@@ -41,7 +41,6 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let myCell = collectionView.cellForItem(at: indexPath) as! CategoryCell
         filterSelected(key: (typeList[indexPath.item]))
-        
     }
     
     
@@ -83,9 +82,6 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         typesCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "myCell")
         
         setupNav()
-        
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -104,8 +100,6 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         self.title = "Spark"
     }
     func didSearchForDates(key: String) {
-        
-        
         var dict = ["tourist":""]
         
 //        for activity in userSelectedModel.preferences[key]! {
@@ -117,9 +111,7 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         
     }
     
-
     var activities: ActivityModel!
-
     
     func didLoadActivities(data: ActivityModel) {
         activities = data
@@ -127,44 +119,14 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
 //        for food in userSelectedModel.preferences["Food"]! {
 //            dict.updateValue("", forKey: food)
 //        }
-        
         DispatchQueue.main.async {
-
                    let vc = ResultsViewController()
                    vc.activityModel = self.activities
-                    
-            
-                  
                    self.navigationController?.pushViewController(vc, animated: true)
                }
-        
 //        var manager = RestaurantsManager(categories: dict, budget:userSelectedModel.preferences["Budget"]! )
 //        manager.delegate = self
 //        manager.fetchActivities()
-//
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     let descriptions = Descriptions()

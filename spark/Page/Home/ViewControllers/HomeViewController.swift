@@ -33,6 +33,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
@@ -45,28 +46,20 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestLocation()
-        
-    
     }
     
     func goToPlace(place: Place) {
-        print("/asdasd")
+        print("go to place")
         DispatchQueue.main.async {
 
             let vc = PlaceViewController()
             vc.place = place
         
             self.navigationController?.pushViewController(vc, animated: true)
-                    
-                  
-                   
                }
-        
     }
    
     func didSearchForDates(key: String) {
-            
-            
             var dict = ["tourist":""]
             
     //        for activity in userSelectedModel.preferences[key]! {
@@ -75,7 +68,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             var manager = ActivityManager(categories: dict, budget:["2"])
                 manager.delegate = self
                 manager.fetchActivities()
-            
         }
         
 
@@ -89,19 +81,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     //        }
             datesArray = self.activities.activities
             DispatchQueue.main.async {
-
                 self.collectionView.reloadData()
-                
                         print(self.activities)
-                        
-                      
-                       
-                   }
-            
-    
+            }
     }
-    
- 
         
     var dateCategories = ["Popular Adventures", "Nearby Adventures", "Shopping", "Food"]
     

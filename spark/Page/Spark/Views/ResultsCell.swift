@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 6/1/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
     
@@ -11,7 +12,6 @@ import UIKit
 
 class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
    
-    
     let score: UILabel = {
         let label = UILabel()
         label.text = "95"
@@ -22,7 +22,6 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         return label
     }()
   
-    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -48,31 +47,28 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     }()
     
     
-       let stack : UIStackView = {
-           let sv = UIStackView()
-           sv.alignment = .center
-           sv.distribution = .fill
-           return sv
-       }()
+    let stack : UIStackView = {
+        let sv = UIStackView()
+        sv.alignment = .center
+        sv.distribution = .fill
+        return sv
+    }()
        
     let ratingLabel:UILabel = {
         let label = UILabel()
-        label.text = "Rating: 4.8"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = .gray
         
         return label
     }()
     
-    let priceLabel:UILabel = {
+    let reviewLabel:UILabel = {
         let label = UILabel()
-        label.text = "$$$"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .black
         
         return label
     }()
-    
     
     var numberOfItems = 1
     var dateArray = [String]()
@@ -81,18 +77,12 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        
-        
-            
     }
     required init?(coder: NSCoder) {
         fatalError("error")
     }
     
-    
-    
     func setupViews() {
-        
         self.addSubview(placeImageView)
         self.addSubview(stack)
         stack.addArrangedSubview(placeImageView)
@@ -110,9 +100,9 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         stack.spacing = 20
         stack.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: -10, width: 0, height: 0)
         self.addSubview(ratingLabel)
-        self.addSubview(priceLabel)
+        self.addSubview(reviewLabel)
         ratingLabel.anchor(top: stack.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        priceLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -20, width: 0, height: 0)
+        reviewLabel.anchor(top: stack.bottomAnchor, left: nil, bottom: nil, right: self.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: -20, width: 0, height: 0)
         self.backgroundColor = .white
         let shadowSize : CGFloat = 5.0
         let shadowPath = UIBezierPath(roundedRect: CGRect(x: -shadowSize / 2,
@@ -124,15 +114,9 @@ class ResultsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         self.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         self.layer.shadowOpacity = 0.5
                 self.layer.shadowRadius = 2
-    
                 self.layer.masksToBounds = false
                 self.layer.cornerRadius = 15
                 self.clipsToBounds = false
             self.layer.shadowPath = shadowPath.cgPath
-       
     }
-    
-    
-    
-    
 }
