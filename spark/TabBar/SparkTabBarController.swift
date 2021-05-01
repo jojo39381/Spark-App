@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 6/22/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -39,6 +40,6 @@ class SparkTabBarController: UITabBarController {
     }
         
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-          print("hello)")
+          print("tap tab")
     }
 }

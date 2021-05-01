@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/20/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -10,16 +11,8 @@ import UIKit
 
 protocol DescriptionsDelegate {
     func didSearchForDates(key: String)
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
+
 class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,10 +27,6 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     let cellId = "cellId"
     let blackView = UIView()
     var key: String?
-    
-    
-    
-    
     
     func showFilters() {
         if let window = UIApplication.shared.keyWindow {
@@ -61,7 +50,6 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     
-    
     @objc func handleDismiss() {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
@@ -70,8 +58,6 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
                                                    height:self.collectionView.frame.height)
             }
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,15 +68,18 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DescriptionCell
+        key = cell.titleLabel.text
         cell.nextButton.addTarget(self, action: #selector(searchDates(_:)), for: .touchUpInside)
-        
         return cell
     }
     
     var delegate: DescriptionsDelegate?
     @objc func searchDates(_ sender : UIButton) {
         self.handleDismiss()
-        self.delegate?.didSearchForDates(key: "tourist")
+        print("description key")
+//        print(sender.titleLabel?.text!)
+        self.delegate?.didSearchForDates(key: key!)
+//        self.delegate?.didSearchForDates(key: (sender.titleLabel?.text)!)
     }
     @objc func selectTime(_ sender: UIButton) {
         if !sender.isSelected {
@@ -110,8 +99,6 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
-    
     
     
     override init() {

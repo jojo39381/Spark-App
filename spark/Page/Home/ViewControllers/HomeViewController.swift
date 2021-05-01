@@ -60,7 +60,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
    
     func didSearchForDates(key: String) {
-            var dict = ["tourist":""]
+        var dict = ["tourist":"", "chill":""]
             
     //        for activity in userSelectedModel.preferences[key]! {
     //            dict.updateValue("", forKey: activity)

@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/25/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -100,7 +101,9 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         self.title = "Spark"
     }
     func didSearchForDates(key: String) {
-        var dict = ["tourist":""]
+        print("didSearchForDates")
+        print(key)
+        var dict = [key:""]
         
 //        for activity in userSelectedModel.preferences[key]! {
 //            dict.updateValue("", forKey: activity)
@@ -108,7 +111,6 @@ class TypesController : UIViewController, UICollectionViewDataSource, UICollecti
         var manager = ActivityManager(categories: dict, budget:["2"])
             manager.delegate = self
             manager.fetchActivities()
-        
     }
     
     var activities: ActivityModel!
