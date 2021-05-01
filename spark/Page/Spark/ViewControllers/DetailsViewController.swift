@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 6/2/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -59,8 +60,6 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
         //        scoresTableView.widthAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
         //        scoresTableView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.1).isActive = true
     }
-    
-    
     
     var arrayOfRoutes: [MKRoute]?
     func findRoutes(source: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
@@ -181,10 +180,29 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
     
     @objc func startAdventure(_ sender: UIButton) {
         iView.isHidden = true
-        adventureStart = !adventureStart
-        startButton.setTitle(adventureStart ? "Finish" : "Start Adventure", for: .normal)
-        
+        if !adventureStart {
+            adventureStart = !adventureStart
+            startButton.setTitle(adventureStart ? "Finish" : "Start Adventure", for: .normal)
+            openGoogleMap()
+        }
     }
+    
+    func openGoogleMap() {
+        let lat = Double((place?.coordinates.latitude)!)
+        let long = Double((place?.coordinates.longitude)!)
+          if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {  //if phone has an app
+              if let url = URL(string: "comgooglemaps-x-callback://?saddr=&daddr=\(lat),\(long)&directionsmode=driving") {
+                        UIApplication.shared.open(url, options: [:])
+               }}
+          else {
+                 //Open in browser
+                if let urlDestination = URL.init(string: "https://www.google.co.in/maps/dir/?saddr=&daddr=\(lat),\(long)&directionsmode=driving") {
+                                   UIApplication.shared.open(urlDestination)
+                               }
+                    }
+            }
+    }
+    
     /*
      // MARK: - Navigation
      
@@ -194,8 +212,6 @@ class DetailsViewController: UIViewController, MKMapViewDelegate {
      // Pass the selected object to the new view controller.
      }
      */
-    
-}
 
 //extension DetailsViewController: UITableViewDelegate, UITableViewDataSource {
 //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
