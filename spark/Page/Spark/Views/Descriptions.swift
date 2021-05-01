@@ -76,7 +76,6 @@ class Descriptions: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     var delegate: DescriptionsDelegate?
     @objc func searchDates(_ sender : UIButton) {
         self.handleDismiss()
-        print("description key")
 //        print(sender.titleLabel?.text!)
         self.delegate?.didSearchForDates(key: key!)
 //        self.delegate?.didSearchForDates(key: (sender.titleLabel?.text)!)

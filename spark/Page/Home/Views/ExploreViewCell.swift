@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 5/28/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -34,11 +35,7 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         homeViewController?.goToPlace(place: datesArray[indexPath.item])
-        
-        
-        
     }
     var homeViewController: HomeViewController?
     var catCollectionView : UICollectionView = {
@@ -46,17 +43,9 @@ class ExploreViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
-        
-        
         return cv
-        
-        
-        
     }()
    
-    
-    
-    
     var datesArray = [Place]()
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

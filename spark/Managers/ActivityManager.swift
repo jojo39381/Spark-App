@@ -45,13 +45,9 @@ struct ActivityManager {
             
             var request = URLRequest(url: (components?.url)!)
             let session = URLSession(configuration: .default)
-            print("components ? .url")
-            print(components?.url)
             var count = 0
             var result = [Place]()
-            
-            print("categories")
-            print(categories)
+
             for (key, value) in categories {
                 components?.queryItems?.append(URLQueryItem(name: "term", value: key))
                 var request = URLRequest(url: (components?.url)!)

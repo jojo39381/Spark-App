@@ -256,7 +256,6 @@ extension ItineraryViewController: UICollectionViewDropDelegate {
         }
         
         if coordinator.proposal.operation == .move {
-            print("lmaoasdkahsbdkabdhabdb")
             self.reorderItems(coordinator: coordinator, destinationIndexPath: destinationIndexPath, collectionView: collectionView)
         }
     }

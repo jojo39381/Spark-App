@@ -3,6 +3,7 @@
 //  spark
 //
 //  Created by Joseph Yeh on 6/30/20.
+//  Modified by Tinna Liu, Peter Li on 5/1/21.
 //  Copyright © 2020 Joseph Yeh. All rights reserved.
 //
 
@@ -18,6 +19,7 @@ var radius = 40000
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UITabBarDelegate, CLLocationManagerDelegate, ActivityManagerDelegate{
     
     let cellId = "cellId"
+    var allAdventures = [Array<Place>]()
     var locationManager = CLLocationManager()
     var locationSet: Bool? {
         didSet {
@@ -56,11 +58,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             vc.place = place
         
             self.navigationController?.pushViewController(vc, animated: true)
-               }
+        }
     }
    
     func didSearchForDates(key: String) {
-        var dict = ["tourist":"", "chill":""]
+        var dict = ["chill":"", "romantic":"", "casual":"", "adventurous":"", "tourist":"", "random":""]
             
     //        for activity in userSelectedModel.preferences[key]! {
     //            dict.updateValue("", forKey: activity)
@@ -69,24 +71,46 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                 manager.delegate = self
                 manager.fetchActivities()
         }
-        
 
         var activities: ActivityModel!
-        var datesArray = [Place]()
+        var popularArray = [Place]()
+        var nearbyArray = [Place]()
+        var ratingArray = [Place]()
         func didLoadActivities(data: ActivityModel) {
             activities = data
     //        var dict = [String:String]()
     //        for food in userSelectedModel.preferences["Food"]! {
     //            dict.updateValue("", forKey: food)
     //        }
-            datesArray = self.activities.activities
+            for place in self.activities.activities {
+                if place.numReviews > 200 && !popularArray.contains(place) {
+                    popularArray.append(place)
+                }
+                if findRadius(place: place) < 2 && !nearbyArray.contains(place) {
+                    nearbyArray.append(place)
+                }
+                if place.ratings > 4.5 && findRadius(place: place) < 30 {
+                    ratingArray.append(place)
+                }
+            }
+            allAdventures = [popularArray, nearbyArray, ratingArray]
+//            datesArray = self.activities.activities
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
                         print(self.activities)
             }
     }
+    
+    func findRadius(place: Place) -> Float {
+        let placeLat = place.coordinates.latitude
+        let placeLon = place.coordinates.longitude
+        let userLat = userLocation.coordinate.latitude
+        let userLon = userLocation.coordinate.longitude
+        let radiusMiles = pow((pow(placeLat - Float(userLat), 2) + pow(placeLon - Float(userLon), 2)), 1/2) * 69
+        return radiusMiles
+    }
         
-    var dateCategories = ["Popular Adventures", "Nearby Adventures", "Shopping", "Food"]
+    var dateCategories = ["Popular Adventures", "Nearby Adventures", "High Rating Adventures"]
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        
@@ -96,7 +120,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExploreViewCell
         cell.homeViewController = self
-        cell.datesArray = datesArray
+        if allAdventures.count == 3 {
+            cell.datesArray = allAdventures[indexPath.item]
+        } else {
+            cell.datesArray = nearbyArray
+        }
         cell.catLabel.text = dateCategories[indexPath.item]
         cell.catCollectionView.reloadData()
         
@@ -129,6 +157,4 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
-
-
 }

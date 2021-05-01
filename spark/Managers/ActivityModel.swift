@@ -13,7 +13,11 @@ struct ActivityModel { // a list a place
     var activities: [Place]
 }
 
-struct Place {
+struct Place: Equatable {
+    static func == (lhs: Place, rhs: Place) -> Bool {
+        return lhs.name == rhs.name && lhs.image_url == rhs.image_url
+    }
+    
     init() {
         name = ""
         categories = [String]()
