@@ -18,7 +18,6 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
         return type.count 
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == type.count - 1 {
             let lastCell = collectionView.dequeueReusableCell(withReuseIdentifier: "lastCell", for: indexPath) as! BudgetCell   
@@ -64,7 +63,7 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
     let type = ["What is you or your partner's favorite types of food?", "What are some activities you would do on a chill date?", "What are some activities you would do on a romantic date?", "Choose a general budget for your dates"]
     let array = [["Chinese", "Japanese", "American", "French", "Korean", "Indian", "Burgers", "Fast Food", "Thai", "Canadian", "Italian", "Filipino", "German", "Mediterranean", "Mexican"],["Bowling", "Movies", "Stargazing", "Beaches", "Hiking", "Parks", "Fishing", "Shopping", "Escape Rooms", "Skydiving", "Swimming", "Golfing"], ["Dancing", "Beaches", "Sightseeing", "Wine Tasting", "Swimming", "Museum", "Camping", "Spa", "Food Tours", "Skydiving", "Trampolines", "Golfing"]]
     
-    
+    var firstTimeUser = false
     
     @objc func nextAction(_ sender : UIButton) {
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! QuestionCell
@@ -77,9 +76,13 @@ class QuestionsViewController: UIViewController, UICollectionViewDelegate, UICol
         let cell = questionsView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as! BudgetCell
         preferences.updateValue(cell.selectedItems, forKey: cell.key)
         db.collection("users").document(auth.currentUser!.uid).setData(["preferences": preferences], merge: true) { (error) in
-            let sparkTabBarController = SparkTabBarController()
-            self.view.window!.rootViewController = sparkTabBarController
-            self.view.window?.makeKeyAndVisible()
+            if self.firstTimeUser {
+                let sparkTabBarController = SparkTabBarController()
+                self.view.window!.rootViewController = sparkTabBarController
+                self.view.window?.makeKeyAndVisible()
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     

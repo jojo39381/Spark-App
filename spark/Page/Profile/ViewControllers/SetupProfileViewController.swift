@@ -2,10 +2,10 @@ import UIKit
 class SetupProfileViewController: UIViewController {
     var titleLabel: UILabel!
     var profileTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(auth.currentUser)
-
+        
         view.backgroundColor = .systemGray6
         titleLabel = UILabel()
         view.addSubview(titleLabel)
@@ -28,19 +28,22 @@ class SetupProfileViewController: UIViewController {
         view.bringSubviewToFront(titleLabel)
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         profileTableView.reloadData()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!]) { (error) in
-            try! auth.signOut()
-            super.viewWillDisappear(animated)
-        }
-    }
+
     func navigate() {
+        db.collection("users").document(auth.currentUser!.uid).updateData(["username": username!]) { (error) in
+            if let error = error {
+                print(error)
+            }
+        }
         self.navigationController?.popToRootViewController(animated: true)
     }
+    
     func logoutButtonTapped() {
+        try! auth.signOut()
         self.view.window?.rootViewController = StartViewController()
         self.view.window?.makeKeyAndVisible()
     }
